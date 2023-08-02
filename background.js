@@ -139,7 +139,9 @@ function browserInjectIf(tabId, changeInfo, tab){
         ) {
            // Check if the script was already injected
           chrome.storage.local.get(`${CONTENT_SCRIPT_RUN_FLAG}_${changeInfo.url}`, function(result) {
-            if (!result[`${CONTENT_SCRIPT_RUN_FLAG}_${changeInfo.url}`]) {
+            // 
+            if(!result[`${CONTENT_SCRIPT_RUN_FLAG}_${changeInfo.url}`]) {
+            //if (1) {
               // Set the flag to indicate that the script has been injected
               chrome.storage.local.set({ [`${CONTENT_SCRIPT_RUN_FLAG}_${changeInfo.url}`]: true }, function() {
                 // Inject content script into the current tab
@@ -166,11 +168,13 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === "createPopup") {
     var message = request.message; // Accessing the message parameter
     // Perform actions with the message parameter
-    var message = request.message;
+    if (message.includes("fts") || message.includes("pl")){
     var popupUrl = chrome.runtime.getURL("popup.html") + `?message=${encodeURIComponent(message)}`;
     chrome.windows.create({ url: popupUrl, type: "popup", width: 400, height: 300 });
-    
-    //chrome.tabs.create({ url: `popup.html?message=${encodeURIComponent(message)}` });
     sendResponse({ message: "Popup created!" });
+    }
+
+    //chrome.tabs.create({ url: `popup.html?message=${encodeURIComponent(message)}` });
+
   }
 });

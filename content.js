@@ -27,11 +27,13 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
     const data = await response.json();
     const labelIds = await data.labelIds;
     const isUnread = await labelIds.includes("UNREAD");
-
     // Only if the message is unread
     // isUnread
     if (isUnread){
+
+      showLoadingPopup();
       await analyzeMessage(data, token, messageId);
+
     }
   }
   catch(error) {
@@ -40,6 +42,51 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
     };
    
 }
+
+function showLoadingPopup() {
+  // Create the pop-up overlay element
+  const popupOverlay = document.createElement('div');
+  popupOverlay.id = 'loading-popup-overlay';
+
+  // Add CSS styling to create the overlay effect
+  popupOverlay.style.position = 'fixed';
+  popupOverlay.style.top = '0';
+  popupOverlay.style.left = '0';
+  popupOverlay.style.width = '100%';
+  popupOverlay.style.height = '100%';
+  //popupOverlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+  popupOverlay.style.zIndex = '9999';
+  popupOverlay.style.display = 'flex';
+  popupOverlay.style.justifyContent = 'center';
+  popupOverlay.style.alignItems = 'center';
+
+  // Create an image element for the loading GIF
+  const loadingGIF = document.createElement('img');
+  loadingGIF.src = 'https://thumbs.gfycat.com/EducatedCautiousArmyant-max-1mb.gif'
+  //'https://www.netatwork.com/uploads/AAPL/loaders/loading_ajax.gif'
+  //'https://iswim.gr/wp-content/plugins/wp-file-manager/images/loading.gif'
+//  'https://icon-library.com/images/waiting-icon-gif/waiting-icon-gif-20.jpg'
+  //'https://icon-library.com/images/waiting-icon-gif/waiting-icon-gif-1.jpg'
+  //'https://3cubed.tech/wp-content/uploads/2019/06/magnifier.gif'
+  //'https://h50007.www5.hpe.com/hfws-static/5/img/loader.gif'
+  //'https://raw.githubusercontent.com/Codelessly/FlutterLoadingGIFs/master/packages/circular_progress_indicator_square_medium.gif';
+  //https://icon-library.com/images/spinner-icon-gif/spinner-icon-gif-25.jpg'
+  // 'https://cdn.dribbble.com/users/1478651/screenshots/6379052/16.gif'
+  loadingGIF.alt = 'Loading...';
+
+  // Append the loading GIF to the pop-up overlay
+  popupOverlay.appendChild(loadingGIF);
+
+  // Append the pop-up overlay to the body of the page
+  document.body.appendChild(popupOverlay);
+
+  // Your code to trigger the loading state (e.g., AJAX request, heavy computation) goes here
+  // When you need to remove the loading pop-up, simply remove the overlay from the DOM:
+
+  setTimeout(() =>  popupOverlay.remove(), 750)
+
+}
+
 
 function decodeMessageBody(mtext){
   var message = "";
@@ -87,9 +134,11 @@ async function getFirstTimeFromSender(senderEmail, token) {
     return Promise.reject(new Error('Sender email is null'));
   }
 
-  // Use cache to store it
+  // Use cache to find emails from that sender
   chrome.storage.local.get(`${senderEmail}`, function(result) {
-    if (result[`${senderEmail}`]) {
+  
+  // If sender email is in cache, that means we recived an email from him
+  if (result[`${senderEmail}`]) {
       return false;
     }
   });
