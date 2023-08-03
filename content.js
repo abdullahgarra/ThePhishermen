@@ -45,32 +45,26 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
 
 function showLoadingPopuInClass(className = '.gE.iv.gt') {
+  
+  const imageSrc = 'https://cdn.pixabay.com/animation/2022/11/13/04/07/04-07-35-655_512.gif';
   // JavaScript code to insert the div element
-  const divElement = document.createElement('div');
-   
-  // Set the width and height of the div (container) element
-  divElement.style.width = '90px';   // Adjust this value for the desired width
-  divElement.style.height = '32px';  // Adjust this value for the desired height
+  const imgElement = document.createElement('img');
   
-  // Set the background image for the div (container) element
-  divElement.style.backgroundImage = 'url(https://cdn.pixabay.com/animation/2022/11/13/04/07/04-07-35-655_512.gif)';
-  
-  // Set the background size to maintain the original width and crop the height
-  divElement.style.backgroundSize = 'auto 100%';
-  
-  // Calculate the position to crop from the center
-  const originalHeight = 158; // Replace this with the actual height of the original image
-  const cropPosition = Math.max(0, (originalHeight - 32) / 2);
-  
-  // Set the background position to crop 32 pixels from the center
-  divElement.style.backgroundPosition = `center ${cropPosition}px`;
-  
+  imgElement.style.width = '20px';   // Adjust this value for the desired width
+  imgElement.style.height = '20px';  // Adjust this value for the desired height
+
+  // Set the source and alt attributes for the image
+  imgElement.src = imageSrc;
+
   // Get the container element with the specified class
   const container = document.querySelector(className);
   
   // Insert the div element before the element with class "gK"
   const elementWithClassGK = container.querySelector('.gK');
-  elementWithClassGK.insertAdjacentElement('afterend', divElement);
+  elementWithClassGK.insertAdjacentElement('afterend', imgElement);
+  
+  // Add a margin between the img element and the class "gH"
+  imgElement.style.marginRight = '10px'; // Adjust this value for the desired space
  }
 
 
