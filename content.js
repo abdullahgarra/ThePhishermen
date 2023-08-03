@@ -31,8 +31,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
     // isUnread
     if (isUnread){
 
-      //showLoadingPopuInClass();
-      showLoadingPopup();
+      showLoadingPopuInClass();
       await analyzeMessage(data, token, messageId);
 
     }
@@ -45,30 +44,34 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 }
 
 
-function showLoadingPopuInClass(className = '.gE.iv.gt'){
-
-  alert(new Date());
-    // JavaScript code to insert the image
+function showLoadingPopuInClass(className = '.gE.iv.gt') {
+  // JavaScript code to insert the div element
+  const divElement = document.createElement('div');
+   
+  // Set the width and height of the div (container) element
+  divElement.style.width = '90px';   // Adjust this value for the desired width
+  divElement.style.height = '32px';  // Adjust this value for the desired height
   
-  /*
-    const imageSrc = 'https://3cubed.tech/wp-content/uploads/2019/06/magnifier.gif'; 
-  const imageAlt = 'Description of the image';
-
-  // Create a new image element
-  const imgElement = document.createElement('img');
-
-  // Set the source and alt attributes for the image
-  imgElement.src = imageSrc;
-  imgElement.alt = imageAlt;
-
-  // Get the container element with the class 'my-class'
+  // Set the background image for the div (container) element
+  divElement.style.backgroundImage = 'url(https://cdn.pixabay.com/animation/2022/11/13/04/07/04-07-35-655_512.gif)';
+  
+  // Set the background size to maintain the original width and crop the height
+  divElement.style.backgroundSize = 'auto 100%';
+  
+  // Calculate the position to crop from the center
+  const originalHeight = 158; // Replace this with the actual height of the original image
+  const cropPosition = Math.max(0, (originalHeight - 32) / 2);
+  
+  // Set the background position to crop 32 pixels from the center
+  divElement.style.backgroundPosition = `center ${cropPosition}px`;
+  
+  // Get the container element with the specified class
   const container = document.querySelector(className);
-
-  // Append the image element to the container
-  container.appendChild(imgElement);
-  */
-
-}
+  
+  // Insert the div element before the element with class "gK"
+  const elementWithClassGK = container.querySelector('.gK');
+  elementWithClassGK.insertAdjacentElement('afterend', divElement);
+ }
 
 
 
