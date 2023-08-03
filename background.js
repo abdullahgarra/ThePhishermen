@@ -139,7 +139,6 @@ function browserInjectIf(tabId, changeInfo, tab){
         ) {
            // Check if the script was already injected
           chrome.storage.local.get(`${CONTENT_SCRIPT_RUN_FLAG}_${changeInfo.url}`, function(result) {
-            // 
             if(!result[`${CONTENT_SCRIPT_RUN_FLAG}_${changeInfo.url}`]) {
             //if (1) {
               // Set the flag to indicate that the script has been injected

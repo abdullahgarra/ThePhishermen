@@ -31,6 +31,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
     // isUnread
     if (isUnread){
 
+      //showLoadingPopuInClass();
       showLoadingPopup();
       await analyzeMessage(data, token, messageId);
 
@@ -43,49 +44,32 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
    
 }
 
-function showLoadingPopup() {
-  // Create the pop-up overlay element
-  const popupOverlay = document.createElement('div');
-  popupOverlay.id = 'loading-popup-overlay';
 
-  // Add CSS styling to create the overlay effect
-  popupOverlay.style.position = 'fixed';
-  popupOverlay.style.top = '0';
-  popupOverlay.style.left = '0';
-  popupOverlay.style.width = '100%';
-  popupOverlay.style.height = '100%';
-  //popupOverlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
-  popupOverlay.style.zIndex = '9999';
-  popupOverlay.style.display = 'flex';
-  popupOverlay.style.justifyContent = 'center';
-  popupOverlay.style.alignItems = 'center';
+function showLoadingPopuInClass(className = '.gE.iv.gt'){
 
-  // Create an image element for the loading GIF
-  const loadingGIF = document.createElement('img');
-  loadingGIF.src = 'https://thumbs.gfycat.com/EducatedCautiousArmyant-max-1mb.gif'
-  //'https://www.netatwork.com/uploads/AAPL/loaders/loading_ajax.gif'
-  //'https://iswim.gr/wp-content/plugins/wp-file-manager/images/loading.gif'
-//  'https://icon-library.com/images/waiting-icon-gif/waiting-icon-gif-20.jpg'
-  //'https://icon-library.com/images/waiting-icon-gif/waiting-icon-gif-1.jpg'
-  //'https://3cubed.tech/wp-content/uploads/2019/06/magnifier.gif'
-  //'https://h50007.www5.hpe.com/hfws-static/5/img/loader.gif'
-  //'https://raw.githubusercontent.com/Codelessly/FlutterLoadingGIFs/master/packages/circular_progress_indicator_square_medium.gif';
-  //https://icon-library.com/images/spinner-icon-gif/spinner-icon-gif-25.jpg'
-  // 'https://cdn.dribbble.com/users/1478651/screenshots/6379052/16.gif'
-  loadingGIF.alt = 'Loading...';
+  alert(new Date());
+    // JavaScript code to insert the image
+  
+  /*
+    const imageSrc = 'https://3cubed.tech/wp-content/uploads/2019/06/magnifier.gif'; 
+  const imageAlt = 'Description of the image';
 
-  // Append the loading GIF to the pop-up overlay
-  popupOverlay.appendChild(loadingGIF);
+  // Create a new image element
+  const imgElement = document.createElement('img');
 
-  // Append the pop-up overlay to the body of the page
-  document.body.appendChild(popupOverlay);
+  // Set the source and alt attributes for the image
+  imgElement.src = imageSrc;
+  imgElement.alt = imageAlt;
 
-  // Your code to trigger the loading state (e.g., AJAX request, heavy computation) goes here
-  // When you need to remove the loading pop-up, simply remove the overlay from the DOM:
+  // Get the container element with the class 'my-class'
+  const container = document.querySelector(className);
 
-  setTimeout(() =>  popupOverlay.remove(), 750)
+  // Append the image element to the container
+  container.appendChild(imgElement);
+  */
 
 }
+
 
 
 function decodeMessageBody(mtext){
