@@ -196,8 +196,8 @@ async function sendAnalyzeRequest(payload) {
     });
   
    const data = await response.json();
-    alert(data['Answer']);
-    const imageElement = document.getElementById('showLoadingPopuInClass');
+    console.log(data['Answer']);
+   const imageElement = document.getElementById('showLoadingPopuInClass');
     imageElement.remove();
     
     chrome.runtime.sendMessage({ action: "createPopup", message: data['Answer'] }, function(response) {
