@@ -65,6 +65,9 @@ function showLoadingPopuInClass(className = '.gE.iv.gt') {
   
   // Add a margin between the img element and the class "gH"
   imgElement.style.marginRight = '10px'; // Adjust this value for the desired space
+
+  setTimeout(() =>  imgElement.remove(), 750)
+
  }
 
 
