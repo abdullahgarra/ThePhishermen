@@ -1,3 +1,12 @@
+
+chrome.action.onClicked.addListener((tab) => {
+  chrome.scripting.executeScript({
+    target: { tabId: tab.id },
+    files: ['content.js']
+  });
+});
+
+
 function create_alert(msg) {
   chrome.notifications.create({
     type: 'basic',
@@ -137,14 +146,7 @@ function browserInjectIf(tabId, changeInfo, tab){
          {
            
               console.log("Injecting");
-              chrome.scripting.executeScript({
-                target: { tabId: tabId },
-                files: ['content.js']
-              }, function() {
-                // Once the script is injected, send a message to the content script
-                chrome.tabs.sendMessage(tabId, { action: 'invokeFunction', functionName: 'readingEmails', token: storedToken, tabUrl: changeInfo.url });
-              });
-              
+              chrome.tabs.sendMessage(tabId, { action: 'invokeFunction', functionName: 'readingEmails', token: storedToken, tabUrl: changeInfo.url });
            } 
          }
         
@@ -170,3 +172,4 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
   }
 });
+
