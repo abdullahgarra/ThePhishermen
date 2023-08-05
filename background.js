@@ -123,10 +123,10 @@ function checkAccessTokenValidity(accessToken) {
 
 chrome.action.onClicked.addListener(browserActionClicked);
 
-//const CONTENT_SCRIPT_RUN_FLAG = 'HasRun';
-var mydict = {}
+var tabsDict = {};
 
 function browserInjectIf(tabId, changeInfo, tab){
+  console.log("From browser");
    // Check if access token is stored
    getStoredAccessToken(function(storedToken) {
     
@@ -135,21 +135,19 @@ function browserInjectIf(tabId, changeInfo, tab){
         changeInfo.url.includes('mail.google.com/mail/u/') &&
         changeInfo.url.includes('inbox/'))
          {
-           // Check if the script was already injected
-           if (!mydict.hasOwnProperty(changeInfo.url)) {
-              mydict[changeInfo.url] = true;
+           
+              console.log("Injecting");
               chrome.scripting.executeScript({
                 target: { tabId: tabId },
                 files: ['content.js']
               }, function() {
                 // Once the script is injected, send a message to the content script
                 chrome.tabs.sendMessage(tabId, { action: 'invokeFunction', functionName: 'readingEmails', token: storedToken, tabUrl: changeInfo.url });
-                // Later, when you want to remove the listener, you can use:
               });
-
+              
            } 
          }
-        }
+        
      )}
 
 

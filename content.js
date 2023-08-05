@@ -1,11 +1,14 @@
+var flag = true;
 
 chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
-    if (message.action === 'invokeFunction' && message.functionName === 'readingEmails') {
+    if (message.action === 'invokeFunction' && message.functionName === 'readingEmails' && flag) {
+      console.log("Content, reading");
       // Access the token value from the message object
       const token = message.token;
       const legacyThreadId = document.querySelector('[role="main"] [data-legacy-thread-id]').getAttribute('data-legacy-thread-id');
       const tabUrl = message.tabUrl; // Access the tab object
-
+      flag = false;
+      
       // Call your specific function with the token value      
       if (token && legacyThreadId && tabUrl){
           await readMessageAndAnalyzeIfUnread(legacyThreadId,token);
@@ -201,6 +204,7 @@ async function sendAnalyzeRequest(payload) {
     chrome.runtime.sendMessage({ action: "createPopup", message: data['Answer'] }, function(response) {
       console.log(response.message);
     });
+    
   }
   catch(error) {
     // Handle any errors
