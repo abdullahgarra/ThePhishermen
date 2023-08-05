@@ -50,6 +50,7 @@ function showLoadingPopuInClass(className = '.gE.iv.gt') {
   // JavaScript code to insert the div element
   const imgElement = document.createElement('img');
   
+  imgElement.id = 'showLoadingPopuInClass';
   imgElement.style.width = '20px';   // Adjust this value for the desired width
   imgElement.style.height = '20px';  // Adjust this value for the desired height
 
@@ -65,8 +66,6 @@ function showLoadingPopuInClass(className = '.gE.iv.gt') {
   
   // Add a margin between the img element and the class "gH"
   imgElement.style.marginRight = '10px'; // Adjust this value for the desired space
-
-  setTimeout(() =>  imgElement.remove(), 750)
 
  }
 
@@ -197,7 +196,10 @@ async function sendAnalyzeRequest(payload) {
     });
   
    const data = await response.json();
-          //alert(data['Answer']);
+    console.log(data['Answer']);
+   const imageElement = document.getElementById('showLoadingPopuInClass');
+    imageElement.remove();
+    
     chrome.runtime.sendMessage({ action: "createPopup", message: data['Answer'] }, function(response) {
       console.log(response.message);
     });
