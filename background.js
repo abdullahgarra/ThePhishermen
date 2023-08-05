@@ -1,3 +1,12 @@
+
+chrome.action.onClicked.addListener((tab) => {
+  chrome.scripting.executeScript({
+    target: { tabId: tab.id },
+    files: ['content.js']
+  });
+});
+
+
 function create_alert(msg) {
   chrome.notifications.create({
     type: 'basic',
@@ -123,54 +132,44 @@ function checkAccessTokenValidity(accessToken) {
 
 chrome.action.onClicked.addListener(browserActionClicked);
 
-const CONTENT_SCRIPT_RUN_FLAG = 'HasRun';
+var tabsDict = {};
 
 function browserInjectIf(tabId, changeInfo, tab){
+  console.log("From browser");
    // Check if access token is stored
    getStoredAccessToken(function(storedToken) {
     
-    if (storedToken && changeInfo.url) {
-      // Use the stored token
-      
-      if (changeInfo.status === 'loading' &&
+    if (storedToken && changeInfo.url &&
+        changeInfo.status === 'loading' &&
         changeInfo.url.includes('mail.google.com/mail/u/') &&
-        changeInfo.url.includes('inbox') &&
-        !(changeInfo.url.slice(-5) === 'inbox')
-        ) {
-           // Check if the script was already injected
-          chrome.storage.local.get(`${CONTENT_SCRIPT_RUN_FLAG}_${changeInfo.url}`, function(result) {
-            if (!result[`${CONTENT_SCRIPT_RUN_FLAG}_${changeInfo.url}`]) {
-              // Set the flag to indicate that the script has been injected
-              chrome.storage.local.set({ [`${CONTENT_SCRIPT_RUN_FLAG}_${changeInfo.url}`]: true }, function() {
-                // Inject content script into the current tab
-                chrome.scripting.executeScript({
-                  target: { tabId: tabId },
-                  files: ['content.js']
-                }, function() {
-                  // Once the script is injected, send a message to the content script
-                  chrome.tabs.sendMessage(tabId, { action: 'invokeFunction', functionName: 'readingEmails', token: storedToken, tabUrl: changeInfo.url });
-                });
-              });
-            }          
-          });
-        }
-      }
-    });
-  }
+        changeInfo.url.includes('inbox/'))
+         {
+           
+              console.log("Injecting");
+              chrome.tabs.sendMessage(tabId, { action: 'invokeFunction', functionName: 'readingEmails', token: storedToken, tabUrl: changeInfo.url });
+           } 
+         }
+        
+     )}
+
 
 // Add the tab update event listener outside the handleAuthToken function
 chrome.tabs.onUpdated.addListener(browserInjectIf);
+
 
 // Listen for a message from the content script
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === "createPopup") {
     var message = request.message; // Accessing the message parameter
     // Perform actions with the message parameter
-    var message = request.message;
+    if (message.includes("fts") || message.includes("pl")){
     var popupUrl = chrome.runtime.getURL("popup.html") + `?message=${encodeURIComponent(message)}`;
     chrome.windows.create({ url: popupUrl, type: "popup", width: 400, height: 300 });
-    
-    //chrome.tabs.create({ url: `popup.html?message=${encodeURIComponent(message)}` });
     sendResponse({ message: "Popup created!" });
+    }
+
+    //chrome.tabs.create({ url: `popup.html?message=${encodeURIComponent(message)}` });
+
   }
 });
+

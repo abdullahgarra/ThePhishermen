@@ -1,11 +1,11 @@
-
 chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
     if (message.action === 'invokeFunction' && message.functionName === 'readingEmails') {
+      console.log("Content, reading");
       // Access the token value from the message object
       const token = message.token;
       const legacyThreadId = document.querySelector('[role="main"] [data-legacy-thread-id]').getAttribute('data-legacy-thread-id');
       const tabUrl = message.tabUrl; // Access the tab object
-
+      
       // Call your specific function with the token value      
       if (token && legacyThreadId && tabUrl){
           await readMessageAndAnalyzeIfUnread(legacyThreadId,token);
@@ -27,11 +27,13 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
     const data = await response.json();
     const labelIds = await data.labelIds;
     const isUnread = await labelIds.includes("UNREAD");
-
     // Only if the message is unread
     // isUnread
     if (isUnread){
+
+      showLoadingPopuInClass();
       await analyzeMessage(data, token, messageId);
+
     }
   }
   catch(error) {
@@ -40,6 +42,35 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
     };
    
 }
+
+
+function showLoadingPopuInClass(className = '.gE.iv.gt') {
+  
+  const imageSrc = 'https://cdn.pixabay.com/animation/2022/11/13/04/07/04-07-35-655_512.gif';
+  // JavaScript code to insert the div element
+  const imgElement = document.createElement('img');
+  
+  imgElement.style.width = '20px';   // Adjust this value for the desired width
+  imgElement.style.height = '20px';  // Adjust this value for the desired height
+
+  // Set the source and alt attributes for the image
+  imgElement.src = imageSrc;
+
+  // Get the container element with the specified class
+  const container = document.querySelector(className);
+  
+  // Insert the div element before the element with class "gK"
+  const elementWithClassGK = container.querySelector('.gK');
+  elementWithClassGK.insertAdjacentElement('afterend', imgElement);
+  
+  // Add a margin between the img element and the class "gH"
+  imgElement.style.marginRight = '10px'; // Adjust this value for the desired space
+
+  setTimeout(() =>  imgElement.remove(), 750)
+
+ }
+
+
 
 function decodeMessageBody(mtext){
   var message = "";
@@ -87,9 +118,11 @@ async function getFirstTimeFromSender(senderEmail, token) {
     return Promise.reject(new Error('Sender email is null'));
   }
 
-  // Use cache to store it
+  // Use cache to find emails from that sender
   chrome.storage.local.get(`${senderEmail}`, function(result) {
-    if (result[`${senderEmail}`]) {
+  
+  // If sender email is in cache, that means we recived an email from him
+  if (result[`${senderEmail}`]) {
       return false;
     }
   });
@@ -168,6 +201,7 @@ async function sendAnalyzeRequest(payload) {
     chrome.runtime.sendMessage({ action: "createPopup", message: data['Answer'] }, function(response) {
       console.log(response.message);
     });
+    
   }
   catch(error) {
     // Handle any errors
