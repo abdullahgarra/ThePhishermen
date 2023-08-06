@@ -107,23 +107,37 @@ function decodeMessageBody(mtext){
   return message;
 }
 
-function getMessageBody(content) {
-  var message = null;
-  try {
-    if ("data" in content.payload.body) {
-      message = content.payload.body.data;
-      message = decodeMessageBody(message);
-    } else if ("data" in content.payload.parts[0].body) {
-      message = content.payload.parts[0].body.data;
-      message = decodeMessageBody(message);
-    } else {
-      console.log("body has no data.");
+function getMessageBody(data) {
+
+//https://stackoverflow.com/questions/59603771/how-to-get-the-text-plain-part-of-a-gmail-api-message/59615222#59615222
+
+  if (data.payload.mimeType === 'text/plain' || data.payload.mimeType === 'text/html') {
+    // Case 1: Plain text message
+    const body = data.payload.body.data;
+    return decodeMessageBody(body);
+  } else if (data.payload.mimeType === 'multipart/alternative') {
+    // Case 2: Html message
+    const body = data.payload.parts[0].body.data;
+    return decodeMessageBody(body);
+  } else if (data.payload.mimeType === 'multipart/mixed') {
+    // Check if it's a plain text message with a file attached (Case 3)
+    if (data.payload.parts[0].mimeType === 'text/plain' || data.payload.parts[0].mimeType === 'text/html') {
+      const body = data.payload.parts[0].body.data;
+      return decodeMessageBody(body);
     }
-  } catch (error) {
-    alert(error);
-  }
-  return message;
+    // Check if it's an html message with a file attached (Case 4)
+    else if (data.payload.parts[0].mimeType === 'multipart/alternative') {
+      const body = data.payload.parts[0].parts[0].body.data;
+      return decodeMessageBody(body);
+    }
+  } else if (data.payload.body)
+
+  alert("Hello");
+  // Return null if the message structure is not supported or doesn't match any case
+  return null;
 }
+
+
 
 function getSenderEmail(fromHeader) {
   try {

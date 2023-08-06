@@ -126,15 +126,26 @@ chrome.action.onClicked.addListener(browserActionClicked);
 
 var tabsSet = new Set();
 
+// --- On Reloading 
+chrome.webNavigation.onCommitted.addListener((details) => {
+  if (["reload"].includes(details.transitionType) &&
+      details.url.includes('mail.google.com/mail/u/') || details.url.includes('inbox/')) {
+      tabsSet.delete(details.tabId);
+      console.log("HIHIHIHI");
+  }
+});
+
+
+
+
 function browserInjectIf(tabId, changeInfo, tab){
   console.log("From browser");
+  //console.log(changeInfo);
+  //console.log(tab);
+
    // Check if access token is stored
    getStoredAccessToken(function(storedToken) {
     
-    if (changeInfo.url == tab.url){
-      tabsSet.delete(tabId);
-    }
-
     if (storedToken && changeInfo.url &&
         changeInfo.status === 'loading' &&
         changeInfo.url.includes('mail.google.com/mail/u/') &&
