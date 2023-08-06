@@ -142,10 +142,12 @@ function browserInjectIf(tabId, changeInfo, tab){
          {
            
               console.log("Injecting");
+              console.log(tabId);
               (async () => {
                 if (!tabsSet.has(tabId)) {
                   tabsSet.add(tabId);
                   console.log("executeScript");
+                  console.log(tabId);
                   await chrome.scripting.executeScript({
                     target: { tabId: tab.id },
                     files: ['content.js'],
