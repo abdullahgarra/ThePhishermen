@@ -124,10 +124,25 @@ function checkAccessTokenValidity(accessToken) {
 
 chrome.action.onClicked.addListener(browserActionClicked);
 
-var tabsDict = {};
+var tabsSet = new Set();
+
+// --- On Reloading 
+chrome.webNavigation.onCommitted.addListener((details) => {
+  if (["reload"].includes(details.transitionType) &&
+      details.url.includes('mail.google.com/mail/u/') || details.url.includes('inbox/')) {
+      tabsSet.delete(details.tabId);
+      console.log("HIHIHIHI");
+  }
+});
+
+
+
 
 function browserInjectIf(tabId, changeInfo, tab){
   console.log("From browser");
+  //console.log(changeInfo);
+  //console.log(tab);
+
    // Check if access token is stored
    getStoredAccessToken(function(storedToken) {
     
@@ -138,9 +153,12 @@ function browserInjectIf(tabId, changeInfo, tab){
          {
            
               console.log("Injecting");
+              console.log(tabId);
               (async () => {
-                if (!tabsDict.hasOwnProperty(tabId)) {
-                  tabsDict[tabId] = true;
+                if (!tabsSet.has(tabId)) {
+                  tabsSet.add(tabId);
+                  console.log("executeScript");
+                  console.log(tabId);
                   await chrome.scripting.executeScript({
                     target: { tabId: tab.id },
                     files: ['content.js'],

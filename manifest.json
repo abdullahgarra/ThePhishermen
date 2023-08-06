@@ -23,7 +23,8 @@
         "identity",
         "notifications",
         "tabs",
-        "contextMenus"
+        "contextMenus",
+        "webNavigation"
 
     ],
     "host_permissions": [
