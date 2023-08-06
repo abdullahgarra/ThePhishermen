@@ -69,6 +69,31 @@ function showLoadingPopuInClass(className = '.gE.iv.gt') {
 
  }
 
+ function showCheckMarkInClass(className = '.gE.iv.gt') {
+  
+  const imageSrc = 'https://freeiconshop.com/wp-content/uploads/edd/checkmark-flat.png';
+  // JavaScript code to insert the div element
+  const imgElement = document.createElement('img');
+  
+  imgElement.style.width = '20px';   // Adjust this value for the desired width
+  imgElement.style.height = '20px';  // Adjust this value for the desired height
+
+  // Set the source and alt attributes for the image
+  imgElement.src = imageSrc;
+
+  // Get the container element with the specified class
+  const container = document.querySelector(className);
+  
+  // Insert the div element before the element with class "gK"
+  const elementWithClassGK = container.querySelector('.gK');
+  elementWithClassGK.insertAdjacentElement('afterend', imgElement);
+  
+  // Add a margin between the img element and the class "gH"
+  imgElement.style.marginRight = '10px'; // Adjust this value for the desired space
+
+  //setTimeout(() =>  imgElement.remove(), 750)
+
+ }
 
 
 function decodeMessageBody(mtext){
@@ -199,11 +224,13 @@ async function sendAnalyzeRequest(payload) {
     console.log(data['Answer']);
    const imageElement = document.getElementById('showLoadingPopuInClass');
     imageElement.remove();
-    
-    chrome.runtime.sendMessage({ action: "createPopup", message: data['Answer'] }, function(response) {
-      console.log(response.message);
-    });
-    
+    if (data['Answer'].includes("fts") || data['Answer'].includes("pl")){
+      chrome.runtime.sendMessage({ action: "createPopup", message: data['Answer'] }, function(response) {
+      });
+    }
+    else {
+      showCheckMarkInClass();
+    }    
   }
   catch(error) {
     // Handle any errors
