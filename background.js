@@ -1,12 +1,4 @@
 
-chrome.action.onClicked.addListener((tab) => {
-  chrome.scripting.executeScript({
-    target: { tabId: tab.id },
-    files: ['content.js']
-  });
-});
-
-
 function create_alert(msg) {
   chrome.notifications.create({
     type: 'basic',
@@ -146,8 +138,17 @@ function browserInjectIf(tabId, changeInfo, tab){
          {
            
               console.log("Injecting");
-              chrome.tabs.sendMessage(tabId, { action: 'invokeFunction', functionName: 'readingEmails', token: storedToken, tabUrl: changeInfo.url });
-           } 
+              (async () => {
+                if (!tabsDict.hasOwnProperty(tabId)) {
+                  tabsDict[tabId] = true;
+                  await chrome.scripting.executeScript({
+                    target: { tabId: tab.id },
+                    files: ['content.js'],
+                  });
+                }
+                chrome.tabs.sendMessage(tabId, { action: 'invokeFunction', functionName: 'readingEmails', token: storedToken, tabUrl: changeInfo.url });
+              })();
+          } 
          }
         
      )}
