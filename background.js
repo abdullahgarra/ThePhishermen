@@ -171,7 +171,7 @@ function browserInjectIf(tabId, changeInfo, tab){
                     files: ['content.js'],
                   });
                 }
-                chrome.tabs.sendMessage(tabId, { action: 'invokeFunction', functionName: 'readingEmails', token: storedToken, tabUrl: changeInfo.url });
+                chrome.tabs.sendMessage(tabId, { action: 'invokeFunction', functionName: 'readingEmails', token: storedToken, tabUrl: changeInfo.url, sessionPreferences: preferences });
               })();
           } 
          }
@@ -198,7 +198,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === "preferencesSelections") {
     sendResponse({ message: "Preferences received!" });
     var message = request.message;
-    console.log(message);
     preferences = message;
   }
 });
