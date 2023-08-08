@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Select your Preferences</title>
+    <style>
+
+        body {
+            background-color: rgba(239, 105, 16, 0.8);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        
+
+        .popup-content {
+            background-color: #fbf9f9; /* Change this color as needed */
+            padding: 10px;
+            border-radius: 10px;
+            width: 200px; /* Adjust the value as needed */
+            margin: 0 auto; /* Center the content horizontally */
+            text-align: center; 
+        }
+
+        .popup-content label {
+            display: block;
+            text-align: left; /* Left-align the labels */
+        }
+
+        .close-button {
+        background-color: rgba(205, 170, 147, 0.8);
+        color: #000000;
+        border: none;
+        font-size: 14px;
+        cursor: pointer;
+        margin-top: 5px ;
+        margin-left: 10px;
+        border-radius: 20px; /* Rounded corners */
+ 
+      }
+
+    </style>
+</head>
+<body>
+<br>
+<div class="popup-container" id="popupContainer">
+    <div class="popup-content">
+        <h2>Custom Preferences Selection</h2>
+        <label><input type="checkbox" name="Content" checked disabled> Content detection</label>
+        <label><input type="checkbox" name="Links" checked> Links detection</label>
+        <button class="close-button" id="closeButton">Save and Close</button>
+</div>
+</div>
+<script src="preferencesPopUp.js">
+</script>
+</body>
+</html>

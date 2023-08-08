@@ -75,6 +75,11 @@ function setStoredAccessToken(token, callback) {
   });
 }
 
+function preferencesPopUp(){
+  var popupUrl = chrome.runtime.getURL("preferencesPopUp.html");
+  chrome.windows.create({ url: popupUrl, type: "popup", width: 400, height: 300 });
+}
+
 
 // User clicked on the browser action button. Check if the user is authenticated.
 function browserActionClicked(tab) {
@@ -90,6 +95,7 @@ function browserActionClicked(tab) {
         else {
           getAuthTokenInteractive();
         }
+        preferencesPopUp();
       })
       .catch(error => {
         console.error('Error checking access token validity:', error);
