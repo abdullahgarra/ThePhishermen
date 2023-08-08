@@ -1,3 +1,4 @@
+var preferences; 
 chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
     if (message.action === 'invokeFunction' && message.functionName === 'readingEmails') {
       console.log("Content, reading");
@@ -5,7 +6,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
       const token = message.token;
       const legacyThreadId = document.querySelector('[role="main"] [data-legacy-thread-id]').getAttribute('data-legacy-thread-id');
       const tabUrl = message.tabUrl; // Access the tab object
-      
+      preferences = message.sessionPreferences;
       // Call your specific function with the token value      
       if (token && legacyThreadId && tabUrl){
           await readMessageAndAnalyzeIfUnread(legacyThreadId,token);
@@ -130,9 +131,7 @@ function getMessageBody(data) {
       const body = data.payload.parts[0].parts[0].body.data;
       return decodeMessageBody(body);
     }
-  } else if (data.payload.body)
-
-  alert("Hello");
+  } 
   // Return null if the message structure is not supported or doesn't match any case
   return null;
 }
@@ -195,9 +194,15 @@ async function createAnalyzeRequestPayload(data, token) {
     }, {});
 
     const email_content = getMessageBody(data);
+    //const links = extractLinksFromContent(email_content);
 
-    const links = extractLinksFromContent(email_content);
-
+    
+    var links = [];
+    if ( preferences.includes("Links")) {
+      links = extractLinksFromContent(email_content);
+    }
+    
+    
     const emailSender = getSenderEmail(headers.from);
 
     try {

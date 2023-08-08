@@ -1,4 +1,6 @@
 
+var preferences = []
+
 function create_alert(msg) {
   chrome.notifications.create({
     type: 'basic',
@@ -75,6 +77,11 @@ function setStoredAccessToken(token, callback) {
   });
 }
 
+function preferencesPopUp(){
+  var popupUrl = chrome.runtime.getURL("preferencesPopUp.html");
+  chrome.windows.create({ url: popupUrl, type: "popup", width: 400, height: 300 });
+}
+
 
 // User clicked on the browser action button. Check if the user is authenticated.
 function browserActionClicked(tab) {
@@ -90,6 +97,7 @@ function browserActionClicked(tab) {
         else {
           getAuthTokenInteractive();
         }
+        preferencesPopUp();
       })
       .catch(error => {
         console.error('Error checking access token validity:', error);
@@ -131,7 +139,6 @@ chrome.webNavigation.onCommitted.addListener((details) => {
   if (["reload"].includes(details.transitionType) &&
       details.url.includes('mail.google.com/mail/u/') || details.url.includes('inbox/')) {
       tabsSet.delete(details.tabId);
-      console.log("HIHIHIHI");
   }
 });
 
@@ -164,7 +171,7 @@ function browserInjectIf(tabId, changeInfo, tab){
                     files: ['content.js'],
                   });
                 }
-                chrome.tabs.sendMessage(tabId, { action: 'invokeFunction', functionName: 'readingEmails', token: storedToken, tabUrl: changeInfo.url });
+                chrome.tabs.sendMessage(tabId, { action: 'invokeFunction', functionName: 'readingEmails', token: storedToken, tabUrl: changeInfo.url, sessionPreferences: preferences });
               })();
           } 
          }
@@ -186,9 +193,13 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     chrome.windows.create({ url: popupUrl, type: "popup", width: 400, height: 300 });
     sendResponse({ message: "Popup created!" });
     }
-
     //chrome.tabs.create({ url: `popup.html?message=${encodeURIComponent(message)}` });
-
+  }
+  if (request.action === "preferencesSelections") {
+    sendResponse({ message: "Preferences received!" });
+    var message = request.message;
+    preferences = message;
   }
 });
+
 
