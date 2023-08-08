@@ -1,4 +1,6 @@
 
+var preferences = []
+
 function create_alert(msg) {
   chrome.notifications.create({
     type: 'basic',
@@ -137,7 +139,6 @@ chrome.webNavigation.onCommitted.addListener((details) => {
   if (["reload"].includes(details.transitionType) &&
       details.url.includes('mail.google.com/mail/u/') || details.url.includes('inbox/')) {
       tabsSet.delete(details.tabId);
-      console.log("HIHIHIHI");
   }
 });
 
@@ -198,6 +199,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     sendResponse({ message: "Preferences received!" });
     var message = request.message;
     console.log(message);
+    preferences = message;
   }
 });
 
