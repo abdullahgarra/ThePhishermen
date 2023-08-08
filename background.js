@@ -192,9 +192,13 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     chrome.windows.create({ url: popupUrl, type: "popup", width: 400, height: 300 });
     sendResponse({ message: "Popup created!" });
     }
-
     //chrome.tabs.create({ url: `popup.html?message=${encodeURIComponent(message)}` });
-
+  }
+  if (request.action === "preferencesSelections") {
+    sendResponse({ message: "Preferences received!" });
+    var message = request.message;
+    console.log(message);
   }
 });
+
 

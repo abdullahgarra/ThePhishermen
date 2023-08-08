@@ -14,7 +14,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 selectedOptions.push(checkbox.name);
             }
         });
-        window.close();
+
+        chrome.runtime.sendMessage({ action: "preferencesSelections", message: selectedOptions }, function(response) {
+        window.close();});
+        
     });
 
 });
