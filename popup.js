@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (message.includes("ftsd")){
 
           document.getElementById('message-text4').innerHTML =`
-          <span><img src="icons/pc.svg" class="bullet-icon" alt="Bullet Icon"></span>
+          <span><img src="icons/ftsd.svg" class="bullet-icon" alt="Bullet Icon"></span>
           <span>This is the first time you have received</span>
           <br>
           <span>an email from this domain.</span>

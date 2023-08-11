@@ -63,6 +63,7 @@ function getDomainFromEmail(email) {
 // 1 if first time, 0 else
 async function getFirstTimeFromDomain(senderEmail, token) {
   const domain = getDomainFromEmail(senderEmail);
+  alert(domain);
   if (domain == null) {
     return Promise.reject(new Error('Sender email domain is null'));
   }
@@ -240,30 +241,30 @@ async function getFirstTimeFromSender(senderEmail, token) {
 
 
 async function createAnalyzeRequestPayload(data, token) {
-    // Extract the required data from the email
-    const headers = data.payload.headers.reduce((acc, header) => {
-      acc[header.name.toLowerCase()] = header.value;
-      return acc;
-    }, {});
+  try {  
+      // Extract the required data from the email
+      const headers = data.payload.headers.reduce((acc, header) => {
+        acc[header.name.toLowerCase()] = header.value;
+        return acc;
+      }, {});
 
-    const email_content = getMessageBody(data);
-    //const links = extractLinksFromContent(email_content);
+      const email_content = getMessageBody(data);
+      //const links = extractLinksFromContent(email_content);
 
-    
-    var links = [];
-    if ( preferences.includes("Links")) {
-      links = extractLinksFromContent(email_content);
-    }
-    
-    var isFirstTimeFromDomain = false;
-    if ( preferences.includes("Domain")) {
-      isFirstTimeFromDomain = await getFirstTimeFromDomain(emailSender, token);
-    }
-    
-    const emailSender = getSenderEmail(headers.from);
+      var links = [];
+      if ( preferences.includes("Links")) {
+        links = extractLinksFromContent(email_content);
+      }
 
-    try {
+      const emailSender = getSenderEmail(headers.from);
+    
+      var isFirstTimeFromDomain = false;
+      if ( preferences.includes("Domain")) {
+        isFirstTimeFromDomain = await getFirstTimeFromDomain(emailSender, token);
+      }
+    
       const isFirstTimeFromSender = await  getFirstTimeFromSender(emailSender, token);
+
       // Create the payload object
       const extractedData = {
         messageId: data.id,
