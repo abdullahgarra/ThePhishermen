@@ -60,6 +60,7 @@ function getDomainFromEmail(email) {
   return domain;
 }
 
+// 1 if first time, 0 else
 async function getFirstTimeFromDomain(senderEmail, token) {
   const domain = getDomainFromEmail(senderEmail);
   if (domain == null) {
@@ -259,6 +260,7 @@ async function createAnalyzeRequestPayload(data, token) {
 
     try {
       const isFirstTimeFromSender = await  getFirstTimeFromSender(emailSender, token);
+      const isFirstTimeFromDomain = await getFirstTimeFromDomain(emailSender, token);
       // Create the payload object
       const extractedData = {
         messageId: data.id,
@@ -268,7 +270,8 @@ async function createAnalyzeRequestPayload(data, token) {
         content: data.snippet,
         decoded_content: email_content,
         links: links,
-        counter_from_sender: isFirstTimeFromSender
+        counter_from_sender: isFirstTimeFromSender,
+        counter_from_domain: isFirstTimeFromDomain
       };
       return JSON.stringify(extractedData);
     }
