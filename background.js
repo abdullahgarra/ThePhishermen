@@ -46,7 +46,7 @@ function handleAuthToken(token) {
     console.error(chrome.runtime.lastError);
   } else {
     setStoredAccessToken(token, function() {
-      create_alert("Hi, welcome! All logged in!");
+      //create_alert("Hi, welcome! All logged in!");
       chrome.action.setIcon({ path: 'icons/green_icon.png' });
     });
   }
@@ -91,7 +91,7 @@ function browserActionClicked(tab) {
       checkAccessTokenValidity(storedToken)
       .then(isValid => {
         if (isValid) {
-            create_alert("Hi, welcome back! Already logged in");
+            //create_alert("Hi, welcome back! Already logged in");
             chrome.action.setIcon({ path: 'icons/green_icon.png' });
         }
         else {
