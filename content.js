@@ -63,7 +63,6 @@ function getDomainFromEmail(email) {
 // 1 if first time, 0 else
 async function getFirstTimeFromDomain(senderEmail, token) {
   const domain = getDomainFromEmail(senderEmail);
-  alert(domain);
   if (domain == null) {
     return Promise.reject(new Error('Sender email domain is null'));
   }
