@@ -41,6 +41,36 @@
  
       }
 
+      .tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+  }
+
+  /* Style for the tooltip text */
+  .tooltip .tooltiptext {
+    visibility: hidden;
+    width: 150px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s, visibility 0.3s;
+  }
+
+  /* Show tooltip text on hover */
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+  }
+
     </style>
 </head>
 <body>
@@ -51,10 +81,9 @@
         <br>
         <h4 style="display: inline;">for new sessions</h4>
         <br><br>
-        <label><input type="checkbox" name="Content" checked disabled> Content detection</label>
-        <label><input type="checkbox" name="Links" checked> Links detection</label>
-        <label><input type="checkbox" name="Domain" checked> New Domains detection</label>
-
+        <label><input type="checkbox" name="Content" checked disabled><span class="tooltip"><span class="tooltiptext">Alerting when a new message is received with a suspicious content</span>Content detection</span></label>
+        <label><input type="checkbox" name="Links" checked ><span class="tooltip"><span class="tooltiptext">Alerting when a new message is received with at least one suspicious link</span>Links detection</span></label>
+        <label><input type="checkbox" name="Domain" checked ><span class="tooltip"><span class="tooltiptext">Alerting when a new message is received from an unknown domain</span>unknown Domains detection</span></label>
         <br>
         <button class="close-button" id="closeButton">Save and Close</button>
 </div>
