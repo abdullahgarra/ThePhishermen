@@ -255,12 +255,15 @@ async function createAnalyzeRequestPayload(data, token) {
       links = extractLinksFromContent(email_content);
     }
     
+    var isFirstTimeFromDomain = false;
+    if ( preferences.includes("Domain")) {
+      isFirstTimeFromDomain = await getFirstTimeFromDomain(emailSender, token);
+    }
     
     const emailSender = getSenderEmail(headers.from);
 
     try {
       const isFirstTimeFromSender = await  getFirstTimeFromSender(emailSender, token);
-      const isFirstTimeFromDomain = await getFirstTimeFromDomain(emailSender, token);
       // Create the payload object
       const extractedData = {
         messageId: data.id,
