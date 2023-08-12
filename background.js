@@ -46,8 +46,10 @@ function handleAuthToken(token) {
     console.error(chrome.runtime.lastError);
   } else {
     setStoredAccessToken(token, function() {
-      create_alert("Hi, welcome! All logged in!");
+      //create_alert("Hi, welcome! All logged in!");
       chrome.action.setIcon({ path: 'icons/green_icon.png' });
+      chrome.action.setTitle({ title: "Click here to change your preferences" });
+
     });
   }
 }
@@ -91,8 +93,10 @@ function browserActionClicked(tab) {
       checkAccessTokenValidity(storedToken)
       .then(isValid => {
         if (isValid) {
-            create_alert("Hi, welcome back! Already logged in");
+            //create_alert("Hi, welcome back! Already logged in");
             chrome.action.setIcon({ path: 'icons/green_icon.png' });
+            // Change the extension title
+            chrome.action.setTitle({ title: "Click here to change your preferences" });
         }
         else {
           getAuthTokenInteractive();
@@ -188,9 +192,9 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === "createPopup") {
     var message = request.message; // Accessing the message parameter
     // Perform actions with the message parameter
-    if (message.includes("fts") || message.includes("pl")){
+    if (message.includes("ftsd") ||message.includes("fts") || message.includes("pl")){
     var popupUrl = chrome.runtime.getURL("popup.html") + `?message=${encodeURIComponent(message)}`;
-    chrome.windows.create({ url: popupUrl, type: "popup", width: 400, height: 300 });
+    chrome.windows.create({ url: popupUrl, type: "popup", width: 400, height: 350 });
     sendResponse({ message: "Popup created!" });
     }
     //chrome.tabs.create({ url: `popup.html?message=${encodeURIComponent(message)}` });

@@ -45,6 +45,59 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 }
 
 
+// Made by chatGPT
+function getDomainFromEmail(email) {
+  // Split the email address by "@" symbol
+  const parts = email.split('@');
+  
+  // Check if the email has the correct format
+  if (parts.length !== 2) {
+    return null; // Invalid email format
+  }
+  
+  // The second part after "@" is the domain
+  const domain = parts[1];
+  return domain;
+}
+
+// 1 if first time, 0 else
+async function getFirstTimeFromDomain(senderEmail, token) {
+  const domain = getDomainFromEmail(senderEmail);
+  if (domain == null) {
+    return Promise.reject(new Error('Sender email domain is null'));
+  }
+
+  // Use cache to find emails from that sender
+  chrome.storage.local.get(`${domain}`, function(result) {
+  
+  // If sender email domain is in cache, that means we recived an email from him
+  if (result[`${domain}`]) {
+      return false;
+    }
+  });
+  
+
+  const url = `https://www.googleapis.com/gmail/v1/users/me/messages?q=from:${domain}`;
+
+  try {
+    const response = await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = await response.json();
+    const resultSize = data.resultSizeEstimate;
+    // Setting the cache
+    chrome.storage.local.set({ [`${domain}`]: true });
+    return resultSize === 1;
+  } catch (error) {
+    // Handle any errors
+    console.log(error);
+    return -1;
+  }
+}
+
+
 function showLoadingPopuInClass(className = '.gE.iv.gt') {
   
   const imageSrc = 'https://cdn.pixabay.com/animation/2022/11/13/04/07/04-07-35-655_512.gif';
@@ -187,26 +240,30 @@ async function getFirstTimeFromSender(senderEmail, token) {
 
 
 async function createAnalyzeRequestPayload(data, token) {
-    // Extract the required data from the email
-    const headers = data.payload.headers.reduce((acc, header) => {
-      acc[header.name.toLowerCase()] = header.value;
-      return acc;
-    }, {});
+  try {  
+      // Extract the required data from the email
+      const headers = data.payload.headers.reduce((acc, header) => {
+        acc[header.name.toLowerCase()] = header.value;
+        return acc;
+      }, {});
 
-    const email_content = getMessageBody(data);
-    //const links = extractLinksFromContent(email_content);
+      const email_content = getMessageBody(data);
+      //const links = extractLinksFromContent(email_content);
 
-    
-    var links = [];
-    if ( preferences.includes("Links")) {
-      links = extractLinksFromContent(email_content);
-    }
-    
-    
-    const emailSender = getSenderEmail(headers.from);
+      var links = [];
+      if ( preferences.includes("Links")) {
+        links = extractLinksFromContent(email_content);
+      }
 
-    try {
+      const emailSender = getSenderEmail(headers.from);
+    
+      var isFirstTimeFromDomain = false;
+      if ( preferences.includes("Domain")) {
+        isFirstTimeFromDomain = await getFirstTimeFromDomain(emailSender, token);
+      }
+    
       const isFirstTimeFromSender = await  getFirstTimeFromSender(emailSender, token);
+
       // Create the payload object
       const extractedData = {
         messageId: data.id,
@@ -216,7 +273,8 @@ async function createAnalyzeRequestPayload(data, token) {
         content: data.snippet,
         decoded_content: email_content,
         links: links,
-        counter_from_sender: isFirstTimeFromSender
+        counter_from_sender: isFirstTimeFromSender,
+        counter_from_domain: isFirstTimeFromDomain
       };
       return JSON.stringify(extractedData);
     }

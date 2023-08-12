@@ -5,54 +5,58 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Apply different background styles based on the message
     // if first time sending / phishing links
-    if (message.includes("fts") || message.includes("pl") ) {
+    if (message.includes("ftsd") || message.includes("fts") || message.includes("pl") ) {
         document.body.classList.add('warning');
         document.getElementById('message-heading').textContent = 'Warning!';
-        if (message.includes("fts")){
+        if (message.includes("fts") && !(message.includes("ftsd"))) {
             document.getElementById('message-text1').innerHTML =`
             <span><img src="icons/fts1.svg" class="bullet-icon" alt="Bullet Icon"></span>
+            <span class="tooltip">
+              <span>This is the first time you have received</span>
+              <br>
+              <span>an email from this sender.
+              <span class="tooltiptext"> To detect this sender as a new sender again, erase this email after reading it.   </span>
+              </span>
+          `;
+        }
+        else if (message.includes("ftsd")) {
+          document.getElementById('message-text1').innerHTML =`
+          <span><img src="icons/ftsd.svg" class="bullet-icon" alt="Bullet Icon"></span>
+          <span class="tooltip">
             <span>This is the first time you have received</span>
             <br>
-            <span>an email from this sender.</span>
-          `;
+            <span>an email from this domain.
+            <span class="tooltiptext"> To detect this domain as a new domain again, erase this email after reading it.   </span>
+            </span>
+        `;
         }
-        else{
-            document.getElementById('message-text1').style.display = "none"
-
-        }
+        else document.getElementById('message-text1').style.display = "none"
         if (message.includes("pl")){
-
             document.getElementById('message-text2').innerHTML =`
             <span><img src="icons/pl.svg" class="bullet-icon" alt="Bullet Icon"></span>
-            <span>This email contains links that are</span>
-            <br>
-            <span>identified as phishing.</span>
+            <span class="tooltip">
+              <span>This email contains links that are</span>
+              <br>
+              <span>identified as phishing.
+              <span class="tooltiptext"> Be carful when clicking on links from this email.</span>
+              </span>
           `;
         }
-        else{
-            document.getElementById('message-text2').style.display = "none"
-
-        }
+        else document.getElementById('message-text2').style.display = "none"
         if (message.includes("pc")){
-
             document.getElementById('message-text3').innerHTML =`
             <span><img src="icons/pc.svg" class="bullet-icon" alt="Bullet Icon"></span>
-            <span>The content of this email raises</span>
-            <br>
-            <span>suspicion of phishing.</span>
+            <span class="tooltip">
+              <span>The content of this email raises</span>
+              <br>
+              <span>suspicion of phishing.
+              <span class="tooltiptext"> Be carful when replaying to this email.</span>
+              </span>
           `;
-
         }
-        else{
-            document.getElementById('message-text3').style.display = "none"
-
-        }
-        
+        else document.getElementById('message-text3').style.display = "none"        
         document.getElementById('message-image').src = 'icons/warning-icon.svg';
-
-
-      } else {
-        
+      } else {    
         /*
         document.body.classList.add('all_good');
         document.getElementById('message-heading').textContent = 'Great news!';

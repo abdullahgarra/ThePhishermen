@@ -46,7 +46,7 @@ def analyze():
     emailObj = Email.from_json(request.get_data())
     
     # Calculate the phishing prob based on the content
-    msg = create_analyze_phishing(emailObj.decoded_content, emailObj.counter_from_sender, emailObj.links)          
+    msg = create_analyze_phishing(emailObj.decoded_content, emailObj.counter_from_sender, emailObj.counter_from_domain, emailObj.links)          
     analysis_result = {'Answer': msg}
 
     print(analysis_result)
@@ -80,7 +80,7 @@ def analyze_phishing_links(links):
 
 
 # Analyze the probability to be phishing
-def create_analyze_phishing(content,counter_from_sender, links):
+def create_analyze_phishing(content,counter_from_sender,counter_from_domain, links):
 
 
     bad_links = analyze_phishing_links(links)
@@ -89,12 +89,16 @@ def create_analyze_phishing(content,counter_from_sender, links):
 
     # pc = phishing content
     # pl = phishing links
-    # fts = first time sending
+    # fts = first time sender email 
+    # ftsd = first time sender domain 
 
     res = [] 
 
     # We only care if it is the first time receving from sender / gotten phishing emails
-    if counter_from_sender == True:
+    if counter_from_domain == True:
+        res.append("fts")
+        res.append("ftsd")
+    elif counter_from_sender == True:
         res.append("fts")
     if len(bad_links) > 0:
         res.append("pl")
