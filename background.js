@@ -1,5 +1,5 @@
 
-var preferences = []
+var preferences = ["Links", "Domain"]
 
 function create_alert(msg) {
   chrome.notifications.create({
@@ -79,9 +79,9 @@ function setStoredAccessToken(token, callback) {
   });
 }
 
-function preferencesPopUp(){
-  var popupUrl = chrome.runtime.getURL("preferencesPopUp.html");
-  chrome.windows.create({ url: popupUrl, type: "popup", width: 400, height: 300 });
+function preferencesPopUp(preferences){
+  var popupUrl = chrome.runtime.getURL("preferencesPopUp.html") + `?message=${encodeURIComponent(preferences)}`;
+  chrome.windows.create({ url: popupUrl, type: "popup", width: 400, height: 300});
 }
 
 
@@ -101,7 +101,7 @@ function browserActionClicked(tab) {
         else {
           getAuthTokenInteractive();
         }
-        preferencesPopUp();
+        preferencesPopUp(preferences);
       })
       .catch(error => {
         console.error('Error checking access token validity:', error);
