@@ -194,7 +194,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     // Perform actions with the message parameter
     if (message.includes("ftsd") ||message.includes("fts") || message.includes("pl")){
     var popupUrl = chrome.runtime.getURL("popup.html") + `?message=${encodeURIComponent(message)}`;
-    chrome.windows.create({ url: popupUrl, type: "popup", width: 400, height: 300 });
+    chrome.windows.create({ url: popupUrl, type: "popup", width: 400, height: 350 });
     sendResponse({ message: "Popup created!" });
     }
     //chrome.tabs.create({ url: `popup.html?message=${encodeURIComponent(message)}` });
