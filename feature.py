@@ -348,22 +348,13 @@ class ReducedFeatureExtraction:
             pass
 
 
-        self.features.append(self.Hppts())
         self.features.append(self.AnchorURL())
+        self.features.append(self.Hppts())
         self.features.append(self.LinksInScriptTags())
+        self.features.append(self.prefixSuffix())
         self.features.append(self.WebsiteTraffic())
-        self.features.append(self.prefixSuffix());
 
-    # 1.UsingIp
     
-    # 2.longUrl
-    
-    # 3.shortUrl
-    
-    # 4.Symbol@
-
-    # 5.Redirecting//
-
     # 6.prefixSuffix
     def prefixSuffix(self):
         try:
@@ -373,8 +364,6 @@ class ReducedFeatureExtraction:
             return 1
         except:
             return -1
-    
-    # 7.SubDomains
     
     # 8.HTTPS
     def Hppts(self):
@@ -386,16 +375,6 @@ class ReducedFeatureExtraction:
         except:
             return 1
 
-    # 9.DomainRegLen
-    
-    # 10. Favicon
-    
-    # 11. NonStdPort
-
-    # 12. HTTPSDomainURL
-   
-    # 13. RequestURL
-    
     # 14. AnchorURL
     def AnchorURL(self):
         try:
@@ -449,25 +428,6 @@ class ReducedFeatureExtraction:
         except:
             return -1
 
-    # 16. ServerFormHandler
-    
-    # 17. InfoEmail
-    
-    # 18. AbnormalURL
-
-    # 19. WebsiteForwarding
-
-    # 20. StatusBarCust
-
-    # 21. DisableRightClick
-
-    # 22. UsingPopupWindow
-    
-    # 23. IframeRedirection
-    
-    # 24. AgeofDomain
-    
-    # 25. DNSRecording    
     
     # 26. WebsiteTraffic   
     def WebsiteTraffic(self):
@@ -478,14 +438,6 @@ class ReducedFeatureExtraction:
             return 0
         except :
             return -1
-
-    # 27. PageRank
-
-    # 28. GoogleIndex
-    
-    # 29. LinksPointingToPage
-    
-    # 30. StatsReport
 
     def getFeaturesList(self):
         return self.features

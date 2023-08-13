@@ -14,8 +14,8 @@ import threading
 import pickle
 
 # Specify the path to the pickle file containing the trained model
-model_path = 'naive_bayes_model.pkl'
-
+#model_path = 'naive_bayes_model.pkl'
+model_path = 'svm_model'
 
 # Load the model from the pickle file
 with open(model_path, 'rb') as file:
