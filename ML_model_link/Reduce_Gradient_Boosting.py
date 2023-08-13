@@ -28,10 +28,9 @@ confusion = confusion_matrix(y_test, y_pred)
 
 print("Accuracy:", accuracy)
 
-if accuracy > 0.92:
+if accuracy > 0.93:
     with open("reduce_gradient_boosting_model.pkl", "wb") as f:
         pickle.dump((gb_classifier), f)
-        print("Shila")
 print('\nAccuracy:', round(accuracy, 5))
 
 tn, fp, fn, tp = confusion_matrix(y_test, y_pred).ravel()

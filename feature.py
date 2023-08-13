@@ -323,3 +323,169 @@ class FeatureExtraction:
 
     def getFeaturesList(self):
         return self.features
+
+
+class ReducedFeatureExtraction:
+    features = []
+    def __init__(self,url):
+        self.features = []
+        self.url = url
+        self.domain = ""
+        self.urlparse = ""
+        self.response = ""
+        self.soup = ""
+
+        try:
+            self.response = requests.get(url)
+            self.soup = BeautifulSoup(response.text, 'html.parser')
+        except:
+            pass
+
+        try:
+            self.urlparse = urlparse(url)
+            self.domain = self.urlparse.netloc
+        except:
+            pass
+
+
+        self.features.append(self.Hppts())
+        self.features.append(self.AnchorURL())
+        self.features.append(self.LinksInScriptTags())
+        self.features.append(self.WebsiteTraffic())
+        self.features.append(self.prefixSuffix());
+
+    # 1.UsingIp
+    
+    # 2.longUrl
+    
+    # 3.shortUrl
+    
+    # 4.Symbol@
+
+    # 5.Redirecting//
+
+    # 6.prefixSuffix
+    def prefixSuffix(self):
+        try:
+            match = re.findall('\-', self.domain)
+            if match:
+                return -1
+            return 1
+        except:
+            return -1
+    
+    # 7.SubDomains
+    
+    # 8.HTTPS
+    def Hppts(self):
+        try:
+            https = self.urlparse.scheme
+            if 'https' in https:
+                return 1
+            return -1
+        except:
+            return 1
+
+    # 9.DomainRegLen
+    
+    # 10. Favicon
+    
+    # 11. NonStdPort
+
+    # 12. HTTPSDomainURL
+   
+    # 13. RequestURL
+    
+    # 14. AnchorURL
+    def AnchorURL(self):
+        try:
+            i,unsafe = 0,0
+            for a in self.soup.find_all('a', href=True):
+                if "#" in a['href'] or "javascript" in a['href'].lower() or "mailto" in a['href'].lower() or not (url in a['href'] or self.domain in a['href']):
+                    unsafe = unsafe + 1
+                i = i + 1
+
+            try:
+                percentage = unsafe / float(i) * 100
+                if percentage < 31.0:
+                    return 1
+                elif ((percentage >= 31.0) and (percentage < 67.0)):
+                    return 0
+                else:
+                    return -1
+            except:
+                return -1
+
+        except:
+            return -1
+
+    # 15. LinksInScriptTags
+    def LinksInScriptTags(self):
+        try:
+            i,success = 0,0
+        
+            for link in self.soup.find_all('link', href=True):
+                dots = [x.start(0) for x in re.finditer('\.', link['href'])]
+                if self.url in link['href'] or self.domain in link['href'] or len(dots) == 1:
+                    success = success + 1
+                i = i+1
+
+            for script in self.soup.find_all('script', src=True):
+                dots = [x.start(0) for x in re.finditer('\.', script['src'])]
+                if self.url in script['src'] or self.domain in script['src'] or len(dots) == 1:
+                    success = success + 1
+                i = i+1
+
+            try:
+                percentage = success / float(i) * 100
+                if percentage < 17.0:
+                    return 1
+                elif((percentage >= 17.0) and (percentage < 81.0)):
+                    return 0
+                else:
+                    return -1
+            except:
+                return 0
+        except:
+            return -1
+
+    # 16. ServerFormHandler
+    
+    # 17. InfoEmail
+    
+    # 18. AbnormalURL
+
+    # 19. WebsiteForwarding
+
+    # 20. StatusBarCust
+
+    # 21. DisableRightClick
+
+    # 22. UsingPopupWindow
+    
+    # 23. IframeRedirection
+    
+    # 24. AgeofDomain
+    
+    # 25. DNSRecording    
+    
+    # 26. WebsiteTraffic   
+    def WebsiteTraffic(self):
+        try:
+            rank = BeautifulSoup(urllib.request.urlopen("http://data.alexa.com/data?cli=10&dat=s&url=" + url).read(), "xml").find("REACH")['RANK']
+            if (int(rank) < 100000):
+                return 1
+            return 0
+        except :
+            return -1
+
+    # 27. PageRank
+
+    # 28. GoogleIndex
+    
+    # 29. LinksPointingToPage
+    
+    # 30. StatsReport
+
+    def getFeaturesList(self):
+        return self.features
