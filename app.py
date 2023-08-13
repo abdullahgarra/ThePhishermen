@@ -3,7 +3,7 @@ import logging
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import ssl
-from feature import FeatureExtraction
+from feature import FeatureExtraction, ReducedFeatureExtraction
 import numpy as np
 import warnings
 import time
@@ -26,10 +26,14 @@ file.close()
 
 
 model_path = 'gradient_boosting_model.pkl'
+reduced_model_path = 'reduce_gradient_boosting_model.pkl'
 
 # Load the model from the pickle file
 with open(model_path, 'rb') as file:
     gbc = pickle.load(file)
+file.close()
+with open(reduced_model_path, 'rb') as file:
+    rgbc = pickle.load(file)
 file.close()
 
 
@@ -46,7 +50,7 @@ def analyze():
     emailObj = Email.from_json(request.get_data())
     
     # Calculate the phishing prob based on the content
-    msg = create_analyze_phishing(emailObj.decoded_content, emailObj.counter_from_sender, emailObj.counter_from_domain, emailObj.links)          
+    msg = create_analyze_phishing(emailObj.preferences, emailObj.decoded_content, emailObj.counter_from_sender, emailObj.counter_from_domain, emailObj.links)          
     analysis_result = {'Answer': msg}
 
     print(analysis_result)
@@ -77,13 +81,27 @@ def analyze_phishing_links(links):
             bad_links.append(link)
     return bad_links
        
-
+def reduced_analyze_phishing_links(links):
+    bad_links = []
+    for link in links:
+        obj = ReducedFeatureExtraction(link) 
+        x = np.array(obj.getFeaturesList()).reshape(1,5) 
+        y_pred =rgbc.predict(x)[0]
+        # 1 is phishing, 0 is non phishing
+        if y_pred == 1:
+            bad_links.append(link)
+    return bad_links
 
 # Analyze the probability to be phishing
-def create_analyze_phishing(content,counter_from_sender,counter_from_domain, links):
+def create_analyze_phishing(preferences, content,counter_from_sender,counter_from_domain, links):
 
-
-    bad_links = analyze_phishing_links(links)
+    if "regular_links" in preferences:
+        bad_links = analyze_phishing_links(links)
+    elif "reduced_links" in preferences:
+        bad_links = reduced_analyze_phishing_links(links)
+    else:
+        bad_links = []
+        print("")
 
     predicted_label_content = analyze_phishing_content(content)
 

@@ -1,5 +1,6 @@
 
-var preferences = ["Links", "Domain"]
+var preferences = []
+//["Links", "Domain"]
 
 function create_alert(msg) {
   chrome.notifications.create({

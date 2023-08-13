@@ -248,12 +248,8 @@ async function createAnalyzeRequestPayload(data, token) {
       }, {});
 
       const email_content = getMessageBody(data);
-      //const links = extractLinksFromContent(email_content);
 
-      var links = [];
-      if ( preferences.includes("Links")) {
-        links = extractLinksFromContent(email_content);
-      }
+      const links = extractLinksFromContent(email_content);
 
       const emailSender = getSenderEmail(headers.from);
     
@@ -266,11 +262,7 @@ async function createAnalyzeRequestPayload(data, token) {
 
       // Create the payload object
       const extractedData = {
-        messageId: data.id,
-        subject: headers.subject,
-        time: headers.date,
-        sender_email: headers.from,
-        content: data.snippet,
+        preferences: preferences,
         decoded_content: email_content,
         links: links,
         counter_from_sender: isFirstTimeFromSender,
