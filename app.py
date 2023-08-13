@@ -6,8 +6,7 @@ import ssl
 from feature import FeatureExtraction, ReducedFeatureExtraction
 import numpy as np
 import warnings
-import time
-import threading
+import joblib
 
 
 # ML
@@ -15,15 +14,17 @@ import pickle
 
 # Specify the path to the pickle file containing the trained model
 #model_path = 'naive_bayes_model.pkl'
-model_path = 'svm_model'
-
+# Load the model from the pickle file
+model_path = 'svm_model.pkl'
 # Load the model from the pickle file
 with open(model_path, 'rb') as file:
-    loaded_model = pickle.load(file)
-    vectorizer = loaded_model[1]
-    model = loaded_model[0]
+    loaded_model_info = joblib.load(model_path)
+    # Load the model from the pickle file
+    loaded_svm = loaded_model_info['svm_model']
+    vectorizer = loaded_model_info['vectorizer']
+    best_threshold = loaded_model_info['best_threshold']
+    beta = loaded_model_info['beta']
 file.close()
-
 
 model_path = 'gradient_boosting_model.pkl'
 reduced_model_path = 'reduce_gradient_boosting_model.pkl'
@@ -60,14 +61,12 @@ def analyze_phishing_content(content):
     #preprocessed_content = preprocess(content)  # Preprocess the question using your preprocessing steps
     vectorized_content = vectorizer.transform([content])  # Transform the question into a numerical representation
 
-    # Classify the question
-    predicted_label = model.predict(vectorized_content)[0]  # Get the predicted class label
-    probability_scores = model.predict_proba(vectorized_content)[0]  # Get the probability scores for each class
+    y_scores = loaded_svm.predict_proba(vectorized_content)[:, 1]
 
-    # Print the predicted label and probability scores
-    #print("Predicted Label:", predicted_label)
-    ##print("Probability Scores:", probability_scores)
-    return predicted_label
+    # Apply the optimized threshold to make predictions
+    y_pred = (y_scores >= best_threshold).astype(int)
+    print(y_pred)
+    return y_pred
 
 def analyze_phishing_links(links):
 
