@@ -4,6 +4,17 @@ document.addEventListener('DOMContentLoaded', function() {
     const closeButton = document.getElementById("closeButton");
     const urlParams = new URLSearchParams(window.location.search);
     
+    const linksCheckbox = document.getElementById("Links");
+    const radioContainer = document.getElementById("radioContainer");
+
+    linksCheckbox.addEventListener("change", function() {
+        if (linksCheckbox.checked) {
+            radioContainer.classList.remove("hidden");
+        } else {
+            radioContainer.classList.add("hidden");
+        }
+    });
+
     // Preferences
     const message = urlParams.get('message');
 
@@ -26,6 +37,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 selectedOptions.push(checkbox.name);
             }
         });
+
+        const radios = popupContainer.querySelectorAll('input[type="radio"]');
+        radios.forEach(radio => {
+            if (radio.checked) {
+                selectedOptions.push(radio.name);
+            }
+        });        
 
         chrome.runtime.sendMessage({ action: "preferencesSelections", message: selectedOptions }, function(response) {
         window.close();});

@@ -248,12 +248,8 @@ async function createAnalyzeRequestPayload(data, token) {
       }, {});
 
       const email_content = getMessageBody(data);
-      //const links = extractLinksFromContent(email_content);
 
-      var links = [];
-      if ( preferences.includes("Links")) {
-        links = extractLinksFromContent(email_content);
-      }
+      var links = extractLinksFromContent(email_content);
 
       const emailSender = getSenderEmail(headers.from);
     
