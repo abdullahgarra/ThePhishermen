@@ -90,9 +90,11 @@
         
         <div id="radioContainer" class="hidden">
           <label for="checkpoint1"><input type="radio" id="regular_links" name="link_type" value="1">
-            Regular links detection</label>
+            <span class="tooltip"><span class="tooltiptext">Using the full model for detection</span>
+            Regular Links Detection</label></span>
           <label for="checkpoint2"><input type="radio" id="reduced_links" name="link_type" value="2">
-            reduced links detection</label>
+            <span class="tooltip"><span class="tooltiptext">Using a weaker model for detection</span>
+            Reduced Links Detection</label></span>
         </div>
 
         <label><input type="checkbox" id="Domain" name="Domain" checked ><span class="tooltip"><span class="tooltiptext">Alerting when a new message is received from an unknown domain</span>unknown Domains detection</span></label>
