@@ -26,10 +26,14 @@ file.close()
 
 
 model_path = 'gradient_boosting_model.pkl'
+reduced_model_path = 'reduce_gradient_boosting_model.pkl'
 
 # Load the model from the pickle file
 with open(model_path, 'rb') as file:
     gbc = pickle.load(file)
+file.close()
+with open(reduced_model_path, 'rb') as file:
+    rgbc = pickle.load(file)
 file.close()
 
 
@@ -80,9 +84,9 @@ def analyze_phishing_links(links):
 def reduced_analyze_phishing_links(links):
     bad_links = []
     for link in links:
-        obj = ReducedFeatureExtraction(link)
-        x = np.array(obj.getFeaturesList()).reshape(1,14) 
-        y_pred =gbc.predict(x)[0]
+        obj = ReducedFeatureExtraction(link) 
+        x = np.array(obj.getFeaturesList()).reshape(1,5) 
+        y_pred =rgbc.predict(x)[0]
         # 1 is phishing, 0 is non phishing
         if y_pred == 1:
             bad_links.append(link)
@@ -97,7 +101,8 @@ def create_analyze_phishing(preferences, content,counter_from_sender,counter_fro
         bad_links = reduced_analyze_phishing_links(links)
     else:
         bad_links = []
-             
+        print("")
+
     predicted_label_content = analyze_phishing_content(content)
 
     # pc = phishing content

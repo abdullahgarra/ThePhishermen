@@ -41,13 +41,19 @@ document.addEventListener('DOMContentLoaded', function() {
         const radios = popupContainer.querySelectorAll('input[type="radio"]');
         radios.forEach(radio => {
             if (radio.checked) {
-                selectedOptions.push(radio.name);
+                selectedOptions.push(radio.id);
             }
         });        
 
-        chrome.runtime.sendMessage({ action: "preferencesSelections", message: selectedOptions }, function(response) {
-        window.close();});
-        
+        if (selectedOptions.includes("Links") &&
+            !selectedOptions.includes("reduced_links") &&
+            !selectedOptions.includes("regular_links")
+            ) {
+            alert("Please select links option, or uncheck the links checkbox");
+        } else {
+            chrome.runtime.sendMessage({ action: "preferencesSelections", message: selectedOptions }, function(response) {
+            window.close();});
+        }
     });
 
 });

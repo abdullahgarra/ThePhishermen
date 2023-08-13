@@ -249,7 +249,7 @@ async function createAnalyzeRequestPayload(data, token) {
 
       const email_content = getMessageBody(data);
 
-      var links = extractLinksFromContent(email_content);
+      const links = extractLinksFromContent(email_content);
 
       const emailSender = getSenderEmail(headers.from);
     
