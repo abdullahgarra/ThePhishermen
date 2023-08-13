@@ -12,6 +12,12 @@ document.addEventListener('DOMContentLoaded', function() {
             radioContainer.classList.remove("hidden");
         } else {
             radioContainer.classList.add("hidden");
+            const radios = popupContainer.querySelectorAll('input[type="radio"]');
+            radios.forEach(radio => {
+                if (radio.checked) {
+                    radio.checked = false;
+                }
+            }); 
         }
     });
 
