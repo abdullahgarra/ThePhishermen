@@ -253,11 +253,8 @@ async function createAnalyzeRequestPayload(data, token) {
 
       const emailSender = getSenderEmail(headers.from);
     
-      var isFirstTimeFromDomain = false;
-      if ( preferences.includes("Domain")) {
-        isFirstTimeFromDomain = await getFirstTimeFromDomain(emailSender, token);
-      }
-    
+      const isFirstTimeFromDomain = await getFirstTimeFromDomain(emailSender, token);
+      
       const isFirstTimeFromSender = await  getFirstTimeFromSender(emailSender, token);
 
       // Create the payload object
