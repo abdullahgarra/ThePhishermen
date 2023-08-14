@@ -5,7 +5,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Apply different background styles based on the message
     // if first time sending / phishing links
-    if (message.includes("ftsd") || message.includes("fts") || message.includes("pl") ) {
+    if (message.includes("ftsd") || message.includes("fts") || message.includes("pl") ||
+        message.includes("bg") || message.includes("cdg"))
+      {
         document.body.classList.add('warning');
         document.getElementById('message-heading').textContent = 'Warning!';
         if (message.includes("fts") && !(message.includes("ftsd"))) {
@@ -54,7 +56,30 @@ document.addEventListener('DOMContentLoaded', function() {
               </span>
           `;
         }
-        else document.getElementById('message-text3').style.display = "none"        
+        else document.getElementById('message-text3').style.display = "none"  
+        if (message.includes("bg")){
+          document.getElementById('message-text4').innerHTML =`
+          <span><img src="icons/g.png" class="bullet-icon" alt="Bullet Icon"></span>
+          <span class="tooltip">
+            <span>The email contains several instances</span>
+            <br>
+            <span>of poor grammar incorrect punctuation."
+            <span class="tooltiptext"> Be carful when replaying to this email.</span>
+            </span>
+        `;
+        }
+        else if (message.includes("cdg")){
+          document.getElementById('message-text4').innerHTML =`
+          <span><img src="icons/g.png" class="bullet-icon" alt="Bullet Icon"></span>
+          <span class="tooltip">
+            <span>Can't determine if the email has bad</span>
+            <br>
+            <span>grammar due to the complexity of the text."
+            <span class="tooltiptext"> Be carful when replaying to this email.</span>
+            </span>
+        `;
+        }
+        else document.getElementById('message-text4').style.display = "none"  
         document.getElementById('message-image').src = 'icons/warning-icon.svg';
       } else {    
         /*
