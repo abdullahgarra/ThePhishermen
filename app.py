@@ -5,12 +5,21 @@ from flask_cors import CORS
 import ssl
 from feature import FeatureExtraction, ReducedFeatureExtraction
 import numpy as np
-import warnings
 import joblib
-
+from happytransformer import HappyTextToText, TTSettings
+import nltk
+from nltk.corpus import stopwords
+from nltk.tokenize import sent_tokenize
 
 # ML
 import pickle
+
+# Tokenize and preprocess the sentences
+nltk.download("punkt")
+nltk.download("stopwords")
+
+stop_words = set(stopwords.words("english"))
+
 
 # Specify the path to the pickle file containing the trained model
 model_path = 'naive_bayes_model.pkl'
@@ -45,6 +54,9 @@ file.close()
 with open(reduced_model_path, 'rb') as file:
     rgbc = pickle.load(file)
 file.close()
+
+happy_tt = HappyTextToText("T5", "vennify/t5-base-grammar-correction")
+args = TTSettings(num_beams=5, min_length=1)
 
 
 app = Flask(__name__)
@@ -125,6 +137,8 @@ def create_analyze_phishing(preferences, content,counter_from_sender,counter_fro
 
     predicted_label_content = analyze_phishing_content(content)
 
+    predicted_label_grammar = analyze_grammer(content)
+
     # pc = phishing content
     # pl = phishing links
     # fts = first time sender email 
@@ -146,8 +160,48 @@ def create_analyze_phishing(preferences, content,counter_from_sender,counter_fro
     # TODO: maybe pass a dict so we can pass the bad links as well?
     return res 
 
+# Token indices sequence length is longer than the specified 
+# maximum sequence length for this model (4708 > 512)
+# Therefor need to divide into sentences
+def calculate_words_arr(content):
+    # Replace semicolons with periods
+    # sent_tokenize doesn't split with ;
+    content = content.replace(';', '.')
+    sentences = sent_tokenize(content)
+    words = set()
+    for idx, sentence in enumerate(sentences, start=1):
+        if (len(sentence) > 512):
+            return {}
+        else:
+            result = happy_tt.generate_text("grammar: " + sentence, args=args)        
+            tmp_words1 = preprocess_sentence(result.text)
+            words.update(tmp_words1)
+    return words
 
-if __name__ == '__main__':
+# Done with chatGPT
+# Don't care for commas
+def analyze_grammer(content):
+    
+    # Extract the words
+    preprocessed_words1 = calculate_words_arr(content)
+    if preprocessed_words1 == {}:
+        return -1
+    preprocessed_words2 = preprocess_sentence(content)
+    # Calculate Jaccard similarity, to find similarity
+    intersection_val = len(preprocessed_words1.intersection(preprocessed_words2))
+    union_val = len(preprocessed_words1.union(preprocessed_words2))
+    if union_val == 0:
+        return -1
+    jaccard_similarity = intersection_val / union_val
+    return jaccard_similarity
+
+
+def preprocess_sentence(text):
+    words = nltk.word_tokenize(text.lower())
+    words = [word for word in words if word.isalnum() and word not in stop_words]
+    return set(words)
+
+if __name__ == '__main__':    
     """
     logging.basicConfig(level=logging.DEBUG)
     cert = '/etc/letsencrypt/live/vm.phishermen.xyz/cert.pem'
