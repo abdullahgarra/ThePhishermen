@@ -81,16 +81,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         else document.getElementById('message-text4').style.display = "none"  
         document.getElementById('message-image').src = 'icons/warning-icon.svg';
-      } else {    
-        /*
-        document.body.classList.add('all_good');
-        document.getElementById('message-heading').textContent = 'Great news!';
-        document.getElementById('message-text1').innerHTML = '<span class="bullet-icon"><img src="icons/ok.ico" width="22" height="22" alt="Bullet Icon"></span>This email has been thoroughly checked, and we\'re happy to inform you that it appears to be safe and free from any phishing attempts.';
-        document.getElementById('message-text2').style.display = "none"
-        document.getElementById('message-text3').style.display = "none"
-
-        document.getElementById('message-image').src = 'icons/rainbow-svgrepo-com.svg';
-        */
       }
 
     var exitButton = document.getElementById('exitButton');
