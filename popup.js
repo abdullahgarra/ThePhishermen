@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <span class="tooltip">
             <span>The email contains several instances</span>
             <br>
-            <span>of poor grammar incorrect punctuation."
+            <span>of poor grammar incorrect punctuation.
             <span class="tooltiptext"> Be carful when replaying to this email.</span>
             </span>
         `;
@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <span class="tooltip">
             <span>Can't determine if the email has bad</span>
             <br>
-            <span>grammar due to the complexity of the text."
+            <span>grammar due to the complexity of the text.
             <span class="tooltiptext"> Be carful when replaying to this email.</span>
             </span>
         `;
