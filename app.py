@@ -140,7 +140,7 @@ def create_analyze_phishing(preferences, content,counter_from_sender,counter_fro
         grammar_score = analyze_grammer(content)
     else:
         grammar_score = 1.0
-        
+
     # pc = phishing content
     # pl = phishing links
     # fts = first time sender email 
@@ -149,7 +149,6 @@ def create_analyze_phishing(preferences, content,counter_from_sender,counter_fro
     # cdg  = can't decide grammar
 
     res = [] 
-
     # We only care if it is the first time receving from sender / gotten phishing emails
     if counter_from_domain == True:
         res.append("fts")
@@ -158,10 +157,10 @@ def create_analyze_phishing(preferences, content,counter_from_sender,counter_fro
         res.append("fts")
     if len(bad_links) > 0:
         res.append("pl")
-    if predicted_label_content == 1:
+    if len(content) > 2 and predicted_label_content == 1:
         res.append("pc")
-    if grammar_score == -1: res.append('cdg')
-    elif grammar_score < 0.95: res.append('bg')
+    if len(content) > 2 and grammar_score == -1: res.append('cdg')
+    elif len(content) > 2 and grammar_score < 0.95: res.append('bg')
 
     # TODO: maybe pass a dict so we can pass the bad links as well?
     return res 
