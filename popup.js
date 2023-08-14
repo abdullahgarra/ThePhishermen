@@ -61,9 +61,9 @@ document.addEventListener('DOMContentLoaded', function() {
           document.getElementById('message-text4').innerHTML =`
           <span><img src="icons/g.png" class="bullet-icon" alt="Bullet Icon"></span>
           <span class="tooltip">
-            <span>The email contains several instances</span>
+            <span>The content of this email contains</span>
             <br>
-            <span>of poor grammar incorrect punctuation.
+            <span> several instances of poor grammar.
             <span class="tooltiptext"> Be carful when replaying to this email.</span>
             </span>
         `;
@@ -72,9 +72,9 @@ document.addEventListener('DOMContentLoaded', function() {
           document.getElementById('message-text4').innerHTML =`
           <span><img src="icons/g.png" class="bullet-icon" alt="Bullet Icon"></span>
           <span class="tooltip">
-            <span>Can't determine if the email has bad</span>
+            <span>Can't determine if the content of</span>
             <br>
-            <span>grammar due to the complexity of the text.
+            <span>this email has bad grammar.
             <span class="tooltiptext"> Be carful when replaying to this email.</span>
             </span>
         `;
