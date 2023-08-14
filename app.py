@@ -133,16 +133,20 @@ def create_analyze_phishing(preferences, content,counter_from_sender,counter_fro
         bad_links = reduced_analyze_phishing_links(links)
     else:
         bad_links = []
-        print("")
 
     predicted_label_content = analyze_phishing_content(content)
 
-    predicted_label_grammar = analyze_grammer(content)
-
+    if "grammar" in preferences:
+        grammar_score = analyze_grammer(content)
+    else:
+        grammar_score = 1.0
+        
     # pc = phishing content
     # pl = phishing links
     # fts = first time sender email 
     # ftsd = first time sender domain 
+    # bg = bad grammar 
+    # cdg  = can't decide grammar
 
     res = [] 
 
@@ -156,6 +160,8 @@ def create_analyze_phishing(preferences, content,counter_from_sender,counter_fro
         res.append("pl")
     if predicted_label_content == 1:
         res.append("pc")
+    if grammar_score == -1: res.append('cdg')
+    elif grammar_score < 0.95: res.append('bg')
 
     # TODO: maybe pass a dict so we can pass the bad links as well?
     return res 
