@@ -46,7 +46,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const message = urlParams.get('message');
 
     document.getElementById('Links').checked = message.includes("Links");
-    document.getElementById('Domain').checked = message.includes("Domain");
     document.getElementById('regular_links').checked = message.includes("regular_links");
     document.getElementById('reduced_links').checked = message.includes("reduced_links");
     if (message.includes("reduced_links") ||
