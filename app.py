@@ -23,16 +23,16 @@ stop_words = set(stopwords.words("english"))
 
 # Specify the path to the pickle file containing the trained model
 model_path = 'naive_bayes_model.pkl'
-
+"""
 # Load the model from the pickle file
 with open(model_path, 'rb') as file:
     loaded_model = pickle.load(file)
     vectorizer = loaded_model[1]
     model = loaded_model[0]
 file.close()
-
-
 """
+
+
 model_path = 'svm_model.pkl'
 # Load the model from the pickle file
 with open(model_path, 'rb') as file:
@@ -43,7 +43,7 @@ with open(model_path, 'rb') as file:
     best_threshold = loaded_model_info['best_threshold']
     beta = loaded_model_info['beta']
 file.close()
-"""
+
 model_path = 'gradient_boosting_model.pkl'
 reduced_model_path = 'reduce_gradient_boosting_model.pkl'
 
@@ -82,12 +82,12 @@ def analyze_phishing_content(content):
     #preprocessed_content = preprocess(content)  # Preprocess the question using your preprocessing steps
     vectorized_content = vectorizer.transform([content])  # Transform the question into a numerical representation
 
-    """
+    
     y_scores = loaded_svm.predict_proba(vectorized_content)[:, 1]
 
+   
     # Apply the optimized threshold to make predictions
     y_pred = (y_scores >= best_threshold).astype(int)
-    print(y_pred)
     return y_pred
     """
 
@@ -99,7 +99,7 @@ def analyze_phishing_content(content):
     #print("Predicted Label:", predicted_label)
     ##print("Probability Scores:", probability_scores)
     return predicted_label
-
+     """
 
 def analyze_phishing_links(links):
 
