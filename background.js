@@ -193,7 +193,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === "createPopup") {
     var message = request.message; // Accessing the message parameter
     // Perform actions with the message parameter
-    if (message.includes("ftsd") ||message.includes("fts") || message.includes("pl")){
+    if (message.includes("ftsd") ||message.includes("fts") || message.includes("pl")
+        || message.includes("bg") || message.includes("cdg")){
     var popupUrl = chrome.runtime.getURL("popup.html") + `?message=${encodeURIComponent(message)}`;
     chrome.windows.create({ url: popupUrl, type: "popup", width: 400, height: 350 });
     sendResponse({ message: "Popup created!" });

@@ -290,7 +290,9 @@ async function sendAnalyzeRequest(payload) {
     console.log(data['Answer']);
    const imageElement = document.getElementById('showLoadingPopuInClass');
     imageElement.remove();
-    if (data['Answer'].includes("fts") || data['Answer'].includes("pl")){
+    if (data['Answer'].includes("ftsd") || data['Answer'].includes("fts") ||
+        data['Answer'].includes("pl") ||
+        data['Answer'].includes("bg") || data['Answer'].includes("cdg") ){
       chrome.runtime.sendMessage({ action: "createPopup", message: data['Answer'] }, function(response) {
       });
     }
