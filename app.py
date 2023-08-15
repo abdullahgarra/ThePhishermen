@@ -216,7 +216,7 @@ def preprocess_sentence(text):
     return set(words)
 
 def analyze_urgency(content):
-    res= pipe(msg,
+    res= pipe(content,
     candidate_labels=["urgent"],
     )
     return res["scores"]
