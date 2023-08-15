@@ -292,7 +292,8 @@ async function sendAnalyzeRequest(payload) {
     imageElement.remove();
     if (data['Answer'].includes("ftsd") || data['Answer'].includes("fts") ||
         data['Answer'].includes("pl") ||
-        data['Answer'].includes("bg") || data['Answer'].includes("cdg") ){
+        data['Answer'].includes("bg") || data['Answer'].includes("cdg") ||
+        data['Answer'].includes("u") ){
       chrome.runtime.sendMessage({ action: "createPopup", message: data['Answer'] }, function(response) {
       });
     }
