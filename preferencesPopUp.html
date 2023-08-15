@@ -74,24 +74,52 @@
   .hidden {
             display: none;
   }
+
   .button {
     display: inline-block;
-    padding: 5px 12px; /* Adjusted padding for smaller height */
     font-size: 12px;
     cursor: pointer;
     transition: background-color 0.3s, color 0.3s;
     border-radius: 20px; /* Rounded corners */
     margin: 0; /* Remove any default margin */
-    border: 1px; /* Remove border */
+    border: none; /* Remove border */
+    padding: 0.3em 1em;
 
   }
   .button.low {
     background-color: #ca942e;
     color: rgb(0, 0, 0);
+    border-radius: 0;
+    margin-bottom: -1px;
+    &:first-child {
+      border-radius: 6px 0 0 6px;
+    }
+    
+    &:last-child {
+      border-radius: 0 6px 6px 0;
+    }
+    
+    &:only-child {
+      border-radius: 6px;
+    }
   }
   .button.high {
     background-color: #bd3d2e;
     color: rgb(2, 2, 2);
+    border-radius: 0;
+    margin-bottom: -1px;
+    &:first-child {
+      border-radius: 6px 0 0 6px;
+    }
+    
+    &:last-child {
+      border-radius: 0 6px 6px 0;
+    }
+    
+    &:only-child {
+      border-radius: 6px;
+    }
+    
   }
 
   .button.selected {
