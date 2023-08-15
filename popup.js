@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function() {
         else document.getElementById('message-text4').style.display = "none"  
         if (message.includes("u")){
           document.getElementById('message-text5').innerHTML =`
-          <span><img src="icons/u.svg" class="bullet-icon" alt="Bullet Icon"></span>
+          <span><img src="icons/u.jpg" class="bullet-icon" alt="Bullet Icon"></span>
           <span class="tooltip">
             <span>The content of this email raises</span>
             <br>
