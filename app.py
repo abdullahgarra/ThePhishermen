@@ -10,6 +10,7 @@ from happytransformer import HappyTextToText, TTSettings
 import nltk
 from nltk.corpus import stopwords
 from nltk.tokenize import sent_tokenize
+from transformers import pipeline
 
 # ML
 import pickle
@@ -20,6 +21,7 @@ nltk.download("stopwords")
 
 stop_words = set(stopwords.words("english"))
 
+pipe = pipeline(model="facebook/bart-large-mnli")
 
 # Specify the path to the pickle file containing the trained model
 model_path = 'naive_bayes_model.pkl'
@@ -141,12 +143,18 @@ def create_analyze_phishing(preferences, content,counter_from_sender,counter_fro
     else:
         grammar_score = 1.0
 
+    if "urgency" in preferences:
+        urgency_score = analyze_urgency(content)
+    else:
+        grammar_score = 0.0
+
     # pc = phishing content
     # pl = phishing links
     # fts = first time sender email 
     # ftsd = first time sender domain 
     # bg = bad grammar 
     # cdg  = can't decide grammar
+    # u = urgency
 
     res = [] 
     # We only care if it is the first time receving from sender / gotten phishing emails
@@ -161,7 +169,8 @@ def create_analyze_phishing(preferences, content,counter_from_sender,counter_fro
         res.append("pc")
     if len(content) > 2 and grammar_score == -1: res.append('cdg')
     elif len(content) > 2 and grammar_score < 0.95: res.append('bg')
-
+    if len(content) > 2 and grammar_score > 0.5:
+        res.append("u")
     # TODO: maybe pass a dict so we can pass the bad links as well?
     return res 
 
@@ -205,6 +214,14 @@ def preprocess_sentence(text):
     words = nltk.word_tokenize(text.lower())
     words = [word for word in words if word.isalnum() and word not in stop_words]
     return set(words)
+
+def analyze_urgency(content):
+    res= pipe(msg,
+    candidate_labels=["urgent"],
+    )
+    return res["scores"]
+
+
 
 if __name__ == '__main__':    
     """
