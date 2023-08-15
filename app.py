@@ -165,8 +165,20 @@ def create_analyze_phishing(preferences, content,counter_from_sender,counter_fro
     if len(bad_links) > 0: res.append("pl")
     if len(content) > 2 and predicted_label_content == 1: res.append("pc")
     if len(content) > 2 and grammar_score == -1: res.append('cdg')
-    elif len(content) > 2 and grammar_score < 0.95: res.append('bg')
-    if len(content) > 2 and urgency_score > 0.95: res.append("u")
+    # Higher grammar_score, means more similar to the valid text
+    # If we are strict, we must allow only high scores
+    elif len(content) > 2:
+        if ("grammarLow" in preferences) \
+            and (grammar_score < 0.75): res.append('bg')
+        if ("grammarHigh" in preferences) \
+            and (grammar_score < 0.95): res.append('bg')
+    # Higher urgency_score, means more urgent
+    # If we are strict, we count low scores as urgent too 
+    if len(content) > 2:
+        if ("urgencyLow" in preferences) \
+            and urgency_score > 0.95: res.append("u")
+        if ("urgencyHigh" in preferences) \
+            and urgency_score > 0.75: res.append("u")
     return res 
 
 # Token indices sequence length is longer than the specified 
