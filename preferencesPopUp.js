@@ -6,6 +6,14 @@ document.addEventListener('DOMContentLoaded', function() {
     
     const buttons = document.querySelectorAll(".button");
 
+    const bubbleIcon = document.getElementById("bubble-icon");
+
+    bubbleIcon.addEventListener("click", () => {
+      const popupWindow = window.open("", "_blank", "width=400,height=300");
+      popupWindow.document.write("<p>This is the content of the popup window that can be larger than the window's size. It will expand outside the window boundaries.</p>");
+    });
+
+
     buttons.forEach(button => {
         button.addEventListener("click", () => {
             const parentDivId = button.parentElement.id;

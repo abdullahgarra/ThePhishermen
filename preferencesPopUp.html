@@ -41,8 +41,13 @@
  
       }
 
-      #bubble-icon {
-      font-size: 10px;
+    .checkbox-container {
+      display: flex;
+      align-items: center;
+    }
+
+    #bubble-icon {
+      font-size: 14px;
       cursor: pointer;
     }
 
@@ -112,10 +117,12 @@
         <h4 style="display: inline;">for new sessions</h4>
         <br><br>
         
-        <label>
+        <div class="checkbox-container">
           <span id="bubble-icon">?</span>
-          <input type="checkbox" id = "Links" name="Links" >Links detection
-        </label>
+          <label>
+            <input type="checkbox" id = "Links" name="Links" >Links detection
+          </label>
+        </div>
         <p id="errorContainerLink" style="color: red;" class="hidden"></p>
         <div id="radioContainer" class="hidden">
           <label for="checkpoint1">
