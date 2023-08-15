@@ -35,7 +35,7 @@
         border: none;
         font-size: 14px;
         cursor: pointer;
-        margin-top: 5px ;
+        margin-top: 15px ;
         margin-left: 10px;
         border-radius: 20px; /* Rounded corners */
  
@@ -84,7 +84,7 @@
     margin: 0; /* Remove any default margin */
     border: none; /* Remove border */
     padding: 0.3em 1em;
-
+    margin-top: 5px ;
   }
   .button.low {
     background-color: #ca942e;
@@ -137,7 +137,7 @@
         <h4 style="display: inline;">for new sessions</h4>
         <br><br>
         <label><input type="checkbox" id = "Links" name="Links"  ><span class="tooltip"><span class="tooltiptext">Alerting when a new message is received with at least one suspicious link</span>Links detection</span></label>
-        <p id="errorContainer" style="color: red;" class="hidden"></p>
+        <p id="errorContainerLink" style="color: red;" class="hidden"></p>
         <div id="radioContainer" class="hidden">
           <label for="checkpoint1"><input type="radio" id="regular_links" name="link_type" value="1">
             <span class="tooltip"><span class="tooltiptext">Using the full model for detection</span>
@@ -150,13 +150,14 @@
         <div id="grammarContainer" class="hidden">
           <button class="button low" id="grammarLow">Low</button><button class="button high" id="grammarHigh">High</button>
         </div>
-        
+        <p id="errorContainerGrammar" style="color: red;" class="hidden"></p>
+
         <label><input type="checkbox" id = "urgency" name="urgency"  ><span class="tooltip"><span class="tooltiptext">Alerting when a new message is creates a sense of urgency</span>Urgency detection</span></label>
         <div id="urgencyContainer" class="hidden">
           <button class="button low" id="urgencyLow">Low</button><button class="button high" id="urgencyLow">High</button>
-      </div>
-      
-        <br>
+        </div>
+        <p id="errorContainerUrgency" style="color: red;" class="hidden"></p>
+
         <button class="close-button" id="closeButton">Save and Close</button>
 </div>
 </div>
