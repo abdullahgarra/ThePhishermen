@@ -41,35 +41,24 @@
  
       }
 
-      .tooltip {
-    position: relative;
-    display: inline-block;
-    cursor: pointer;
-  }
+    .container-for-icon {
+      display: flex;
+      align-items: center;
+    }
 
-  /* Style for the tooltip text */
-  .tooltip .tooltiptext {
-    visibility: hidden;
-    width: 150px;
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-    border-radius: 5px;
-    padding: 5px;
-    position: absolute;
-    z-index: 1;
-    bottom: 125%;
-    left: 50%;
-    transform: translateX(-50%);
-    opacity: 0;
-    transition: opacity 0.3s, visibility 0.3s;
-  }
+    .bubble-icon {
+      font-size: 10px;
+      cursor: pointer;
+      display: inline-block;
+      width: 13px;
+      height: 13px;
+      color: #000;
+      border-radius: 50%; /* Rounded border */
+      text-align: center;
+      line-height: 13px;
+      border: 1px solid #000; /* Add border styling */
 
-  /* Show tooltip text on hover */
-  .tooltip:hover .tooltiptext {
-    visibility: visible;
-    opacity: 1;
-  }
+    }
 
   .hidden {
             display: none;
@@ -136,30 +125,51 @@
         <br>
         <h4 style="display: inline;">for new sessions</h4>
         <br><br>
-        <label><input type="checkbox" id = "Links" name="Links"  ><span class="tooltip"><span class="tooltiptext">Alerting when a new message is received with at least one suspicious link</span>Links detection</span></label>
+        
+        <div class="container-for-icon">
+          <span id="link-icon" class="bubble-icon">?</span>
+          <label>
+            <input type="checkbox" id = "Links" name="Links" >Links detection
+          </label>
+        </div>
         <p id="errorContainerLink" style="color: red;" class="hidden"></p>
         <div id="radioContainer" class="hidden">
-          <label for="checkpoint1"><input type="radio" id="regular_links" name="link_type" value="1">
-            <span class="tooltip"><span class="tooltiptext">Using the full model for detection</span>
-            Regular Links Detection</label></span>
-          <label for="checkpoint2"><input type="radio" id="reduced_links" name="link_type" value="2">
-            <span class="tooltip"><span class="tooltiptext">Using a weaker model for detection</span>
-            Reduced Links Detection</label></span>
+          <label for="checkpoint1">
+            <input type="radio" id="regular_links" name="link_type" value="1">
+              Regular Links Detection
+          </label>
+          <label for="checkpoint2">
+            <input type="radio" id="reduced_links" name="link_type" value="2">
+              Reduced Links Detection
+          </label>
         </div>
-        <label><input type="checkbox" id = "grammar" name="grammar"  ><span class="tooltip"><span class="tooltiptext">Alerting when a new message is received with a bad grammar</span>Bad Grammar detection</span></label>
+
+        <div class="container-for-icon">
+          <span id="grammar-icon" class="bubble-icon">?</span>
+          <label>
+            <input type="checkbox" id = "grammar" name="grammar"  >
+              Bad Grammar detection
+          </label>
+        </div>
         <div id="grammarContainer" class="hidden">
           <button class="button low" id="grammarLow">Low</button><button class="button high" id="grammarHigh">High</button>
         </div>
         <p id="errorContainerGrammar" style="color: red;" class="hidden"></p>
 
-        <label><input type="checkbox" id = "urgency" name="urgency"  ><span class="tooltip"><span class="tooltiptext">Alerting when a new message is creates a sense of urgency</span>Urgency detection</span></label>
+        <div class="container-for-icon">
+          <span id="urgency-icon" class="bubble-icon">?</span>
+          <label>
+            <input type="checkbox" id = "urgency" name="urgency"  >
+              Urgency detection
+          </label>
+        </div>
         <div id="urgencyContainer" class="hidden">
           <button class="button low" id="urgencyLow">Low</button><button class="button high" id="urgencyHigh">High</button>
         </div>
         <p id="errorContainerUrgency" style="color: red;" class="hidden"></p>
 
         <button class="close-button" id="closeButton">Save and Close</button>
-</div>
+  </div>
 </div>
 <script src="preferencesPopUp.js">
 </script>
