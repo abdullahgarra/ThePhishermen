@@ -1,4 +1,17 @@
 document.addEventListener('DOMContentLoaded', function() {
+    const buttons = document.querySelectorAll(".button");
+
+    buttons.forEach(button => {
+        button.addEventListener("click", () => {
+            const parentDivId = button.parentElement.id;
+            const container = document.getElementById(parentDivId);
+            const buttonsInContainer = container.querySelectorAll(".button");
+            buttonsInContainer.forEach(btn => {
+                btn.classList.remove("selected");
+            });  
+            button.classList.add("selected");
+        });
+    });
 
     const popupContainer = document.getElementById("popupContainer");
     const closeButton = document.getElementById("closeButton");
@@ -11,13 +24,19 @@ document.addEventListener('DOMContentLoaded', function() {
     const regularLinksRadio = document.getElementById("regular_links");
     const reducedLinksRadio = document.getElementById("reduced_links");
 
+    const grammarCheckbox = document.getElementById("grammar");
+    const grammarContainer = document.getElementById("grammarContainer");
+
+    const urgencyCheckbox = document.getElementById("urgency");
+    const urgencyContainer = document.getElementById("urgencyContainer");
+
 
     linksCheckbox.addEventListener("change", function() {
         if (linksCheckbox.checked) {
             radioContainer.classList.remove("hidden");
         } else {
             radioContainer.classList.add("hidden");
-            errorContainer.classList.add("hidden2");
+            errorContainer.classList.add("hidden");
             errorContainer.textContent = "";
             const radios = popupContainer.querySelectorAll('input[type="radio"]');
             radios.forEach(radio => {
@@ -30,17 +49,45 @@ document.addEventListener('DOMContentLoaded', function() {
 
     reducedLinksRadio.addEventListener("change", function() {
         if (linksCheckbox.checked && reducedLinksRadio.checked) {
-            errorContainer.classList.add("hidden2");
+            errorContainer.classList.add("hidden");
             errorContainer.textContent = "";
         } 
     });
 
     regularLinksRadio.addEventListener("change", function() {
         if (linksCheckbox.checked && regularLinksRadio.checked) {
-            errorContainer.classList.add("hidden2");
+            errorContainer.classList.add("hidden");
             errorContainer.textContent = "";
         }
     });
+
+    grammarCheckbox.addEventListener("change", function() {
+        if (grammarCheckbox.checked) {
+            grammarContainer.classList.remove("hidden");
+        } else {
+            grammarContainer.classList.add("hidden");
+            const buttonsInContainer = grammarContainer.querySelectorAll(".button");
+            buttonsInContainer.forEach(btn => {
+                btn.classList.remove("selected");
+            });  
+        } 
+    });
+
+    urgencyCheckbox.addEventListener("change", function() {
+        if (urgencyCheckbox.checked) {
+            urgencyContainer.classList.remove("hidden");
+        } else {
+            urgencyContainer.classList.add("hidden");
+            const buttonsInContainer = urgencyContainer.querySelectorAll(".button");
+            buttonsInContainer.forEach(btn => {
+                btn.classList.remove("selected");
+            });  
+        } 
+    });
+
+
+
+
 
     // Preferences
     const message = urlParams.get('message');
@@ -63,11 +110,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const selectedOptions = []; // Array to store selected options
 
-        const checkboxes = popupContainer.querySelectorAll('input[type="checkbox"]');
-        checkboxes.forEach(checkbox => {
-            if (checkbox.checked) {
-                selectedOptions.push(checkbox.name);
-            }
+        const buttons = popupContainer.querySelectorAll('button');
+        buttons.forEach(button => {
+            
         });
 
         const radios = popupContainer.querySelectorAll('input[type="radio"]');
@@ -82,7 +127,7 @@ document.addEventListener('DOMContentLoaded', function() {
             !selectedOptions.includes("regular_links")
             ) {
                 errorContainer.textContent = "Select a links detection option.";
-                errorContainer.classList.remove("hidden2");
+                errorContainer.classList.remove("hidden");
         } else {
             // Clear the error message if no issue
             chrome.runtime.sendMessage({ action: "preferencesSelections", message: selectedOptions }, function(response) {

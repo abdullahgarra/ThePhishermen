@@ -74,10 +74,30 @@
   .hidden {
             display: none;
   }
+  .button {
+    display: inline-block;
+    padding: 5px 12px; /* Adjusted padding for smaller height */
+    font-size: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    border-radius: 20px; /* Rounded corners */
+    margin: 0; /* Remove any default margin */
+    border: 1px; /* Remove border */
 
-  .hidden2 {
-            display: none;
   }
+  .button.low {
+    background-color: #ca942e;
+    color: rgb(0, 0, 0);
+  }
+  .button.high {
+    background-color: #bd3d2e;
+    color: rgb(2, 2, 2);
+  }
+
+  .button.selected {
+    filter: brightness(1.3);
+  }
+
     </style>
 </head>
 <body>
@@ -89,7 +109,7 @@
         <h4 style="display: inline;">for new sessions</h4>
         <br><br>
         <label><input type="checkbox" id = "Links" name="Links"  ><span class="tooltip"><span class="tooltiptext">Alerting when a new message is received with at least one suspicious link</span>Links detection</span></label>
-        <p id="errorContainer" style="color: red;" class="hidden2"></p>
+        <p id="errorContainer" style="color: red;" class="hidden"></p>
         <div id="radioContainer" class="hidden">
           <label for="checkpoint1"><input type="radio" id="regular_links" name="link_type" value="1">
             <span class="tooltip"><span class="tooltiptext">Using the full model for detection</span>
@@ -99,8 +119,15 @@
             Reduced Links Detection</label></span>
         </div>
         <label><input type="checkbox" id = "grammar" name="grammar"  ><span class="tooltip"><span class="tooltiptext">Alerting when a new message is received with a bad grammar</span>Bad Grammar detection</span></label>
+        <div id="grammarContainer" class="hidden">
+          <button class="button low" id="grammarLow">Low</button><button class="button high" id="grammarHigh">High</button>
+        </div>
+        
         <label><input type="checkbox" id = "urgency" name="urgency"  ><span class="tooltip"><span class="tooltiptext">Alerting when a new message is creates a sense of urgency</span>Urgency detection</span></label>
-
+        <div id="urgencyContainer" class="hidden">
+          <button class="button low" id="urgencyLow">Low</button><button class="button high" id="urgencyLow">High</button>
+      </div>
+      
         <br>
         <button class="close-button" id="closeButton">Save and Close</button>
 </div>
