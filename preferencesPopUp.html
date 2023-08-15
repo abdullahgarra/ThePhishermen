@@ -136,23 +136,23 @@
         <br>
         <h4 style="display: inline;">for new sessions</h4>
         <br><br>
-        <label><input type="checkbox" id = "Links" name="Links"  ><span class="tooltip"><span class="tooltiptext">Alerting when a new message is received with at least one suspicious link</span>Links detection</span></label>
+        <label><input type="checkbox" id = "Links" name="Links" >Links detection</label>
         <p id="errorContainerLink" style="color: red;" class="hidden"></p>
         <div id="radioContainer" class="hidden">
           <label for="checkpoint1"><input type="radio" id="regular_links" name="link_type" value="1">
-            <span class="tooltip"><span class="tooltiptext">Using the full model for detection</span>
-            Regular Links Detection</label></span>
+            Regular Links Detection</label>
           <label for="checkpoint2"><input type="radio" id="reduced_links" name="link_type" value="2">
-            <span class="tooltip"><span class="tooltiptext">Using a weaker model for detection</span>
-            Reduced Links Detection</label></span>
+            Reduced Links Detection</label>
         </div>
-        <label><input type="checkbox" id = "grammar" name="grammar"  ><span class="tooltip"><span class="tooltiptext">Alerting when a new message is received with a bad grammar</span>Bad Grammar detection</span></label>
+        <label><input type="checkbox" id = "grammar" name="grammar"  >
+          Bad Grammar detection</label>
         <div id="grammarContainer" class="hidden">
           <button class="button low" id="grammarLow">Low</button><button class="button high" id="grammarHigh">High</button>
         </div>
         <p id="errorContainerGrammar" style="color: red;" class="hidden"></p>
 
-        <label><input type="checkbox" id = "urgency" name="urgency"  ><span class="tooltip"><span class="tooltiptext">Alerting when a new message is creates a sense of urgency</span>Urgency detection</span></label>
+        <label><input type="checkbox" id = "urgency" name="urgency"  >
+          Urgency detection</label>
         <div id="urgencyContainer" class="hidden">
           <button class="button low" id="urgencyLow">Low</button><button class="button high" id="urgencyHigh">High</button>
         </div>
