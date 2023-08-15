@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Apply different background styles based on the message
     // if first time sending / phishing links
     if (message.includes("ftsd") || message.includes("fts") || message.includes("pl") ||
-        message.includes("bg") || message.includes("cdg"))
+        message.includes("bg") || message.includes("cdg") || message.includes("u"))
       {
         document.body.classList.add('warning');
         document.getElementById('message-heading').textContent = 'Warning!';
@@ -80,6 +80,18 @@ document.addEventListener('DOMContentLoaded', function() {
         `;
         }
         else document.getElementById('message-text4').style.display = "none"  
+        if (message.includes("u")){
+          document.getElementById('message-text5').innerHTML =`
+          <span><img src="icons/u.svg" class="bullet-icon" alt="Bullet Icon"></span>
+          <span class="tooltip">
+            <span>The content of this email raises</span>
+            <br>
+            <span>sense of urgency.
+            <span class="tooltiptext"> Be carful when replaying to this email.</span>
+            </span>
+        `;
+      }
+      else document.getElementById('message-text5').style.display = "none" 
         document.getElementById('message-image').src = 'icons/warning-icon.svg';
       }
 
