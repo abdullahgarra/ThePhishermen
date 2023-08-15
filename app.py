@@ -167,7 +167,6 @@ def create_analyze_phishing(preferences, content,counter_from_sender,counter_fro
     if len(content) > 2 and grammar_score == -1: res.append('cdg')
     elif len(content) > 2 and grammar_score < 0.95: res.append('bg')
     if len(content) > 2 and urgency_score > 0.95: res.append("u")
-    # TODO: maybe pass a dict so we can pass the bad links as well?
     return res 
 
 # Token indices sequence length is longer than the specified 
@@ -215,7 +214,6 @@ def analyze_urgency(content):
     res= pipe(content,
     candidate_labels=["urgent"],
     )
-    print(res["scores"])
     return res["scores"][0]
 
 
