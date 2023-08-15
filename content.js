@@ -287,7 +287,7 @@ async function sendAnalyzeRequest(payload) {
     });
   
    const data = await response.json();
-    console.log(data['Answer']);
+   console.log(data['Answer']);
    const imageElement = document.getElementById('showLoadingPopuInClass');
     imageElement.remove();
     if (data['Answer'].includes("ftsd") || data['Answer'].includes("fts") ||
