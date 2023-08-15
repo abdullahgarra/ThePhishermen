@@ -166,7 +166,7 @@ def create_analyze_phishing(preferences, content,counter_from_sender,counter_fro
     if len(content) > 2 and predicted_label_content == 1: res.append("pc")
     if len(content) > 2 and grammar_score == -1: res.append('cdg')
     elif len(content) > 2 and grammar_score < 0.95: res.append('bg')
-    if len(content) > 2 and urgency_score > 0.5: res.append("u")
+    if len(content) > 2 and urgency_score > 0.95: res.append("u")
     # TODO: maybe pass a dict so we can pass the bad links as well?
     return res 
 
