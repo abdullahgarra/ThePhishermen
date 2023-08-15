@@ -10,6 +10,7 @@ from happytransformer import HappyTextToText, TTSettings
 import nltk
 from nltk.corpus import stopwords
 from nltk.tokenize import sent_tokenize
+from transformers import pipeline
 
 # ML
 import pickle
@@ -20,6 +21,7 @@ nltk.download("stopwords")
 
 stop_words = set(stopwords.words("english"))
 
+pipe = pipeline(model="facebook/bart-large-mnli")
 
 # Specify the path to the pickle file containing the trained model
 model_path = 'naive_bayes_model.pkl'
@@ -141,28 +143,30 @@ def create_analyze_phishing(preferences, content,counter_from_sender,counter_fro
     else:
         grammar_score = 1.0
 
+    if "urgency" in preferences:
+        urgency_score = analyze_urgency(content)
+    else:
+        urgency_score = 0.0
+
     # pc = phishing content
     # pl = phishing links
     # fts = first time sender email 
     # ftsd = first time sender domain 
     # bg = bad grammar 
     # cdg  = can't decide grammar
+    # u = urgency
 
     res = [] 
     # We only care if it is the first time receving from sender / gotten phishing emails
-    if counter_from_domain == True:
+    if counter_from_domain:
         res.append("fts")
         res.append("ftsd")
-    elif counter_from_sender == True:
-        res.append("fts")
-    if len(bad_links) > 0:
-        res.append("pl")
-    if len(content) > 2 and predicted_label_content == 1:
-        res.append("pc")
+    elif counter_from_sender: res.append("fts")
+    if len(bad_links) > 0: res.append("pl")
+    if len(content) > 2 and predicted_label_content == 1: res.append("pc")
     if len(content) > 2 and grammar_score == -1: res.append('cdg')
     elif len(content) > 2 and grammar_score < 0.95: res.append('bg')
-
-    # TODO: maybe pass a dict so we can pass the bad links as well?
+    if len(content) > 2 and urgency_score > 0.95: res.append("u")
     return res 
 
 # Token indices sequence length is longer than the specified 
@@ -205,6 +209,14 @@ def preprocess_sentence(text):
     words = nltk.word_tokenize(text.lower())
     words = [word for word in words if word.isalnum() and word not in stop_words]
     return set(words)
+
+def analyze_urgency(content):
+    res= pipe(content,
+    candidate_labels=["urgent"],
+    )
+    return res["scores"][0]
+
+
 
 if __name__ == '__main__':    
     """

@@ -287,12 +287,13 @@ async function sendAnalyzeRequest(payload) {
     });
   
    const data = await response.json();
-    console.log(data['Answer']);
+   console.log(data['Answer']);
    const imageElement = document.getElementById('showLoadingPopuInClass');
     imageElement.remove();
     if (data['Answer'].includes("ftsd") || data['Answer'].includes("fts") ||
         data['Answer'].includes("pl") ||
-        data['Answer'].includes("bg") || data['Answer'].includes("cdg") ){
+        data['Answer'].includes("bg") || data['Answer'].includes("cdg") ||
+        data['Answer'].includes("u") ){
       chrome.runtime.sendMessage({ action: "createPopup", message: data['Answer'] }, function(response) {
       });
     }
