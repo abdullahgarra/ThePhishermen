@@ -141,8 +141,7 @@ var tabsSet = new Set();
 
 // --- On Reloading 
 chrome.webNavigation.onCommitted.addListener((details) => {
-  if (["reload"].includes(details.transitionType) &&
-      details.url.includes('mail.google.com/mail/u/') || details.url.includes('inbox/')) {
+  if (["reload"].includes(details.transitionType)) {
       tabsSet.delete(details.tabId);
   }
 });
