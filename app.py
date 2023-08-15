@@ -216,7 +216,7 @@ def analyze_urgency(content):
     candidate_labels=["urgent"],
     )
     print(res["scores"])
-    return res["scores"]
+    return res["scores"][0]
 
 
 
