@@ -110,19 +110,40 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
     // Preferences
-    const message = urlParams.get('message');
+    const preferences = urlParams.get('message');
 
-    document.getElementById('Links').checked = message.includes("Links");
-    document.getElementById('regular_links').checked = message.includes("regular_links");
-    document.getElementById('reduced_links').checked = message.includes("reduced_links");
-    //document.getElementById('grammar').checked = message.includes("grammar");
-    //document.getElementById('urgency').checked = message.includes("urgency");
+    document.getElementById('Links').checked = preferences.includes("Links");
+    document.getElementById('regular_links').checked = preferences.includes("regular_links");
+    document.getElementById('reduced_links').checked = preferences.includes("reduced_links");
+    document.getElementById('grammar').checked = preferences.includes("grammar");
+    document.getElementById('urgency').checked = preferences.includes("urgency");
+    //button.classList.add("selected");
 
-    if (message.includes("reduced_links") ||
-        message.includes("regular_links")
+    if (preferences.includes("Links")
     ){
         radioContainer.classList.remove("hidden");
     }
+
+    if (preferences.includes("grammar")){
+        grammarContainer.classList.remove("hidden");
+        const buttons = grammarContainer.querySelectorAll('button');
+        buttons.forEach(button => {
+            if (preferences.includes(button.id)){
+                button.classList.add("selected");
+            } 
+        });
+    }
+
+    if (preferences.includes("urgency")){
+        urgencyContainer.classList.remove("hidden");
+        const buttons = urgencyContainer.querySelectorAll('button');
+        buttons.forEach(button => {
+            if (preferences.includes(button.id)){
+                button.classList.add("selected");
+            } 
+        });
+    }
+
 
 
     closeButton.addEventListener("click", () => {
