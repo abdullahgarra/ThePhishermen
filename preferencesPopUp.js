@@ -49,6 +49,8 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('regular_links').checked = message.includes("regular_links");
     document.getElementById('reduced_links').checked = message.includes("reduced_links");
     document.getElementById('grammar').checked = message.includes("grammar");
+    document.getElementById('urgency').checked = message.includes("urgency");
+
     if (message.includes("reduced_links") ||
         message.includes("regular_links")
     ){
