@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    const popupContainer = document.getElementById("popupContainer");
+    const popupContainer = document.getElementById("popup-content");
     const closeButton = document.getElementById("closeButton");
     const urlParams = new URLSearchParams(window.location.search);
     const errorContainerLink = document.getElementById("errorContainerLink");
