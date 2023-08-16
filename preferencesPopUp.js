@@ -10,15 +10,38 @@ function createListener(icon_name, title, text){
         const popupFeatures = `width=${popupWidth},height=${popupHeight},left=${left},top=${top}`;
   
         const popupWindow = window.open('', '_blank', popupFeatures);
-  
-        popupWindow.document.write('<p>' + text + '</p');
+        popupWindow.document.body.innerHTML = '<p style="font-size: 15px;">' + text + '</p>';
+
+        //popupWindow.document.write('<p>' + text + '</p');
         popupWindow.document.title = title;
       });
   }
 
-createListener('link-icon', 'Info On Links Detection', 'Shila');
-createListener('grammar-icon', 'Info On Grammar Detection', 'Max');
-createListener('urgency-icon', 'Info On Urgency Detection', 'Toy');
+const link_text =
+    "Phishing links in emails mimic real URLs to deceive recipients, " +
+    "into revealing data or spreading malware.<br>" +
+    "We offer a phishing detection service that checks these links carefully, "+
+    "through a spectrum of information levels." +
+    "This method offers a detailed review or a simplified inspection," +  
+    "relying on fewer data inputs for analysis."
+    
+createListener('link-icon', 'Info On Links Detection', link_text);
+const grammar_text = 
+    "Bad grammar/spelling in emails can signal phishing. " +
+    "Be cautious with such emails, especially for unexpected requests" +
+    ", urgency, or unfamiliar links. <br>" +
+    " We offer a test comparing email content to a valid version." +
+    " High similarity indicates validity." +
+    " The 'Low' button means you're okay with less similarity."
+createListener('grammar-icon', 'Info On Grammar Detection', grammar_text);
+const urgency_text =  
+  "The urgency in an email can signal phishing. " +
+  "Be cautious with urgent emails, especially for unexpected requests, unfamiliar links," +
+  " or sensitive info. " +
+  " We offer a test to determine if the email conveys a sense of urgency." +
+  " High score means indicates validity." +
+  " The 'Low' button means you're okay with some sense of urgency."
+createListener('urgency-icon', 'Info On Urgency Detection', urgency_text);
 
 document.addEventListener('DOMContentLoaded', function() {
     
