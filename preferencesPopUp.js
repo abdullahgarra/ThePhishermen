@@ -1,59 +1,24 @@
-const linkIcon = document.getElementById('link-icon');
-linkIcon.addEventListener('click', () => {
-  const iconRect = linkIcon.getBoundingClientRect();
-  const popupWidth = 350;
-  const popupHeight = 200;
-  const left = iconRect.left - popupWidth + window.screenX;
-  const top = iconRect.top + window.screenY;
-  const popupFeatures = `width=${popupWidth},height=${popupHeight},left=${left},top=${top}`;
-  const popupWindow = window.open('', '_blank', popupFeatures);
-  // You can write the content of the popup window here
-  popupWindow.document.write('<p>This is the popup content of link-icon.</p>');
-  // Set the icon for the popup window
-  /*
-  const iconLink = popupWindow.document.createElement('link');
-  iconLink.rel = 'icon';
-  iconLink.type = 'image/png'; // Change to the appropriate MIME type if needed
-  iconLink.href = 'icons/icon2.png'; // Replace with the actual path to your icon image
-  popupWindow.document.head.appendChild(iconLink);
-  popupWindow.document.head.innerHTML += `
-    <link rel="icon" href="icons/icon2.png" type="image/png">
-  `;
-  */
-  popupWindow.document.title = 'Info On Links Detection';
 
+function createListener(icon_name, title, text){
+    const currIcon = document.getElementById(icon_name);
+    currIcon.addEventListener('click', () => {
+        const iconRect = currIcon.getBoundingClientRect();
+        const popupWidth = 350;
+        const popupHeight = 200;
+        const left = iconRect.left - popupWidth + window.screenX;
+        const top = iconRect.top + window.screenY;
+        const popupFeatures = `width=${popupWidth},height=${popupHeight},left=${left},top=${top}`;
   
-});
+        const popupWindow = window.open('', '_blank', popupFeatures);
+  
+        popupWindow.document.write('<p>' + text + '</p');
+        popupWindow.document.title = title;
+      });
+  }
 
-const grammarIcon = document.getElementById('grammar-icon');
-grammarIcon.addEventListener('click', () => {
-  const iconRect = grammarIcon.getBoundingClientRect();
-  const popupWidth = 350;
-  const popupHeight = 200;
-  const left = iconRect.left - popupWidth + window.screenX;
-  const top = iconRect.top + window.screenY;
-  const popupFeatures = `width=${popupWidth},height=${popupHeight},left=${left},top=${top}`;
-  const popupWindow = window.open('', '_blank', popupFeatures);
-  // You can write the content of the popup window here
-  popupWindow.document.write('<p>This is the popup content of grammar-icon.</p>');
-  popupWindow.document.title = 'Info On Grammar Detection';
-});
-
-const urgencyIcon = document.getElementById('urgency-icon');
-urgencyIcon.addEventListener('click', () => {
-  const iconRect = urgencyIcon.getBoundingClientRect();
-  const popupWidth = 350;
-  const popupHeight = 200;
-  const left = iconRect.left - popupWidth + window.screenX;
-  const top = iconRect.top + window.screenY;
-  const popupFeatures = `width=${popupWidth},height=${popupHeight},left=${left},top=${top}`;
-  const popupWindow = window.open('', '_blank', popupFeatures);
-  // You can write the content of the popup window here
-  popupWindow.document.write('<p>This is the popup content of urgency-icon.</p>');
-  popupWindow.document.title = 'Info On Urgency Detection';
-
-});
-
+createListener('link-icon', 'Info On Links Detection', 'Shila');
+createListener('grammar-icon', 'Info On Grammar Detection', 'Max');
+createListener('urgency-icon', 'Info On Urgency Detection', 'Toy');
 
 document.addEventListener('DOMContentLoaded', function() {
     
