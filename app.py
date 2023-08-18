@@ -11,6 +11,8 @@ import nltk
 from nltk.corpus import stopwords
 from nltk.tokenize import sent_tokenize
 from transformers import pipeline
+import warnings
+warnings.filterwarnings('ignore')
 
 # ML
 import pickle
