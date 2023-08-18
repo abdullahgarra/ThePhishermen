@@ -1,6 +1,5 @@
 
 document.addEventListener('DOMContentLoaded', function() {
-    
     const urlParams = new URLSearchParams(window.location.search);
     const message = urlParams.get('message');
 
@@ -15,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('message-text1').innerHTML =`
             <span class="fts-trigger">
               <a href="#" id="fts-link">
-                <img src="icons/fts1.svg" class="bullet-icon" alt="Bullet Icon">
+                <img src="imgs/fts1.svg" class="bullet-icon" alt="Bullet Icon">
               </a>
             </span>
             <span>This is the first time you received</span>
@@ -29,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
           document.getElementById('message-text1').innerHTML =`
           <span class="ftsd-trigger">
             <a href="#" id="ftsd-link">
-              <img src="icons/ftsd.svg" class="bullet-icon" alt="Bullet Icon">
+              <img src="imgs/ftsd.svg" class="bullet-icon" alt="Bullet Icon">
             </a>
           </span>
           <span>This is the first time you received</span>
@@ -44,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('message-text2').innerHTML =`
             <span class="links-trigger">
               <a href="#" id="links-link">
-                <img src="icons/pl.svg" class="bullet-icon" alt="Bullet Icon">
+                <img src="imgs/pl.svg" class="bullet-icon" alt="Bullet Icon">
               </a>
             </span>
             <span>This email contains links that are</span>
@@ -59,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('message-text3').innerHTML =`
             <span class="content-trigger">
               <a href="#" id="content-link">
-                <img src="icons/pc.svg" class="bullet-icon" alt="Bullet Icon">
+                <img src="imgs/pc.svg" class="bullet-icon" alt="Bullet Icon">
               </a>
             </span>
             <span>The content of this email raises</span>
@@ -74,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
           document.getElementById('message-text4').innerHTML =`
           <span class="grammar-trigger">
             <a href="#" id="grammar-link">
-              <img src="icons/g.png" class="bullet-icon" alt="Bullet Icon">
+              <img src="imgs/g.png" class="bullet-icon" alt="Bullet Icon">
             </a>
           </span>
           <span>The content of this email contains</span>
@@ -86,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function() {
         else if (message.includes("cdg")){
           document.getElementById('message-text4').innerHTML =`
           <span>
-              <img src="icons/g.png" class="bullet-icon" alt="Bullet Icon">
+              <img src="imgs/g.png" class="bullet-icon" alt="Bullet Icon">
           </span>
           <span>Can't determine if the content of</span>
           <br>
@@ -98,7 +97,7 @@ document.addEventListener('DOMContentLoaded', function() {
           document.getElementById('message-text5').innerHTML =`
           <span class="urgent-trigger">
             <a href="#" id="urgent-link">
-              <img src="icons/u.jpg" class="bullet-icon" alt="Bullet Icon">
+              <img src="imgs/u.jpg" class="bullet-icon" alt="Bullet Icon">
             </a>
           </span>
           <span>The content of this email raises</span>
@@ -108,7 +107,8 @@ document.addEventListener('DOMContentLoaded', function() {
         createListener("urgent-trigger", "Notes On Urgent Sense", "Shila this is urgent");
       }
       else document.getElementById('message-text5').style.display = "none" 
-        document.getElementById('message-image').src = 'icons/warning-icon.svg';
+      
+        document.getElementById('message-image').src = 'imgs/warning-icon.svg';
       }
 
     var exitButton = document.getElementById('exitButton');

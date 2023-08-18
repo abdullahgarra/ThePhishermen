@@ -81,7 +81,7 @@ function setStoredAccessToken(token, callback) {
 }
 
 function preferencesPopUp(preferences){
-  var popupUrl = chrome.runtime.getURL("preferencesPopUp.html") + `?message=${encodeURIComponent(preferences)}`;
+  var popupUrl = chrome.runtime.getURL("popups/preferencesPopUp.html") + `?message=${encodeURIComponent(preferences)}`;
   chrome.windows.create({ url: popupUrl, type: "popup", width: 400, height: 550, left: 400});
 }
 
@@ -194,11 +194,10 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     // Perform actions with the message parameter
     if (message.includes("ftsd") ||message.includes("fts") || message.includes("pl")
         || message.includes("bg") || message.includes("cdg") || message.includes("u")){
-    var popupUrl = chrome.runtime.getURL("popup.html") + `?message=${encodeURIComponent(message)}`;
+    var popupUrl = chrome.runtime.getURL("popups/warningPopUp.html") + `?message=${encodeURIComponent(message)}`;
     chrome.windows.create({ url: popupUrl, type: "popup", width: 410, height: 400, left: 400 });
     sendResponse({ message: "Popup created!" });
     }
-    //chrome.tabs.create({ url: `popup.html?message=${encodeURIComponent(message)}` });
   }
   if (request.action === "preferencesSelections") {
     sendResponse({ message: "Preferences received!" });
