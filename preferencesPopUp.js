@@ -1,22 +1,4 @@
 
-function createListener(icon_name, title, text){
-    const currIcon = document.getElementById(icon_name);
-    currIcon.addEventListener('click', () => {
-        const iconRect = currIcon.getBoundingClientRect();
-        const popupWidth = 350;
-        const popupHeight = 200;
-        const left = iconRect.left - popupWidth + window.screenX;
-        const top = iconRect.top + window.screenY;
-        const popupFeatures = `width=${popupWidth},height=${popupHeight},left=${left},top=${top}`;
-  
-        const popupWindow = window.open('', '_blank', popupFeatures);
-        popupWindow.document.body.innerHTML = '<p style="font-size: 15px;">' + text + '</p>';
-
-        //popupWindow.document.write('<p>' + text + '</p');
-        popupWindow.document.title = title;
-      });
-  }
-
 const link_text =
     "Phishing links in emails mimic real URLs to deceive recipients, " +
     "into revealing data or spreading malware.<br>" +
@@ -25,7 +7,7 @@ const link_text =
     " This method offers a detailed review or a simplified inspection," +  
     "relying on fewer data inputs for analysis."
     
-createListener('links-icon', 'Info On Links Detection', link_text);
+createListenerForExplanation('links-icon', 'Info On Links Detection', link_text);
 const grammar_text = 
     "Bad grammar/spelling in emails can signal phishing. " +
     "Be cautious with such emails, especially for unexpected requests" +
@@ -33,7 +15,7 @@ const grammar_text =
     " We offer a test comparing email content to a valid version." +
     " High similarity indicates validity." +
     " The 'Low' button means you're okay with less similarity."
-createListener('grammar-icon', 'Info On Grammar Detection', grammar_text);
+createListenerForExplanation('grammar-icon', 'Info On Grammar Detection', grammar_text);
 const urgency_text =  
   "The urgency in an email can signal phishing. " +
   "Be cautious with urgent emails, especially for unexpected requests, unfamiliar links," +
@@ -41,16 +23,85 @@ const urgency_text =
   " We offer a test to determine if the email conveys a sense of urgency." +
   " High score means indicates validity." +
   " The 'Low' button means you're okay with some sense of urgency."
-createListener('urgency-icon', 'Info On Urgency Detection', urgency_text);
+createListenerForExplanation('urgency-icon', 'Info On Urgency Detection', urgency_text);
 
 document.addEventListener('DOMContentLoaded', function() {
     
-    const errorContainerUrgency = document.getElementById("errorContainerUrgency");
+    const linksCheckbox = document.getElementById("Links");
+    const linksContainer = document.getElementById("linksContainer");
+    const errorContainerLinks = document.getElementById("errorContainerLinks");
+
+    const grammarCheckbox = document.getElementById("Grammar");
+    const grammarContainer = document.getElementById("grammarContainer");
     const errorContainerGrammar = document.getElementById("errorContainerGrammar");    
-    const errorContainerLink = document.getElementById("errorContainerLinks");
+
+
+    const urgencyCheckbox = document.getElementById("Urgency");
+    const urgencyContainer = document.getElementById("urgencyContainer");
+    const errorContainerUrgency = document.getElementById("errorContainerUrgency");
+
+    // Make sure that the 'errors' comments are deleted 
+    // Make sure to present the buttons once checked
+    createListenerForCheckbox(linksCheckbox, linksContainer, errorContainerLinks)
+    createListenerForCheckbox(grammarCheckbox, grammarContainer, errorContainerGrammar)
+    createListenerForCheckbox(urgencyCheckbox, urgencyContainer, errorContainerUrgency)
+
+    // Make sure that the 'errors' comments are deleted 
+    // Make sure to present the button as selected
+    handleClickOnPreferencesButtons(errorContainerLinks, errorContainerGrammar, errorContainerUrgency);
+
+    // Previous preferences are sent,
+    // we make sure that these preferences are presented to the user
+    const urlParams = new URLSearchParams(window.location.search);
+    handlePreviousPreferences(urlParams, linksContainer, grammarContainer, urgencyContainer);
+
+    // Listener for exiting
+    createListenerForCloseButton(errorContainerLinks,
+                                 errorContainerGrammar,
+                                 errorContainerUrgency);
+
+});
+
+function createListenerForExplanation(icon_name, title, text){
+    const currIcon = document.getElementById(icon_name);
+    currIcon.addEventListener('click', () => {
+        const iconRect = currIcon.getBoundingClientRect();
+        const popupWidth = 350;
+        const popupHeight = 200;
+        const left = iconRect.left - popupWidth + window.screenX;
+        const top = iconRect.top + window.screenY;
+        const popupFeatures = `width=${popupWidth},height=${popupHeight},left=${left},top=${top}`;
+
+        const popupWindow = window.open('', '_blank', popupFeatures);
+        popupWindow.document.body.innerHTML = '<p style="font-size: 15px;">' + text + '</p>';
+
+        //popupWindow.document.write('<p>' + text + '</p');
+        popupWindow.document.title = title;
+    });
+}
+
+function createListenerForCheckbox(checkboxElement, containerElement, errorContainerElement){
+    checkboxElement.addEventListener("change", function() {
+        if (checkboxElement.checked) {
+            containerElement.classList.remove("hidden");
+        } else {
+            containerElement.classList.add("hidden");
+            const buttonsInContainer = containerElement.querySelectorAll(".button");
+            buttonsInContainer.forEach(btn => {
+                btn.classList.remove("selected");
+            }); 
+            errorContainerElement.classList.add("hidden");
+            errorContainerElement.textContent = ""; 
+        } 
+    });
+}
+
+function handleClickOnPreferencesButtons(errorContainerLinks,
+                                        errorContainerGrammar,
+                                        errorContainerUrgency){
 
     const buttons = document.querySelectorAll(".button");
-    
+
     buttons.forEach(button => {
         button.addEventListener("click", () => {
             const parentDivId = button.parentElement.id;
@@ -69,75 +120,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 errorContainerGrammar.textContent = "";
             }
             else if (parentDivId == "linksContainer"){
-                errorContainerGrammar.classList.add("hidden");
-                errorContainerGrammar.textContent = "";
+                errorContainerLinks.classList.add("hidden");
+                errorContainerLinks.textContent = "";
             }
         });
     });
+}
 
-    const popupContainer = document.getElementById("popup-content");
-    const closeButton = document.getElementById("closeButton");
-    const urlParams = new URLSearchParams(window.location.search);
-
-    const linksCheckbox = document.getElementById("Links");
-    const linksContainer = document.getElementById("linksContainer");
-
-    const grammarCheckbox = document.getElementById("grammar");
-    const grammarContainer = document.getElementById("grammarContainer");
-
-    const urgencyCheckbox = document.getElementById("urgency");
-    const urgencyContainer = document.getElementById("urgencyContainer");
-
-    linksCheckbox.addEventListener("change", function() {
-        if (linksCheckbox.checked) {
-            linksContainer.classList.remove("hidden");
-        } else {
-            linksContainer.classList.add("hidden");
-            const buttonsInContainer = linksContainer.querySelectorAll(".button");
-            buttonsInContainer.forEach(btn => {
-                btn.classList.remove("selected");
-            });  
-            errorContainerUrgency.classList.add("hidden");
-            errorContainerUrgency.textContent = "";
-        } 
-    });
-
-
-    grammarCheckbox.addEventListener("change", function() {
-        if (grammarCheckbox.checked) {
-            grammarContainer.classList.remove("hidden");
-        } else {
-            grammarContainer.classList.add("hidden");
-            const buttonsInContainer = grammarContainer.querySelectorAll(".button");
-            buttonsInContainer.forEach(btn => {
-                btn.classList.remove("selected");
-            }); 
-            errorContainerGrammar.classList.add("hidden");
-            errorContainerGrammar.textContent = ""; 
-        } 
-    });
-
-    urgencyCheckbox.addEventListener("change", function() {
-        if (urgencyCheckbox.checked) {
-            urgencyContainer.classList.remove("hidden");
-        } else {
-            urgencyContainer.classList.add("hidden");
-            const buttonsInContainer = urgencyContainer.querySelectorAll(".button");
-            buttonsInContainer.forEach(btn => {
-                btn.classList.remove("selected");
-            });  
-            errorContainerUrgency.classList.add("hidden");
-            errorContainerUrgency.textContent = "";
-        } 
-    });
-
-
-    // Preferences
+function handlePreviousPreferences(urlParams, linksContainer,
+                                   grammarContainer, urgencyContainer){
+    
     const preferences = urlParams.get('message');
 
     document.getElementById('Links').checked = preferences.includes("Links");
-    document.getElementById('grammar').checked = preferences.includes("grammar");
-    document.getElementById('urgency').checked = preferences.includes("urgency");
+    document.getElementById('Grammar').checked = preferences.includes("Grammar");
+    document.getElementById('Urgency').checked = preferences.includes("Urgency");
 
     if (preferences.includes("Links")){
         linksContainer.classList.remove("hidden");
@@ -149,7 +146,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    if (preferences.includes("grammar")){
+    if (preferences.includes("Grammar")){
         grammarContainer.classList.remove("hidden");
         const buttons = grammarContainer.querySelectorAll('button');
         buttons.forEach(button => {
@@ -159,7 +156,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    if (preferences.includes("urgency")){
+    if (preferences.includes("Urgency")){
         urgencyContainer.classList.remove("hidden");
         const buttons = urgencyContainer.querySelectorAll('button');
         buttons.forEach(button => {
@@ -168,57 +165,75 @@ document.addEventListener('DOMContentLoaded', function() {
             } 
         });
     }
+}
 
-
-
+function createListenerForCloseButton(errorContainerLinks,
+                                      errorContainerGrammar,
+                                      errorContainerUrgency)
+{
+    const closeButton = document.getElementById("closeButton");
     closeButton.addEventListener("click", () => {
+        
         document.body.classList.remove("no-scroll");
 
-        const selectedOptions = []; // Array to store selected options
+        // Find selectedOptions
+        const selectedOptions = findSelectedOptions();
 
-        const buttons = popupContainer.querySelectorAll('button');
-        buttons.forEach(button => {
-            if (button.classList.contains('selected')) {
-                selectedOptions.push(button.id);
-            }
-        });
-
-        const checkboxes = popupContainer.querySelectorAll('input[type="checkbox"]');
-        checkboxes.forEach(checkbox => {
-            if (checkbox.checked) {
-                selectedOptions.push(checkbox.name);
-            }
-        });
-
-    
-        var flag = true;
-        if (selectedOptions.includes("Links") &&
-            !selectedOptions.includes("linksLow") &&
-            !selectedOptions.includes("linksHigh")
-            ) {
-                errorContainerLink.textContent = "Select a links detection option.";
-                errorContainerLink.classList.remove("hidden");
-                flag = false;
-            }
-        if (selectedOptions.includes("urgency")  &&
-        !selectedOptions.includes("urgencyLow") &&
-        !selectedOptions.includes("urgencyHigh")) {
-            errorContainerUrgency.textContent = "Select a urgency detection option.";
-            errorContainerUrgency.classList.remove("hidden");
-            flag = false;
-        }
-        if (selectedOptions.includes("grammar")  &&
-        !selectedOptions.includes("grammarLow") &&
-        !selectedOptions.includes("grammarHigh")) {
-            errorContainerGrammar.textContent = "Select a Grammar detection option.";
-            errorContainerGrammar.classList.remove("hidden");
-            flag = false;
-        }
+        // Check if can exit popup
+        flag = checkForError(selectedOptions,  errorContainerLinks,
+                             errorContainerGrammar, errorContainerUrgency);
         if (flag) {
-            // Clear the error message if no issue
             chrome.runtime.sendMessage({ action: "preferencesSelections", message: selectedOptions }, function(response) {
             window.close();});
         }
     });
+}
 
-});
+function findSelectedOptions(){
+
+    const selectedOptions = [];
+
+    const popupContainer = document.getElementById("popup-content");
+    const buttons = popupContainer.querySelectorAll('button');
+    buttons.forEach(button => {
+        if (button.classList.contains('selected')) {
+            selectedOptions.push(button.id);
+        }
+    });
+
+    const checkboxes = popupContainer.querySelectorAll('input[type="checkbox"]');
+    checkboxes.forEach(checkbox => {
+        if (checkbox.checked) {
+            selectedOptions.push(checkbox.name);
+        }
+    });
+    return selectedOptions
+}
+
+function checkForError(selectedOptions,  errorContainerLinks,
+                       errorContainerGrammar, errorContainerUrgency){
+
+    if (selectedOptions.includes("Links") &&
+        !selectedOptions.includes("LinksLow") &&
+        !selectedOptions.includes("LinksHigh")
+        ) {
+            errorContainerLinks.textContent = "Select a links detection option.";
+            errorContainerLinks.classList.remove("hidden");
+             return false;
+        }
+    if (selectedOptions.includes("Urgency")  &&
+    !selectedOptions.includes("UrgencyLow") &&
+    !selectedOptions.includes("UrgencyHigh")) {
+        errorContainerUrgency.textContent = "Select a urgency detection option.";
+        errorContainerUrgency.classList.remove("hidden");
+        return false;
+    }
+    if (selectedOptions.includes("Grammar")  &&
+    !selectedOptions.includes("GrammarLow") &&
+    !selectedOptions.includes("GrammarHigh")) {
+        errorContainerGrammar.textContent = "Select a Grammar detection option.";
+        errorContainerGrammar.classList.remove("hidden");
+        return false;
+    }
+    return true;
+}
