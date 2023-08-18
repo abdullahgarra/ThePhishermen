@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <img src="icons/fts1.svg" class="bullet-icon" alt="Bullet Icon">
               </a>
             </span>
-            <span>This is the first time you have received</span>
+            <span>This is the first time you've received</span>
             <br>
             <span>an email from this sender.</span>
           `;
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
               <img src="icons/ftsd.svg" class="bullet-icon" alt="Bullet Icon">
             </a>
           </span>
-          <span>This is the first time you have received</span>
+          <span>This is the first time you've received</span>
           <br>
           <span>an email from this domain.</span>
         `;
