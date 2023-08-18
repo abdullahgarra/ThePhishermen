@@ -126,22 +126,16 @@
     <br><br>
     
     <div class="container-for-icon">
-      <span id="link-icon" class="bubble-icon">?</span>
+      <span id="links-icon" class="bubble-icon">?</span>
       <label>
-        <input type="checkbox" id = "Links" name="Links" >Links
+        <input type="checkbox" id = "Links" name="Links"  >
+          Phishing Links 
       </label>
     </div>
-    <p id="errorContainerLink" style="color: red;" class="hidden"></p>
-    <div id="radioContainer" class="hidden">
-      <label for="checkpoint1">
-        <input type="radio" id="regular_links" name="link_type" value="1">
-          Regular Links Detection
-      </label>
-      <label for="checkpoint2">
-        <input type="radio" id="reduced_links" name="link_type" value="2">
-          Reduced Links
-      </label>
+    <div id="linksContainer" class="hidden">
+      <button class="button low" id="linksLow">Simple</button><button class="button high" id="linksHigh">Extended</button>
     </div>
+    <p id="errorContainerLinks" style="color: red;" class="hidden"></p>
 
     <div class="container-for-icon">
       <span id="grammar-icon" class="bubble-icon">?</span>

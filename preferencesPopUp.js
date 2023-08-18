@@ -22,10 +22,10 @@ const link_text =
     "into revealing data or spreading malware.<br>" +
     "We offer a phishing detection service that checks these links carefully, "+
     "through a spectrum of information levels." +
-    "This method offers a detailed review or a simplified inspection," +  
+    " This method offers a detailed review or a simplified inspection," +  
     "relying on fewer data inputs for analysis."
     
-createListener('link-icon', 'Info On Links Detection', link_text);
+createListener('links-icon', 'Info On Links Detection', link_text);
 const grammar_text = 
     "Bad grammar/spelling in emails can signal phishing. " +
     "Be cautious with such emails, especially for unexpected requests" +
@@ -47,6 +47,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     const errorContainerUrgency = document.getElementById("errorContainerUrgency");
     const errorContainerGrammar = document.getElementById("errorContainerGrammar");    
+    const errorContainerLink = document.getElementById("errorContainerLinks");
+
     const buttons = document.querySelectorAll(".button");
     
     buttons.forEach(button => {
@@ -66,22 +68,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 errorContainerGrammar.classList.add("hidden");
                 errorContainerGrammar.textContent = "";
             }
-           
+            else if (parentDivId == "linksContainer"){
+                errorContainerGrammar.classList.add("hidden");
+                errorContainerGrammar.textContent = "";
+            }
         });
     });
 
     const popupContainer = document.getElementById("popup-content");
     const closeButton = document.getElementById("closeButton");
     const urlParams = new URLSearchParams(window.location.search);
-    const errorContainerLink = document.getElementById("errorContainerLink");
-
-
 
     const linksCheckbox = document.getElementById("Links");
-    const radioContainer = document.getElementById("radioContainer");
-
-    const regularLinksRadio = document.getElementById("regular_links");
-    const reducedLinksRadio = document.getElementById("reduced_links");
+    const linksContainer = document.getElementById("linksContainer");
 
     const grammarCheckbox = document.getElementById("grammar");
     const grammarContainer = document.getElementById("grammarContainer");
@@ -89,36 +88,20 @@ document.addEventListener('DOMContentLoaded', function() {
     const urgencyCheckbox = document.getElementById("urgency");
     const urgencyContainer = document.getElementById("urgencyContainer");
 
-
     linksCheckbox.addEventListener("change", function() {
         if (linksCheckbox.checked) {
-            radioContainer.classList.remove("hidden");
+            linksContainer.classList.remove("hidden");
         } else {
-            radioContainer.classList.add("hidden");
-            errorContainerLink.classList.add("hidden");
-            errorContainerLink.textContent = "";
-            const radios = popupContainer.querySelectorAll('input[type="radio"]');
-            radios.forEach(radio => {
-                if (radio.checked) {
-                    radio.checked = false;
-                }
-            }); 
-        }
-    });
-
-    reducedLinksRadio.addEventListener("change", function() {
-        if (linksCheckbox.checked && reducedLinksRadio.checked) {
-            errorContainerLink.classList.add("hidden");
-            errorContainerLink.textContent = "";
+            linksContainer.classList.add("hidden");
+            const buttonsInContainer = linksContainer.querySelectorAll(".button");
+            buttonsInContainer.forEach(btn => {
+                btn.classList.remove("selected");
+            });  
+            errorContainerUrgency.classList.add("hidden");
+            errorContainerUrgency.textContent = "";
         } 
     });
 
-    regularLinksRadio.addEventListener("change", function() {
-        if (linksCheckbox.checked && regularLinksRadio.checked) {
-            errorContainerLink.classList.add("hidden");
-            errorContainerLink.textContent = "";
-        }
-    });
 
     grammarCheckbox.addEventListener("change", function() {
         if (grammarCheckbox.checked) {
@@ -149,22 +132,21 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
 
-
-
-
     // Preferences
     const preferences = urlParams.get('message');
 
     document.getElementById('Links').checked = preferences.includes("Links");
-    document.getElementById('regular_links').checked = preferences.includes("regular_links");
-    document.getElementById('reduced_links').checked = preferences.includes("reduced_links");
     document.getElementById('grammar').checked = preferences.includes("grammar");
     document.getElementById('urgency').checked = preferences.includes("urgency");
-    //button.classList.add("selected");
 
-    if (preferences.includes("Links")
-    ){
-        radioContainer.classList.remove("hidden");
+    if (preferences.includes("Links")){
+        linksContainer.classList.remove("hidden");
+        const buttons = linksContainer.querySelectorAll('button');
+        buttons.forEach(button => {
+            if (preferences.includes(button.id)){
+                button.classList.add("selected");
+            } 
+        });
     }
 
     if (preferences.includes("grammar")){
@@ -208,16 +190,11 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
-        const radios = popupContainer.querySelectorAll('input[type="radio"]');
-        radios.forEach(radio => {
-            if (radio.checked) {
-                selectedOptions.push(radio.id);
-            }
-        });        
+    
         var flag = true;
         if (selectedOptions.includes("Links") &&
-            !selectedOptions.includes("reduced_links") &&
-            !selectedOptions.includes("regular_links")
+            !selectedOptions.includes("linksLow") &&
+            !selectedOptions.includes("linksHigh")
             ) {
                 errorContainerLink.textContent = "Select a links detection option.";
                 errorContainerLink.classList.remove("hidden");

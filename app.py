@@ -11,6 +11,8 @@ import nltk
 from nltk.corpus import stopwords
 from nltk.tokenize import sent_tokenize
 from transformers import pipeline
+import warnings
+warnings.filterwarnings('ignore')
 
 # ML
 import pickle
@@ -129,9 +131,9 @@ def reduced_analyze_phishing_links(links):
 # Analyze the probability to be phishing
 def create_analyze_phishing(preferences, content,counter_from_sender,counter_from_domain, links):
 
-    if "regular_links" in preferences:
+    if "linksHigh" in preferences:
         bad_links = analyze_phishing_links(links)
-    elif "reduced_links" in preferences:
+    elif "linksLow" in preferences:
         bad_links = reduced_analyze_phishing_links(links)
     else:
         bad_links = []
