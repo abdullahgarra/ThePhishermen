@@ -3,13 +3,20 @@ document.addEventListener('DOMContentLoaded', function() {
     const urlParams = new URLSearchParams(window.location.search);
     const message = urlParams.get('message');
 
+    const alerts = ["ftsd", "fts", "pl", "bg", "cdg", "u"];
+
+
+    const includesAlert = alerts.some(alert => message.includes(alert));
+
     // Apply different background styles based on the message
-    // if first time sending / phishing links
-    if (message.includes("ftsd") || message.includes("fts") || message.includes("pl") ||
-        message.includes("bg") || message.includes("cdg") || message.includes("u"))
+    // Every finding will cause the alert, beside "phishing content"
+    if (includesAlert)
       {
         document.body.classList.add('warning');
         document.getElementById('message-heading').textContent = 'Warning!';
+        document.getElementById('message-image').src = 'imgs/warning-icon.svg';
+
+        // First time sender, not first time domain
         if (message.includes("fts") && !(message.includes("ftsd"))) {
             document.getElementById('message-text1').innerHTML =`
             <span class="fts-trigger">
@@ -24,6 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
           createListener("fts-trigger", "Notes On First Time Sender", "Notes On First Time Sender");
 
         }
+        // First time domain (sender also)
         else if (message.includes("ftsd")) {
           document.getElementById('message-text1').innerHTML =`
           <span class="ftsd-trigger">
@@ -39,6 +47,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
         }
         else document.getElementById('message-text1').style.display = "none"
+        
+        // Phishing links
         if (message.includes("pl")){
             document.getElementById('message-text2').innerHTML =`
             <span class="links-trigger">
@@ -54,6 +64,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
         }
         else document.getElementById('message-text2').style.display = "none"
+        
+        // Phishing content
         if (message.includes("pc")){
             document.getElementById('message-text3').innerHTML =`
             <span class="content-trigger">
@@ -66,9 +78,11 @@ document.addEventListener('DOMContentLoaded', function() {
             <span>suspicion of phishing.</span>
           `;
           createListener("content-trigger", "Notes On Suspicious Content", "Suspicious Suspicious Suspicious");
-
         }
+
         else document.getElementById('message-text3').style.display = "none"  
+        
+        // Bad Grammar/spelling 
         if (message.includes("bg")){
           document.getElementById('message-text4').innerHTML =`
           <span class="grammar-trigger">
@@ -82,6 +96,7 @@ document.addEventListener('DOMContentLoaded', function() {
         `;
         createListener("grammar-trigger", "Notes On Bad Grammar", "Shila doesn't know Grammar");
         }
+        // Can't calculate Grammar/spelling 
         else if (message.includes("cdg")){
           document.getElementById('message-text4').innerHTML =`
           <span>
@@ -93,6 +108,8 @@ document.addEventListener('DOMContentLoaded', function() {
         `;
         }
         else document.getElementById('message-text4').style.display = "none"  
+        
+        // Urgency sense 
         if (message.includes("u")){
           document.getElementById('message-text5').innerHTML =`
           <span class="urgent-trigger">
@@ -106,9 +123,7 @@ document.addEventListener('DOMContentLoaded', function() {
         `;
         createListener("urgent-trigger", "Notes On Urgent Sense", "Shila this is urgent");
       }
-      else document.getElementById('message-text5').style.display = "none" 
-      
-        document.getElementById('message-image').src = 'imgs/warning-icon.svg';
+      else document.getElementById('message-text5').style.display = "none"       
       }
 
     var exitButton = document.getElementById('exitButton');
