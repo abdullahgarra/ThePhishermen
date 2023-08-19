@@ -1,9 +1,9 @@
-from classes.Email import Email
+from Email import Email
 import logging
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import ssl
-from classes.feature import FeatureExtraction, ReducedFeatureExtraction
+from feature import FeatureExtraction, ReducedFeatureExtraction
 import numpy as np
 import joblib
 from happytransformer import HappyTextToText, TTSettings
@@ -68,7 +68,6 @@ def analyze():
     msg = create_analyze_phishing(emailObj.preferences, emailObj.decoded_content, emailObj.counter_from_sender, emailObj.counter_from_domain, emailObj.links)          
     analysis_result = {'Answer': msg}
 
-    print(analysis_result)
     return jsonify(analysis_result)
 
 def analyze_phishing_content(content):
@@ -82,18 +81,7 @@ def analyze_phishing_content(content):
     # Apply the optimized threshold to make predictions
     y_pred = (y_scores >= best_threshold).astype(int)
     return y_pred
-    """
-
-     # Classify the question
-    predicted_label = model.predict(vectorized_content)[0]  # Get the predicted class label
-    probability_scores = model.predict_proba(vectorized_content)[0]  # Get the probability scores for each class
-
-    # Print the predicted label and probability scores
-    #print("Predicted Label:", predicted_label)
-    ##print("Probability Scores:", probability_scores)
-    return predicted_label
-     """
-
+   
 def analyze_phishing_links(links):
 
     bad_links = []
