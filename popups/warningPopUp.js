@@ -1,19 +1,19 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     const urlParams = new URLSearchParams(window.location.search);
-    const message = urlParams.get('message');
+    const message = urlParams.get('alerts');
 
     const alerts = {
-      'ftsd': {
-        title: 'Notes On First Time Domain',
-        text: 'This is the first time you received an email from this domain.',
-        imgSrc: 'imgs/ftsd.svg',
-        p_class: 'message-fts'
-      },
       'fts': {
         title: 'Notes On First Time Sender',
         text: 'This is the first time you received an email from this sender.',
         imgSrc: 'imgs/fts.svg',
+        p_class: 'message-fts'
+      },
+      'ftsd': {
+        title: 'Notes On First Time Domain',
+        text: 'This is the first time you received an email from this domain.',
+        imgSrc: 'imgs/ftsd.svg',
         p_class: 'message-fts'
       },
       'pl': {

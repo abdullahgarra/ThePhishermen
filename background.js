@@ -190,10 +190,10 @@ chrome.tabs.onUpdated.addListener(browserInjectIf);
 // Listen for a message from the content script
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === "createPopup") {
-    var message = request.message; // Accessing the message parameter
+    var alerts = request.message; // Accessing the message parameter
     // Perform actions with the message parameter
-    if (message.length > 0){
-    var popupUrl = chrome.runtime.getURL("popups/warningPopUp.html") + `?message=${encodeURIComponent(message)}`;
+    if (alerts.length > 0){
+    var popupUrl = chrome.runtime.getURL("popups/warningPopUp.html") + `?alerts=${encodeURIComponent(alerts)}`;
     chrome.windows.create({ url: popupUrl, type: "popup", width: 410, height: 400 });
     sendResponse({ message: "Popup created!" });
     }
