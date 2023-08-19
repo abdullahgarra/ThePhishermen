@@ -139,6 +139,8 @@ def create_analyze_phishing(preferences, content,counter_from_sender,counter_fro
     else:
         urgency_score = 0.0
 
+    print(urgency_score)
+    print(grammar_score)
     # pc = phishing content
     # pl = phishing links
     # fts = first time sender email 
@@ -146,11 +148,9 @@ def create_analyze_phishing(preferences, content,counter_from_sender,counter_fro
     # bg = bad grammar 
     # cdg  = can't decide grammar
     # u = urgency
-    print(preferences)
     res = [] 
     # We only care if it is the first time receving from sender / gotten phishing emails
     if counter_from_domain:
-        res.append("fts")
         res.append("ftsd")
     elif counter_from_sender: res.append("fts")
     if len(bad_links) > 0: res.append("pl")

@@ -8,43 +8,43 @@ document.addEventListener('DOMContentLoaded', function() {
         title: 'Notes On First Time Domain',
         text: 'This is the first time you received an email from this domain.',
         imgSrc: 'imgs/ftsd.svg',
-        p: 'message-fts'
+        p_class: 'message-fts'
       },
       'fts': {
         title: 'Notes On First Time Sender',
         text: 'This is the first time you received an email from this sender.',
         imgSrc: 'imgs/fts.svg',
-        p: 'message-fts'
+        p_class: 'message-fts'
       },
       'pl': {
         title: 'Notes On Suspicious Links',
         text: 'This email contains links that are identified as phishing.',
         imgSrc: 'imgs/pl.svg',
-        p: 'message-links'
+        p_class: 'message-links'
       },
       'pc': {
         title: 'Notes On Suspicious Content',
         text: 'The content of this email raises suspicion of phishing.',
         imgSrc: 'imgs/pc.svg',
-        p: 'message-content'
+        p_class: 'message-content'
       },
       'bg': {
         title: 'Notes On Bad Grammar',
         text: 'The content of this email contains several instances of poor grammar.',
         imgSrc: 'imgs/g.png',
-        p: 'message-grammar'
+        p_class: 'message-grammar'
       },
       'cdg': {
         title: '',
         text: "Can't determine if the content of this email has bad grammar.",
         imgSrc: 'imgs/g.png',
-        p: 'message-grammar'
+        p_class: 'message-grammar'
       },
       'u': {
         title: 'Notes On Urgent Sense',
         text: 'The content of this email raises a sense of urgency.',
         imgSrc: 'imgs/u.jpg',
-        p: 'message-urgent'
+        p_class: 'message-urgent'
       }
     };
 
@@ -58,8 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function applyStylesAndListeners(message, alerts) {
     const validAlerts = Object.keys(alerts).filter(alert => message.includes(alert));
-  
-    if (validAlerts.length === 0 || message.includes('pc')) {
+    if (validAlerts.length === 0 ) {
       return;
     }
   
@@ -70,44 +69,16 @@ document.addEventListener('DOMContentLoaded', function() {
     const image = document.getElementById('message-image');
     image.src = 'imgs/warning-icon.svg';
   
-    const textElements = {
-      'message-text1': validAlerts.includes('ftsd') ? alerts['ftsd'].text : '',
-      'message-text2': validAlerts.includes('pl') ? alerts['pl'].text : '',
-      'message-text3': validAlerts.includes('pc') ? alerts['pc'].text : '',
-      'message-text4': validAlerts.includes('bg') ? alerts['bg'].text : alerts['cdg'].text,
-      'message-text5': validAlerts.includes('u') ? alerts['u'].text : ''
-    };
-  
-    for (const elementId in textElements) {
-      const element = document.getElementById(elementId);
-      element.innerHTML = textElements[elementId];
-      if (textElements[elementId] === '') {
-        element.style.display = 'none';
-      }
-    }
-  
-    for (const validAlert of validAlerts) {
-      const alertSpan = document.createElement('span');
-      alertSpan.className = `${validAlert}-trigger`;      
-      const alertA = document.createElement('a');
-      alertA.href = '#';
-      alertA.id = `${validAlert}-link`;
-      alertSpan.appendChild(alertA);
-      const imgElement = document.createElement('img');
-      imgElement.src = alerts[validAlert].imgSrc;
-      // alert(alerts[validAlert]);
-      imgElement.className = 'bullet-icon';
-      imgElement.alt = 'Bullet Icon';
-      alertA.appendChild(imgElement);
-      alert(imgElement.src);
-      
-      const messageText1 = document.getElementById('message-text1');
-
-      messageText1.appendChild(alertSpan);
-
-      // Append the <a> element within the existing HTML structure
-
-
+    for (const validAlert of validAlerts){
+      const element = document.getElementById(alerts[validAlert].p_class);
+      element.innerHTML = `
+      <span class="${validAlert}-trigger">
+        <a href="#" id="${validAlert}-link">
+          <img src="${alerts[validAlert].imgSrc}" class="bullet-icon" alt="Bullet Icon">
+        </a>
+      </span>
+      <span>${alerts[validAlert].text}</span>
+      `;
       // Listener for more information
       createListener(`${validAlert}-trigger`, alerts[validAlert].title, alerts[validAlert].text);
     }
