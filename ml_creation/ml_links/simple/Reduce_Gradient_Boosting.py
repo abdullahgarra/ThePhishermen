@@ -29,7 +29,7 @@ confusion = confusion_matrix(y_test, y_pred)
 print("Accuracy:", accuracy)
 
 if accuracy > 0.93:
-    with open("reduce_gradient_boosting_model.pkl", "wb") as f:
+    with open("ml_models/reduce_gradient_boosting_model.pkl", "wb") as f:
         pickle.dump((gb_classifier), f)
 print('\nAccuracy:', round(accuracy, 5))
 

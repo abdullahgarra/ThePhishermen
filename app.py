@@ -25,19 +25,8 @@ stop_words = set(stopwords.words("english"))
 
 pipe = pipeline(model="facebook/bart-large-mnli")
 
-# Specify the path to the pickle file containing the trained model
-model_path = 'naive_bayes_model.pkl'
-"""
-# Load the model from the pickle file
-with open(model_path, 'rb') as file:
-    loaded_model = pickle.load(file)
-    vectorizer = loaded_model[1]
-    model = loaded_model[0]
-file.close()
-"""
 
-
-model_path = 'svm_model.pkl'
+model_path = 'ml_models/svm_model.pkl'
 # Load the model from the pickle file
 with open(model_path, 'rb') as file:
     loaded_model_info = joblib.load(model_path)
@@ -48,8 +37,8 @@ with open(model_path, 'rb') as file:
     beta = loaded_model_info['beta']
 file.close()
 
-model_path = 'gradient_boosting_model.pkl'
-reduced_model_path = 'reduce_gradient_boosting_model.pkl'
+model_path = 'ml_models/gradient_boosting_model.pkl'
+reduced_model_path = 'ml_models/reduce_gradient_boosting_model.pkl'
 
 # Load the model from the pickle file
 with open(model_path, 'rb') as file:
