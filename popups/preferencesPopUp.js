@@ -33,8 +33,6 @@ createListenerForExplanation('urgency-icon', 'Info On Urgency Detection', urgenc
 
 document.addEventListener('DOMContentLoaded', function() {
     
-    const contentCheckbox = document.getElementById("Content");
-
     const linksCheckbox = document.getElementById("Links");
     const linksContainer = document.getElementById("linksContainer");
     const errorContainerLinks = document.getElementById("errorContainerLinks");
@@ -142,7 +140,7 @@ function handlePreviousPreferences(urlParams, linksContainer,
     
     const preferences = urlParams.get('message');
 
-    document.getElementById('Content').checked = preferences.includes("Links");
+    document.getElementById('Content').checked = preferences.includes("Content");
     document.getElementById('Links').checked = preferences.includes("Links");
     document.getElementById('Grammar').checked = preferences.includes("Grammar");
     document.getElementById('Urgency').checked = preferences.includes("Urgency");
