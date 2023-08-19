@@ -180,6 +180,7 @@ function createListenerForCloseButton(errorContainerLinks,
         const selectedOptions = findSelectedOptions();
 
         // Check if can exit popup
+        //  Create suitable errors in func
         flag = checkForError(selectedOptions,  errorContainerLinks,
                              errorContainerGrammar, errorContainerUrgency);
         if (flag) {
@@ -212,28 +213,28 @@ function findSelectedOptions(){
 
 function checkForError(selectedOptions,  errorContainerLinks,
                        errorContainerGrammar, errorContainerUrgency){
-
+    var flag = true;
     if (selectedOptions.includes("Links") &&
         !selectedOptions.includes("LinksLow") &&
         !selectedOptions.includes("LinksHigh")
         ) {
             errorContainerLinks.textContent = "Select a links detection option.";
             errorContainerLinks.classList.remove("hidden");
-             return false;
+            flag = false;
         }
     if (selectedOptions.includes("Urgency")  &&
     !selectedOptions.includes("UrgencyLow") &&
     !selectedOptions.includes("UrgencyHigh")) {
         errorContainerUrgency.textContent = "Select a urgency detection option.";
         errorContainerUrgency.classList.remove("hidden");
-        return false;
+        flag = false;
     }
     if (selectedOptions.includes("Grammar")  &&
     !selectedOptions.includes("GrammarLow") &&
     !selectedOptions.includes("GrammarHigh")) {
         errorContainerGrammar.textContent = "Select a Grammar detection option.";
         errorContainerGrammar.classList.remove("hidden");
-        return false;
+        flag = false;
     }
-    return true;
+    return flag;
 }
