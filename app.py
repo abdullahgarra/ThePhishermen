@@ -1,9 +1,9 @@
-from Email import Email
+from classes.Email import Email
 import logging
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import ssl
-from feature import FeatureExtraction, ReducedFeatureExtraction
+from classes.feature import FeatureExtraction, ReducedFeatureExtraction
 import numpy as np
 import joblib
 from happytransformer import HappyTextToText, TTSettings
