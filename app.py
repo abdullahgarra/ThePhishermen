@@ -147,7 +147,7 @@ def create_analyze_phishing(preferences, content,counter_from_sender,counter_fro
     # If we are strict, we must allow only high scores
     elif len(content) > 2:
         if ("GrammarLow" in preferences) \
-            and (grammar_score < 0.75): res.append('bg')
+            and (grammar_score < 0.90): res.append('bg')
         if ("GrammarHigh" in preferences) \
             and (grammar_score < 0.95): res.append('bg')
     # Higher urgency_score, means more urgent
@@ -156,7 +156,7 @@ def create_analyze_phishing(preferences, content,counter_from_sender,counter_fro
         if ("UrgencyLow" in preferences) \
             and urgency_score > 0.95: res.append("u")
         if ("UrgencyHigh" in preferences) \
-            and urgency_score > 0.75: res.append("u")
+            and urgency_score > 0.90: res.append("u")
     print(res)
     return res 
 
