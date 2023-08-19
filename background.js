@@ -12,6 +12,16 @@ function create_alert(msg) {
   );
 }
 
+function UIforPreferences(){
+  if (preferences.length === 0){
+    chrome.action.setIcon({ path: 'icons/orange_icon.png' });
+    chrome.action.setTitle({ title: "Click to choose your preferences" });
+  } else {
+    chrome.action.setIcon({ path: 'icons/green_icon.png' });
+    chrome.action.setTitle({ title: "Click to change your preferences" });
+  }
+}
+
 
 /**
  * Get the user's access_token.
@@ -48,9 +58,7 @@ function handleAuthToken(token) {
   } else {
     setStoredAccessToken(token, function() {
       //create_alert("Hi, welcome! All logged in!");
-      //chrome.action.setIcon({ path: 'icons/green_icon.png' });
-      //chrome.action.setTitle({ title: "Click here to change your preferences" });
-
+      UIforPreferences();
     });
   }
 }
@@ -95,9 +103,7 @@ function browserActionClicked(tab) {
       .then(isValid => {
         if (isValid) {
             //create_alert("Hi, welcome back! Already logged in");
-            //chrome.action.setIcon({ path: 'icons/green_icon.png' });
-            // Change the extension title
-            //chrome.action.setTitle({ title: "Click here to change your preferences" });
+            UIforPreferences();
         }
         else {
           getAuthTokenInteractive();
@@ -202,13 +208,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     sendResponse({ message: "Preferences received!" });
     var message = request.message;
     preferences = message;
-    if (preferences.length === 0){
-      chrome.action.setIcon({ path: 'icons/orange_icon.png' });
-      chrome.action.setTitle({ title: "Click to choose your preferences" });
-    } else {
-      chrome.action.setIcon({ path: 'icons/green_icon.png' });
-      chrome.action.setTitle({ title: "Click to chnage your preferences" });
-    }
+    UIforPreferences();
     
   }
 });
