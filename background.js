@@ -202,6 +202,14 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     sendResponse({ message: "Preferences received!" });
     var message = request.message;
     preferences = message;
+    if (preferences.length === 0){
+      chrome.action.setIcon({ path: 'icons/orange_icon.png' });
+      chrome.action.setTitle({ title: "Click to choose your preferences" });
+    } else {
+      chrome.action.setIcon({ path: 'icons/green_icon.png' });
+      chrome.action.setTitle({ title: "Click to chnage your preferences" });
+    }
+    
   }
 });
 
