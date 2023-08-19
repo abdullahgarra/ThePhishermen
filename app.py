@@ -76,7 +76,7 @@ def analyze_phishing_content(content):
 
     
     y_scores = loaded_svm.predict_proba(vectorized_content)[:, 1]
-
+    print(y_scores)
    
     # Apply the optimized threshold to make predictions
     y_pred = (y_scores >= best_threshold).astype(int)
