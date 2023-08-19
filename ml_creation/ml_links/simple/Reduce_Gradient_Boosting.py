@@ -4,7 +4,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.metrics import accuracy_score, confusion_matrix
 # Load the dataset (assuming you have a CSV file with features and labels)
-data = pd.read_csv("ML_model_link\phishing.csv")
+data = pd.read_csv("ML_model_link\phishing2.csv")
 
 # Separate features (X) and labels (y)
 X = data.drop('class', axis=1)
@@ -28,10 +28,9 @@ confusion = confusion_matrix(y_test, y_pred)
 
 print("Accuracy:", accuracy)
 
-if accuracy > 0.95:
-    with open("gradient_boosting_model.pkl", "wb") as f:
+if accuracy > 0.93:
+    with open("ml_models/reduce_gradient_boosting_model.pkl", "wb") as f:
         pickle.dump((gb_classifier), f)
-
 print('\nAccuracy:', round(accuracy, 5))
 
 tn, fp, fn, tp = confusion_matrix(y_test, y_pred).ravel()

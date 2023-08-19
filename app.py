@@ -1,9 +1,9 @@
-from Email import Email
+from classes.Email import Email
 import logging
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import ssl
-from feature import FeatureExtraction, ReducedFeatureExtraction
+from classes.feature import FeatureExtraction, ReducedFeatureExtraction
 import numpy as np
 import joblib
 from happytransformer import HappyTextToText, TTSettings
@@ -25,19 +25,8 @@ stop_words = set(stopwords.words("english"))
 
 pipe = pipeline(model="facebook/bart-large-mnli")
 
-# Specify the path to the pickle file containing the trained model
-model_path = 'naive_bayes_model.pkl'
-"""
-# Load the model from the pickle file
-with open(model_path, 'rb') as file:
-    loaded_model = pickle.load(file)
-    vectorizer = loaded_model[1]
-    model = loaded_model[0]
-file.close()
-"""
 
-
-model_path = 'svm_model.pkl'
+model_path = 'ml_models/svm_model.pkl'
 # Load the model from the pickle file
 with open(model_path, 'rb') as file:
     loaded_model_info = joblib.load(model_path)
@@ -48,8 +37,8 @@ with open(model_path, 'rb') as file:
     beta = loaded_model_info['beta']
 file.close()
 
-model_path = 'gradient_boosting_model.pkl'
-reduced_model_path = 'reduce_gradient_boosting_model.pkl'
+model_path = 'ml_models/gradient_boosting_model.pkl'
+reduced_model_path = 'ml_models/reduce_gradient_boosting_model.pkl'
 
 # Load the model from the pickle file
 with open(model_path, 'rb') as file:
@@ -131,21 +120,21 @@ def reduced_analyze_phishing_links(links):
 # Analyze the probability to be phishing
 def create_analyze_phishing(preferences, content,counter_from_sender,counter_from_domain, links):
 
-    if "linksHigh" in preferences:
+    if "LinksHigh" in preferences:
         bad_links = analyze_phishing_links(links)
-    elif "linksLow" in preferences:
+    elif "LinksLow" in preferences:
         bad_links = reduced_analyze_phishing_links(links)
     else:
         bad_links = []
 
     predicted_label_content = analyze_phishing_content(content)
 
-    if "grammar" in preferences:
+    if "Grammar" in preferences:
         grammar_score = analyze_grammer(content)
     else:
         grammar_score = 1.0
 
-    if "urgency" in preferences:
+    if "Urgency" in preferences:
         urgency_score = analyze_urgency(content)
     else:
         urgency_score = 0.0
@@ -157,7 +146,7 @@ def create_analyze_phishing(preferences, content,counter_from_sender,counter_fro
     # bg = bad grammar 
     # cdg  = can't decide grammar
     # u = urgency
-
+    print(preferences)
     res = [] 
     # We only care if it is the first time receving from sender / gotten phishing emails
     if counter_from_domain:
@@ -170,16 +159,16 @@ def create_analyze_phishing(preferences, content,counter_from_sender,counter_fro
     # Higher grammar_score, means more similar to the valid text
     # If we are strict, we must allow only high scores
     elif len(content) > 2:
-        if ("grammarLow" in preferences) \
+        if ("GrammarLow" in preferences) \
             and (grammar_score < 0.75): res.append('bg')
-        if ("grammarHigh" in preferences) \
+        if ("GrammarHigh" in preferences) \
             and (grammar_score < 0.95): res.append('bg')
     # Higher urgency_score, means more urgent
     # If we are strict, we count low scores as urgent too 
     if len(content) > 2:
-        if ("urgencyLow" in preferences) \
+        if ("UrgencyLow" in preferences) \
             and urgency_score > 0.95: res.append("u")
-        if ("urgencyHigh" in preferences) \
+        if ("UrgencyHigh" in preferences) \
             and urgency_score > 0.75: res.append("u")
     return res 
 
