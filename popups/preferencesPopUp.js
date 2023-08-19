@@ -1,4 +1,10 @@
-
+const content_text =
+    "Phishing email often exhibit repetitive patterns and employ" +
+    "specific words to mimic legitimate communication.<br>" +
+    "We offer a phishing detection service that analyzes email content, "+
+    "processing and comprehending the extensive data within emails. " +
+    "The 'Low' button means you're okay with some probability that the content is phishing." 
+createListenerForExplanation('content-icon', 'Info On Content Detection', content_text);
 const link_text =
     "Phishing links in emails mimic real URLs to deceive recipients, " +
     "into revealing data or spreading malware.<br>" +
@@ -27,6 +33,8 @@ createListenerForExplanation('urgency-icon', 'Info On Urgency Detection', urgenc
 
 document.addEventListener('DOMContentLoaded', function() {
     
+    const contentCheckbox = document.getElementById("Content");
+
     const linksCheckbox = document.getElementById("Links");
     const linksContainer = document.getElementById("linksContainer");
     const errorContainerLinks = document.getElementById("errorContainerLinks");
@@ -48,12 +56,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Make sure that the 'errors' comments are deleted 
     // Make sure to present the button as selected
-    handleClickOnPreferencesButtons(errorContainerLinks, errorContainerGrammar, errorContainerUrgency);
+    handleClickOnPreferencesButtons(errorContainerLinks,
+                                    errorContainerGrammar, errorContainerUrgency);
 
     // Previous preferences are sent,
     // we make sure that these preferences are presented to the user
     const urlParams = new URLSearchParams(window.location.search);
-    handlePreviousPreferences(urlParams, linksContainer, grammarContainer, urgencyContainer);
+    handlePreviousPreferences(urlParams, linksContainer, 
+                            grammarContainer, urgencyContainer);
 
     // Listener for exiting
     createListenerForCloseButton(errorContainerLinks,
@@ -132,6 +142,7 @@ function handlePreviousPreferences(urlParams, linksContainer,
     
     const preferences = urlParams.get('message');
 
+    document.getElementById('Content').checked = preferences.includes("Links");
     document.getElementById('Links').checked = preferences.includes("Links");
     document.getElementById('Grammar').checked = preferences.includes("Grammar");
     document.getElementById('Urgency').checked = preferences.includes("Urgency");

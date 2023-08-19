@@ -74,9 +74,7 @@ def analyze_phishing_content(content):
     #preprocessed_content = preprocess(content)  # Preprocess the question using your preprocessing steps
     vectorized_content = vectorizer.transform([content])  # Transform the question into a numerical representation
 
-    
     y_scores = loaded_svm.predict_proba(vectorized_content)[:, 1]
-    print(y_scores)
    
     # Apply the optimized threshold to make predictions
     y_pred = (y_scores >= best_threshold).astype(int)
@@ -115,8 +113,11 @@ def create_analyze_phishing(preferences, content,counter_from_sender,counter_fro
     else:
         bad_links = []
 
-    predicted_label_content = analyze_phishing_content(content)
-
+    if "Content" in preferences:
+        predicted_label_content = analyze_phishing_content(content)
+    else:
+        predicted_label_content = 0
+    
     if "Grammar" in preferences:
         grammar_score = analyze_grammer(content)
     else:
@@ -127,8 +128,6 @@ def create_analyze_phishing(preferences, content,counter_from_sender,counter_fro
     else:
         urgency_score = 0.0
 
-    print(urgency_score)
-    print(grammar_score)
     # pc = phishing content
     # pl = phishing links
     # fts = first time sender email 
@@ -158,6 +157,7 @@ def create_analyze_phishing(preferences, content,counter_from_sender,counter_fro
             and urgency_score > 0.95: res.append("u")
         if ("UrgencyHigh" in preferences) \
             and urgency_score > 0.75: res.append("u")
+    print(res)
     return res 
 
 # Token indices sequence length is longer than the specified 
