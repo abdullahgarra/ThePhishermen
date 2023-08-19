@@ -48,8 +48,8 @@ function handleAuthToken(token) {
   } else {
     setStoredAccessToken(token, function() {
       //create_alert("Hi, welcome! All logged in!");
-      chrome.action.setIcon({ path: 'icons/green_icon.png' });
-      chrome.action.setTitle({ title: "Click here to change your preferences" });
+      //chrome.action.setIcon({ path: 'icons/green_icon.png' });
+      //chrome.action.setTitle({ title: "Click here to change your preferences" });
 
     });
   }
@@ -95,9 +95,9 @@ function browserActionClicked(tab) {
       .then(isValid => {
         if (isValid) {
             //create_alert("Hi, welcome back! Already logged in");
-            chrome.action.setIcon({ path: 'icons/green_icon.png' });
+            //chrome.action.setIcon({ path: 'icons/green_icon.png' });
             // Change the extension title
-            chrome.action.setTitle({ title: "Click here to change your preferences" });
+            //chrome.action.setTitle({ title: "Click here to change your preferences" });
         }
         else {
           getAuthTokenInteractive();
