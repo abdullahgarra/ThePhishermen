@@ -157,6 +157,7 @@ chrome.webNavigation.onCommitted.addListener((details) => {
 
 function browserInjectIf(tabId, changeInfo, tab){
   console.log("From browser");
+
   //console.log(changeInfo);
   //console.log(tab);
 
@@ -168,6 +169,7 @@ function browserInjectIf(tabId, changeInfo, tab){
         changeInfo.url.includes('mail.google.com/mail/u/') &&
         changeInfo.url.includes('inbox/'))
          {
+              UIforPreferences();
            
               console.log("Injecting");
               console.log(tabId);
