@@ -2,8 +2,8 @@ const content_text =
     "Phishing email often exhibit repetitive patterns and employ" +
     "specific words to mimic legitimate communication.<br>" +
     "We offer a phishing detection service that analyzes email content, "+
-    "processing and comprehending the extensive data within emails. " +
-    "The 'Low' button means you're okay with some probability that the content is phishing." 
+    "processing and comprehending the extensive data within emails. "
+//+ "The 'Low' button means you're okay with some probability that the content is phishing." 
 createListenerForExplanation('content-icon', 'Info On Content Detection', content_text);
 const link_text =
     "Phishing links in emails mimic real URLs to deceive recipients, " +

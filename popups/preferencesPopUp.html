@@ -19,7 +19,7 @@
             background-color: #fbf9f9; /* Change this color as needed */
             padding: 10px;
             border-radius: 10px;
-            width: 200px; /* Adjust the value as needed */
+            width: 225px; /* Adjust the value as needed */
             margin: 0 auto; /* Center the content horizontally */
             text-align: center; 
         }
@@ -38,8 +38,15 @@
         margin-top: 15px ;
         margin-left: 10px;
         border-radius: 20px; /* Rounded corners */
- 
+        border: 1px solid;
+        border-color: black ;
       }
+
+      p {
+        margin-top: 5px;
+        margin-bottom: 5px;
+      }
+      
 
     .container-for-icon {
       display: flex;
@@ -129,7 +136,7 @@
       <span id="content-icon" class="bubble-icon">?</span>
       <label>
         <input type="checkbox" id = "Content" name="Content"  >
-          Phishing Content 
+          Phishing Content Detection
       </label>
     </div>
 
@@ -137,11 +144,11 @@
       <span id="links-icon" class="bubble-icon">?</span>
       <label>
         <input type="checkbox" id = "Links" name="Links"  >
-          Phishing Links 
+          Phishing Links Detection 
       </label>
     </div>
     <div id="linksContainer" class="hidden">
-      <button class="button low" id="LinksLow">Simple</button><button class="button high" id="LinksHigh">Extended</button>
+      <button class="button low" id="LinksLow">Simpler</button><button class="button high" id="LinksHigh">Extended</button>
     </div>
     <p id="errorContainerLinks" style="color: red;" class="hidden"></p>
 
@@ -149,11 +156,11 @@
       <span id="grammar-icon" class="bubble-icon">?</span>
       <label>
         <input type="checkbox" id = "Grammar" name="Grammar"  >
-          Bad Grammar/Spelling
+          Bad Grammar/Spelling Detection
       </label>
     </div>
     <div id="grammarContainer" class="hidden">
-      <button class="button low" id="GrammarLow">Low</button><button class="button high" id="GrammarHigh">High</button>
+      Sensitivity: <button class="button low" id="GrammarLow">Low</button><button class="button high" id="GrammarHigh">High</button>
     </div>
     <p id="errorContainerGrammar" style="color: red;" class="hidden"></p>
 
@@ -161,11 +168,11 @@
       <span id="urgency-icon" class="bubble-icon">?</span>
       <label>
         <input type="checkbox" id = "Urgency" name="Urgency"  >
-          Urgency
+          Urgency Detection
       </label>
     </div>
     <div id="urgencyContainer" class="hidden">
-      <button class="button low" id="UrgencyLow">Low</button><button class="button high" id="UrgencyHigh">High</button>
+      Sensitivity: <button class="button low" id="UrgencyLow">Low</button><button class="button high" id="UrgencyHigh">High</button>
     </div>
     <p id="errorContainerUrgency" style="color: red;" class="hidden"></p>
 

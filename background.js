@@ -90,7 +90,7 @@ function setStoredAccessToken(token, callback) {
 
 function preferencesPopUp(preferences){
   var popupUrl = chrome.runtime.getURL("popups/preferencesPopUp.html") + `?message=${encodeURIComponent(preferences)}`;
-  chrome.windows.create({ url: popupUrl, type: "popup", width: 400, height: 550});
+  chrome.windows.create({ url: popupUrl, type: "popup", width: 450, height: 600});
 }
 
 
