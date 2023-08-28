@@ -5,44 +5,51 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const alerts = {
       'fts': {
-        title: 'Notes On First Time Sender',
+        title: 'First Time Sender',
         text: 'This is the first time you received an email from this sender.',
+        infoText: "This is the first time you receive an email from this sender. Nevertheless, we've noted a previous interaction with the domain linked to this sender, which reduces potential risks.",
         imgSrc: 'imgs/fts.svg',
         p_class: 'message-fts'
       },
       'ftsd': {
-        title: 'Notes On First Time Domain',
+        title: 'First Time Domain',
         text: 'This is the first time you received an email from this domain.',
+        infoText: "You've received an email from an unfamiliar domain. Proceed with care and avoid clicking on any suspicious links or downloading attachments. Please delete this email if you want to continue identifing this domain as unfamiliar.",
         imgSrc: 'imgs/ftsd.svg',
         p_class: 'message-fts'
       },
       'pl': {
-        title: 'Notes On Suspicious Links',
+        title: 'Suspicious Links',
         text: 'This email contains links that are identified as phishing.',
+        infoText: 'Clicking on a suspicious link can expose you to malware infections, identity theft, financial loss, privacy breaches, reputation damage, and system compromise, posing significant risks to your online security and personal information.',
         imgSrc: 'imgs/pl.svg',
         p_class: 'message-links'
       },
       'pc': {
-        title: 'Notes On Suspicious Content',
+        title: 'Suspicious Content',
         text: 'The content of this email raises suspicion of phishing.',
+        infoText: "Receiving an email with suspicious content can lead to potential risks, including falling victim to phishing attempts. Exercise caution, refrain from clicking on any links or downloading attachments, and verify the sender's authenticity.",
         imgSrc: 'imgs/pc.svg',
         p_class: 'message-content'
       },
       'bg': {
-        title: 'Notes On Bad Grammar',
+        title: 'Bad Grammar',
         text: 'The content of this email contains several cases of poor grammar.',
+        infoText: 'Emails with bad grammar/spelling are often associated with phishing attempts or scams, where cybercriminals may be trying to deceive you into taking harmful actions or revealing sensitive information. Please be safe and alert.',
         imgSrc: 'imgs/g.png',
         p_class: 'message-grammar'
       },
       'cdg': {
-        title: '',
+        title: 'Grammar/Spelling Detection',
         text: "Can't determine if the content of this email has bad grammar.",
+        infoText: "Can't determine if the content of this email has bad grammar.",
         imgSrc: 'imgs/g.png',
         p_class: 'message-grammar'
       },
       'u': {
-        title: 'Notes On Urgent Sense',
+        title: 'Urgent Sense',
         text: 'The content of this email raises a sense of urgency.',
+        infoText: "Cybercriminals often exploit urgency, pressuring decisions like clicking malicious links or sharing sensitive information. Verify sender's identity and request legitimacy before taking action.",
         imgSrc: 'imgs/u.jpg',
         p_class: 'message-urgent'
       }
@@ -80,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function() {
       <span>${alerts[validAlert].text}</span>
       `;
       // Listener for more information
-      createListener(`${validAlert}-trigger`, alerts[validAlert].title, alerts[validAlert].text);
+      createListener(`${validAlert}-trigger`, alerts[validAlert].title, alerts[validAlert].infoText);
     }
   }
 
@@ -91,7 +98,7 @@ function createListener(span_name, title, text){
     popupTrigger.addEventListener('click', () => {
       const iconRect = popupTrigger.getBoundingClientRect();
       const popupWidth = 300;
-      const popupHeight = 200;
+      const popupHeight = 150;
       const left = iconRect.left - popupWidth + window.screenX;
       const top = iconRect.top + window.screenY;
       const popupFeatures = `width=${popupWidth},height=${popupHeight},left=${left},top=${top}`;
