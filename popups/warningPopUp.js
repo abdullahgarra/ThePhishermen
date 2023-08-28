@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
       },
       'bg': {
         title: 'Notes On Bad Grammar',
-        text: 'The content of this email contains several instances of poor grammar.',
+        text: 'The content of this email contains several cases of poor grammar.',
         imgSrc: 'imgs/g.png',
         p_class: 'message-grammar'
       },
