@@ -1,7 +1,4 @@
 
-var preferences = []
-//["Links"]
-
 function create_alert(msg) {
   chrome.notifications.create({
     type: 'basic',
@@ -13,15 +10,20 @@ function create_alert(msg) {
 }
 
 function UIforPreferences(){
-  if (preferences.length === 0){
-    chrome.action.setIcon({ path: 'icons/orange_icon.png' });
-    chrome.action.setTitle({ title: "Click to choose your preferences" });
-  } else {
-    chrome.action.setIcon({ path: 'icons/green_icon.png' });
-    chrome.action.setTitle({ title: "Click to change your preferences" });
-  }
+  getStoredPreferences().then((prefrences) => {
+    if (prefrences !== null){
+      chrome.action.setIcon({ path: 'icons/green_icon.png' });
+      chrome.action.setTitle({ title: "Click to change your preferences" });
+    }
+    else {
+      chrome.action.setIcon({ path: 'icons/orange_icon.png' });
+      chrome.action.setTitle({ title: "Click to choose your preferences" });
+    }
+  }).catch((error) => {
+    // Handle storage error
+    console.error(error);
+  });
 }
-
 
 /**
  * Get the user's access_token.
@@ -58,7 +60,6 @@ function handleAuthToken(token) {
   } else {
     setStoredAccessToken(token, function() {
       //create_alert("Hi, welcome! All logged in!");
-      UIforPreferences();
     });
   }
 }
@@ -88,9 +89,38 @@ function setStoredAccessToken(token, callback) {
   });
 }
 
-function preferencesPopUp(preferences){
-  var popupUrl = chrome.runtime.getURL("popups/preferencesPopUp.html") + `?message=${encodeURIComponent(preferences)}`;
-  chrome.windows.create({ url: popupUrl, type: "popup", width: 450, height: 600});
+function getStoredPreferences() {
+  return new Promise((resolve, reject) => {
+    chrome.storage.local.get(['preferences'], function(result) {
+      if (chrome.runtime.lastError) {
+        // Handle storage error
+        reject(chrome.runtime.lastError);
+      } else if (!result.hasOwnProperty('preferences')) {
+        // 'preferences' not found
+        resolve(null);
+      } else {
+        // 'preferences' found
+        resolve(result.preferences);
+      }
+    });
+  });
+}
+
+function preferencesPopUp(){
+
+  getStoredPreferences().then((preferences) => {
+    if (preferences !== null) {
+      var popupUrl = chrome.runtime.getURL("popups/preferencesPopUp.html") + `?message=${encodeURIComponent(preferences)}`;
+    }
+    else {
+      var popupUrl = chrome.runtime.getURL("popups/preferencesPopUp.html") + `?message=${encodeURIComponent([])}`;
+    }
+    chrome.windows.create({ url: popupUrl, type: "popup", width: 450, height: 600});
+  }).catch((error) => {
+    // Handle storage error
+    console.error(error);
+  });
+  
 }
 
 
@@ -108,7 +138,8 @@ function browserActionClicked(tab) {
         else {
           getAuthTokenInteractive();
         }
-        preferencesPopUp(preferences);
+
+        preferencesPopUp();
       })
       .catch(error => {
         console.error('Error checking access token validity:', error);
@@ -157,6 +188,7 @@ chrome.webNavigation.onCommitted.addListener((details) => {
 
 function browserInjectIf(tabId, changeInfo, tab){
   console.log("From browser");
+  UIforPreferences();
 
   //console.log(changeInfo);
   //console.log(tab);
@@ -169,7 +201,6 @@ function browserInjectIf(tabId, changeInfo, tab){
         changeInfo.url.includes('mail.google.com/mail/u/') &&
         changeInfo.url.includes('inbox/'))
          {
-              UIforPreferences();
            
               console.log("Injecting");
               console.log(tabId);
@@ -183,7 +214,17 @@ function browserInjectIf(tabId, changeInfo, tab){
                     files: ['content.js'],
                   });
                 }
-                chrome.tabs.sendMessage(tabId, { action: 'invokeFunction', functionName: 'readingEmails', token: storedToken, tabUrl: changeInfo.url, sessionPreferences: preferences });
+                getStoredPreferences().then((preferences) => {
+                  if (preferences !== null) {
+                    // 'preferences' is available, do something with it
+                    chrome.tabs.sendMessage(tabId, { action: 'invokeFunction', functionName: 'readingEmails', token: storedToken, tabUrl: changeInfo.url, sessionPreferences: preferences });
+                  } else {
+                    chrome.tabs.sendMessage(tabId, { action: 'invokeFunction', functionName: 'readingEmails', token: storedToken, tabUrl: changeInfo.url, sessionPreferences: [] });
+                  }
+                }).catch((error) => {
+                  // Handle storage error
+                  console.error(error);
+                });              
               })();
           } 
          }
@@ -211,7 +252,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     var message = request.message;
     preferences = message;
     UIforPreferences();
-    
+    // 
+    chrome.storage.local.set({ 'preferences': preferences });
   }
 });
 
