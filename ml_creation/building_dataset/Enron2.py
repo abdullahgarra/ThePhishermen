@@ -36,6 +36,3 @@ def email_analyse(path):
         writer.writerow(content)
     file.close()
 
-# print(get_body_without_past_message("hello"))
-# print(read_file("C:\\Users\\lilac\\Downloads\\enron_mail_20150507\\maildir\\dasovich-j\\all_documents\\29377"))
-
