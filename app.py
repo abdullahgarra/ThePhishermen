@@ -1,7 +1,7 @@
 from Email import Email
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from feature import FeatureExtraction, ReducedFeatureExtraction
+from feature import ExtendedFeatureExtraction, ReducedFeatureExtraction
 import numpy as np
 import joblib
 from happytransformer import HappyTextToText, TTSettings
@@ -150,7 +150,7 @@ def analyze_phishing_links(links, model_type):
             x = np.array(obj.getFeaturesList()).reshape(1, 5)
             y_prediction = rgbc.predict(x)[0]
         elif model_type == "extended":
-            obj = FeatureExtraction(link)
+            obj = ExtendedFeatureExtraction(link)
             x = np.array(obj.getFeaturesList()).reshape(1, 14)
             y_prediction = gbc.predict(x)[0]
         else:

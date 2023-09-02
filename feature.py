@@ -15,7 +15,7 @@ from urllib.parse import urlparse
 # The extraction of the "important" features
 # Their importance was taken from:
 # https://github.com/VaibhavBichave/Phishing-URL-Detection
-class FeatureExtraction:
+class BaseFeatureExtraction:
     features = []
 
     def __init__(self, url):
@@ -44,21 +44,6 @@ class FeatureExtraction:
         except:
             pass
 
-        # All the 14 features for the extended version
-        self.features.append(self.UsingIp())
-        self.features.append(self.longUrl())
-        self.features.append(self.prefixSuffix())
-        self.features.append(self.SubDomains())
-        self.features.append(self.Hppts())
-        self.features.append(self.DomainRegLen())
-        self.features.append(self.RequestURL())
-        self.features.append(self.AnchorURL())
-        self.features.append(self.LinksInScriptTags())
-        self.features.append(self.ServerFormHandler())
-        self.features.append(self.DNSRecording())
-        self.features.append(self.WebsiteTraffic())
-        self.features.append(self.GoogleIndex())
-        self.features.append(self.LinksPointingToPage())
 
     # 1.UsingIp
     def UsingIp(self):
@@ -289,7 +274,7 @@ class FeatureExtraction:
     # 26. WebsiteTraffic   
     def WebsiteTraffic(self):
         try:
-            rank = BeautifulSoup(urllib.request.urlopen("http://data.alexa.com/data?cli=10&dat=s&url=" + url).read(),
+            rank = BeautifulSoup(urllib.request.urlopen("http://data.alexa.com/data?cli=10&dat=s&url=" + self.url).read(),
                                  "xml").find("REACH")['RANK']
             if int(rank) < 100000:
                 return 1
@@ -329,122 +314,36 @@ class FeatureExtraction:
         return self.features
 
 
-# The extraction of the 5 most "important" features
-# Their importance was taken from:
-# https://github.com/VaibhavBichave/Phishing-URL-Detection
-class ReducedFeatureExtraction:
-    features = []
+# Adding all the 14 features
+class ExtendedFeatureExtraction(BaseFeatureExtraction):
+    def __init__(self, url):
+        super().__init__(url)
+
+        # Add features specific to ExtendedFeatureExtraction
+        self.features.append(self.UsingIp())
+        self.features.append(self.longUrl())
+        self.features.append(self.prefixSuffix())
+        self.features.append(self.SubDomains())
+        self.features.append(self.Hppts())
+        self.features.append(self.DomainRegLen())
+        self.features.append(self.RequestURL())
+        self.features.append(self.AnchorURL())
+        self.features.append(self.LinksInScriptTags())
+        self.features.append(self.ServerFormHandler())
+        self.features.append(self.DNSRecording())
+        self.features.append(self.WebsiteTraffic())
+        self.features.append(self.GoogleIndex())
+        self.features.append(self.LinksPointingToPage())
+
+
+# The 5 most "important" features
+class ReducedFeatureExtraction(BaseFeatureExtraction):
 
     def __init__(self, url):
-        self.features = []
-        self.url = url
-        self.domain = ""
-        self.urlparse = ""
-        self.response = ""
-        self.soup = ""
-
-        try:
-            self.response = requests.get(url)
-            self.soup = BeautifulSoup(self.response.text, 'html.parser')
-        except:
-            pass
-
-        try:
-            self.urlparse = urlparse(url)
-            self.domain = self.urlparse.netloc
-        except:
-            pass
+        super().__init__(url)
 
         self.features.append(self.AnchorURL())
         self.features.append(self.Hppts())
         self.features.append(self.LinksInScriptTags())
         self.features.append(self.prefixSuffix())
         self.features.append(self.WebsiteTraffic())
-
-    # 6.prefixSuffix
-    def prefixSuffix(self):
-        try:
-            match = re.findall('\-', self.domain)
-            if match:
-                return -1
-            return 1
-        except:
-            return -1
-
-    # 8.HTTPS
-    def Hppts(self):
-        try:
-            https = self.urlparse.scheme
-            if 'https' in https:
-                return 1
-            return -1
-        except:
-            return 1
-
-    # 14. AnchorURL
-    def AnchorURL(self):
-        try:
-            i, unsafe = 0, 0
-            for a in self.soup.find_all('a', href=True):
-                if "#" in a['href'] or "javascript" in a['href'].lower() or "mailto" in a['href'].lower() or not (
-                        self.url in a['href'] or self.domain in a['href']):
-                    unsafe = unsafe + 1
-                i = i + 1
-
-            try:
-                percentage = unsafe / float(i) * 100
-                if percentage < 31.0:
-                    return 1
-                elif (percentage >= 31.0) and (percentage < 67.0):
-                    return 0
-                else:
-                    return -1
-            except:
-                return -1
-
-        except:
-            return -1
-
-    # 15. LinksInScriptTags
-    def LinksInScriptTags(self):
-        try:
-            i, success = 0, 0
-
-            for link in self.soup.find_all('link', href=True):
-                dots = [x.start(0) for x in re.finditer('\.', link['href'])]
-                if self.url in link['href'] or self.domain in link['href'] or len(dots) == 1:
-                    success = success + 1
-                i = i + 1
-
-            for script in self.soup.find_all('script', src=True):
-                dots = [x.start(0) for x in re.finditer('\.', script['src'])]
-                if self.url in script['src'] or self.domain in script['src'] or len(dots) == 1:
-                    success = success + 1
-                i = i + 1
-
-            try:
-                percentage = success / float(i) * 100
-                if percentage < 17.0:
-                    return 1
-                elif (percentage >= 17.0) and (percentage < 81.0):
-                    return 0
-                else:
-                    return -1
-            except:
-                return 0
-        except:
-            return -1
-
-    # 26. WebsiteTraffic   
-    def WebsiteTraffic(self):
-        try:
-            rank = BeautifulSoup(urllib.request.urlopen("http://data.alexa.com/data?cli=10&dat=s&url=" + url).read(),
-                                 "xml").find("REACH")['RANK']
-            if int(rank) < 100000:
-                return 1
-            return 0
-        except:
-            return -1
-
-    def getFeaturesList(self):
-        return self.features
