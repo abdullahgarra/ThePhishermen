@@ -1,10 +1,13 @@
+
+# This code was created with ChatGPT
+
 import pandas as pd
 import pickle
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.metrics import accuracy_score, confusion_matrix
 # Load the dataset (assuming you have a CSV file with features and labels)
-data = pd.read_csv("ML_model_link\phishing2.csv")
+data = pd.read_csv("phishing2.csv")
 
 # Separate features (X) and labels (y)
 X = data.drop('class', axis=1)
@@ -28,8 +31,10 @@ confusion = confusion_matrix(y_test, y_pred)
 
 print("Accuracy:", accuracy)
 
+# Keep the model only if the accuracy is good 
+# From debugging, it doesn't look like it gets much higher than that
 if accuracy > 0.93:
-    with open("ml_models/reduce_gradient_boosting_model.pkl", "wb") as f:
+    with open("reduce_gradient_boosting_model.pkl", "wb") as f:
         pickle.dump((gb_classifier), f)
 print('\nAccuracy:', round(accuracy, 5))
 
@@ -42,7 +47,6 @@ table = pd.DataFrame({
     'FN': [fn]
 })
 
-
 # Loop over the rows of the DataFrame
 for index, row in table.iterrows():
     # Print the row name and its values
@@ -50,4 +54,3 @@ for index, row in table.iterrows():
     print(f"Non-Phishing -> found phishing: {row['FP']}")
     print(f"Non-Phishing -> found non-phishing: {row['TN']}")
     print(f"Phishing -> found non-phishing: {row['FN']}")
-

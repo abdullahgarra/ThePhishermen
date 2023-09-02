@@ -1,3 +1,7 @@
+
+# Taken from:
+# https://github.com/VaibhavBichave/Phishing-URL-Detection/blob/c25eae02643e2e0c3d221c8950ad8409a13a1b65/feature.py
+
 import ipaddress
 import re
 import urllib.request
@@ -11,6 +15,9 @@ import time
 from dateutil.parser import parse as date_parse
 from urllib.parse import urlparse
 
+# The extraction of the "important" features
+# Their importance was taken from:
+# https://github.com/VaibhavBichave/Phishing-URL-Detection
 class FeatureExtraction:
     features = []
     def __init__(self,url):
@@ -39,17 +46,13 @@ class FeatureExtraction:
         except:
             pass
 
-
-        
-
+        # All the 14 featurs for the extended version
         self.features.append(self.UsingIp())
         self.features.append(self.longUrl())
         self.features.append(self.prefixSuffix())
         self.features.append(self.SubDomains())
         self.features.append(self.Hppts())
         self.features.append(self.DomainRegLen())
-        
-
         self.features.append(self.RequestURL())
         self.features.append(self.AnchorURL())
         self.features.append(self.LinksInScriptTags())
@@ -58,7 +61,6 @@ class FeatureExtraction:
         self.features.append(self.WebsiteTraffic())
         self.features.append(self.GoogleIndex())
         self.features.append(self.LinksPointingToPage())
-
 
      # 1.UsingIp
     def UsingIp(self):
@@ -324,7 +326,9 @@ class FeatureExtraction:
     def getFeaturesList(self):
         return self.features
 
-
+# The extraction of the 5 most "important" features
+# Their importance was taken from:
+# https://github.com/VaibhavBichave/Phishing-URL-Detection
 class ReducedFeatureExtraction:
     features = []
     def __init__(self,url):
@@ -347,14 +351,12 @@ class ReducedFeatureExtraction:
         except:
             pass
 
-
         self.features.append(self.AnchorURL())
         self.features.append(self.Hppts())
         self.features.append(self.LinksInScriptTags())
         self.features.append(self.prefixSuffix())
         self.features.append(self.WebsiteTraffic())
 
-    
     # 6.prefixSuffix
     def prefixSuffix(self):
         try:
@@ -428,7 +430,6 @@ class ReducedFeatureExtraction:
         except:
             return -1
 
-    
     # 26. WebsiteTraffic   
     def WebsiteTraffic(self):
         try:
