@@ -3,6 +3,8 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from feature import ExtendedFeatureExtraction, ReducedFeatureExtraction
 import numpy as np
+# pip install joblib==1.2.0
+# pip install scikit-learn==1.0.1
 import joblib
 from happytransformer import HappyTextToText, TTSettings
 import nltk
@@ -12,10 +14,7 @@ from transformers import pipeline
 import pickle
 
 import warnings
-
 warnings.filterwarnings('ignore')
-
-# Tokenize and preprocess the sentences
 
 
 app = Flask(__name__)
@@ -30,7 +29,6 @@ cors = CORS(app)
 @app.route('/analyze', methods=['POST'])
 def analyze():
     email_obj = Email.from_json(request.get_data())
-
     # Calculate the phishing probability
     msg = create_analyze_phishing(email_obj.preferences, email_obj.decoded_content,
                                   email_obj.indicator_of_first_time_sender,
@@ -59,12 +57,14 @@ def create_analyze_phishing(preferences, content, indicator_of_first_time_sender
         return res
 
     # --------------- Content --------------- #
+
     if "Content" in preferences:
         predicted_label_content = analyze_phishing_content(content)
         if predicted_label_content == 1:
             res.append("pc")
 
     # --------------- Links --------------- #
+
     links_score = 0
     if "LinksHigh" in preferences:
         links_score = analyze_phishing_links(links, "extended")
@@ -74,6 +74,7 @@ def create_analyze_phishing(preferences, content, indicator_of_first_time_sender
         res.append("pl")
 
     # ---------- Grammar/Spelling ---------- #
+
     if "Grammar" in preferences:
         grammar_score = analyze_grammar(content)
         # Can't calculate grammar_score
@@ -144,17 +145,24 @@ file.close()
 # Returns 1 if a phishy link was found
 # Otherwise, 0
 def analyze_phishing_links(links, model_type):
+    print(model_type)
     for link in links:
         if model_type == "simpler":
             obj = ReducedFeatureExtraction(link)
             x = np.array(obj.getFeaturesList()).reshape(1, 5)
+            print(obj.getFeaturesList())
             y_prediction = rgbc.predict(x)[0]
         elif model_type == "extended":
             obj = ExtendedFeatureExtraction(link)
+            print(obj.getFeaturesList())
             x = np.array(obj.getFeaturesList()).reshape(1, 14)
             y_prediction = gbc.predict(x)[0]
+            print(gbc.predict(x))
+
         else:
             raise ValueError("Invalid type")
+        print(y_prediction)
+        print(link)
         # 1 is phishing, 0 is non phishing
         if y_prediction == 1:
             return 1
@@ -186,7 +194,7 @@ args = TTSettings(num_beams=5, min_length=1)
 # Given a text, return the set of words
 # that appeared in the sentence
 # Not including stop words
-def get_set_from_sentence(text):
+def get_set_from_text(text):
     words = nltk.word_tokenize(text.lower())
     words = [word for word in words if word.isalnum() and word not in stop_words]
     return set(words)
@@ -212,7 +220,7 @@ def get_set_from_valid_content(content):
             # Generate the valid version of the sentence from the content
             result = happy_tt.generate_text("grammar: " + sentence, args=args)
             # Get temporary set of words
-            tmp_set = get_set_from_sentence(result.text)
+            tmp_set = get_set_from_text(result.text)
             words.update(tmp_set)
 
     # Returns the combination of all tmp_sets
@@ -224,7 +232,7 @@ def get_set_from_valid_content(content):
 def analyze_grammar(content):
     # Extract the words into a set
     preprocessed_words1 = get_set_from_valid_content(content)
-    preprocessed_words2 = get_set_from_sentence(content)
+    preprocessed_words2 = get_set_from_text(content)
 
     if len(preprocessed_words1) == 0 or len(preprocessed_words2) == 0:
         return -1
