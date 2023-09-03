@@ -262,8 +262,8 @@ async function createAnalyzeRequestPayload(data, token) {
         preferences: preferences,
         decoded_content: email_content,
         links: links,
-        counter_from_sender: isFirstTimeFromSender,
-        counter_from_domain: isFirstTimeFromDomain
+        indicator_of_first_time_sender: isFirstTimeFromSender,
+        indicator_of_first_time_domain: isFirstTimeFromDomain
       };
       return JSON.stringify(extractedData);
     }
