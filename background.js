@@ -11,7 +11,8 @@ function create_alert(msg) {
 
 function UIforPreferences(){
   getStoredPreferences().then((prefrences) => {
-    if (prefrences !== null){
+    console.log(prefrences);
+    if (prefrences !== null && prefrences.length !== 0){
       chrome.action.setIcon({ path: 'icons/green_icon.png' });
       chrome.action.setTitle({ title: "Click to change your preferences" });
     }
