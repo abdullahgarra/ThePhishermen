@@ -145,24 +145,17 @@ file.close()
 # Returns 1 if a phishy link was found
 # Otherwise, 0
 def analyze_phishing_links(links, model_type):
-    print(model_type)
     for link in links:
         if model_type == "simpler":
             obj = ReducedFeatureExtraction(link)
             x = np.array(obj.getFeaturesList()).reshape(1, 5)
-            print(obj.getFeaturesList())
             y_prediction = rgbc.predict(x)[0]
         elif model_type == "extended":
             obj = ExtendedFeatureExtraction(link)
-            print(obj.getFeaturesList())
             x = np.array(obj.getFeaturesList()).reshape(1, 14)
             y_prediction = gbc.predict(x)[0]
-            print(gbc.predict(x))
-
         else:
             raise ValueError("Invalid type")
-        print(y_prediction)
-        print(link)
         # 1 is phishing, 0 is non phishing
         if y_prediction == 1:
             return 1
