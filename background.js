@@ -132,7 +132,7 @@ function UIforPreferences(){
 
 /* ---------------------------- Extension's Icon handling  ---------------------------- */
 
-/**
+/*
  * User clicked on the icon of the extension
  * Check if the user is authenticated
 */
@@ -176,6 +176,10 @@ chrome.webNavigation.onCommitted.addListener((details) => {
   }
 });
 
+/*
+ * URL changed
+ * Check if the new page is GMAIL and inbox
+*/
 function browserInject(tabId, changeInfo, tab){
 
    // Check if access token is stored
