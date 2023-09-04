@@ -52,10 +52,10 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
       if (payload) {
           // Get the subject of the email, for the popup's title
           const subject = data.payload.headers.find(header => header.name === 'Subject');
-          if (subject) {
+          if (subject && subject.value.length > 0) {
             await sendAnalyzeRequest("Warnings on: " + subject.value, payload);
           } else {
-            await sendAnalyzeRequest("Warnings on: <no-subject>", payload);
+            await sendAnalyzeRequest("Warnings on: (no subject)", payload);
           }
       }
     }
