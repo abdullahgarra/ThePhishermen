@@ -31,14 +31,20 @@ avg_of_f1_score = np.empty((0,4))
 avg_of_manipulated_f1_score = np.empty((0,4))
 avg_of_manipulated_f1_score2 = np.empty((0,4))
 
-for i in range(1):
+for i in range(100):
+
+    # Sample legit emails from dataset
     legit_mails = legit_mails.sample(n=10000)
 
+    # Add in the phishing emails from another dataset
     data = pd.concat([small_dataset, legit_mails], ignore_index=True)
-    data = data.dropna()
+
+    # Add in the phishing emails from another dataset
     data = pd.concat([data, more_phishing])
 
-    # Perform text vectorization on the text column using CountVectorizer# Perform text vectorization on the text column using CountVectorizer
+    data = data.dropna()
+
+    # Perform text vectorization on the text column using CountVectorizer
     vectorizer = TfidfVectorizer()
     X = vectorizer.fit_transform(data["text"])
 
@@ -138,21 +144,6 @@ for i in range(1):
     model_info_filename = 'svm_model.pkl'
     joblib.dump(model_info, model_info_filename)
 
-    #test_email = "Hi there"
-    test_email = """Double the GrammarlyGO prompts
-Grammarly Premium and Grammarly Business users now get 1,000 GrammarlyGO prompts each month (previously 500) to help draft business plans, summarize email chains, and craft high-quality articles in seconds.
-
-More accurate and descriptive rewrites
-When you use GrammarlyGO to improve your writing, you’ll receive higher-quality rewrites while also getting an explanation of the changes made to your text.
-
-GrammarlyGO context improvements
-GrammarlyGO is now better at integrating the context of the writing surrounding your cursor to make your generated text more relevant. And, when it needs more context to produce a high-quality output, it now has the ability to ask follow-up questions.
-Explore All New Features"""
-    #test_email = "We’re writing to let you know that Quora is updating its Terms of Service and Privacy Policy. The key changes include: Terms of Service. We've updated our Terms of Service to be easier to read and include updated information on our current products and features, our platform policies, and how to manage your settings. We also have made updates to our arbitration provisions, including new rules for where there are multiple similar claims. Privacy Policy. Our updated Privacy Policy has the most recent information about how we collect, use, store, transfer, and otherwise process your personal data. We’ve also updated the policy with clearer language and formatting to make it easier to understand and included additional disclosures required by new privacy laws. This update includes information about your new privacy choices, including the ability to opt out of having your data used for LLM training, and depending on your location, the ability to not have your data used for targeted advertising. You can read the fully updated Terms of Service and Privacy Policy, which will take effect on August 25, 2023. By using Quora on or after that date, you’ll be agreeing to the updated terms and policies. Please contact us through our Help Center if you have any questions. Thanks for sharing and growing the world's knowledge with us! Quora"
-    test_email = vectorizer.transform([test_email])
-    score = svm.predict_proba(test_email)[:,1]
-    print(score)
-    print(score >= best_threshold)
 
     print("optimizing f1_score beta = 1.2")
     beta = 1.2
