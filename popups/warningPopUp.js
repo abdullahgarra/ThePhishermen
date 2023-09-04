@@ -3,6 +3,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const urlParams = new URLSearchParams(window.location.search);
     const message = urlParams.get('alerts');
 
+    // Changing the title of the popup to be the subject of the email
+    const title = urlParams.get('title');
+    const popupTitle = document.getElementById("popupTitle");
+    if (popupTitle) {
+      popupTitle.innerText = title;
+    }
+
     const alerts = {
       'fts': {
         title: 'First Time Sender',
