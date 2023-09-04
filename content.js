@@ -40,16 +40,23 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
     });
     
     const data = await response.json();
-    const labelIds = await data.labelIds;
-    const isUnread = await labelIds.includes("UNREAD");
 
+    // Check if the email is unread
+    const labelIds = await data.labelIds || [];;
+    const isUnread = await labelIds.includes("UNREAD");
     if (isUnread){
       // Create a loading gif next to the email
       showLoadingGifInClass();
       // Only if the email is unread
       const payload = await createAnalyzeRequestPayload(data, token);
       if (payload) {
-          await sendAnalyzeRequest(payload);
+          // Get the subject of the email, for the popup's title
+          const subject = data.payload.headers.find(header => header.name === 'Subject');
+          if (subject) {
+            await sendAnalyzeRequest("Warnings on: " + subject.value, payload);
+          } else {
+            await sendAnalyzeRequest("Warnings on: <no-subject>", payload);
+          }
       }
     }
   }
@@ -260,7 +267,7 @@ async function getFirstTimeFromDomain(senderEmail, token) {
 
 /* ---------------------------- sendAnalyzeRequest ---------------------------- */
 
-async function sendAnalyzeRequest(payload) {
+async function sendAnalyzeRequest(email_subject, payload) {
 
   // 'https://vm.phishermen.xyz/analyze',
   try {
@@ -277,7 +284,7 @@ async function sendAnalyzeRequest(payload) {
    const imageElement = document.getElementById('idOfInsertedImg');
     imageElement.remove();
     if (data['Answer'].length > 0 ){
-      chrome.runtime.sendMessage({ action: "createPopup", message: data['Answer'] }, function(response) {
+      chrome.runtime.sendMessage({ action: "createPopup", message: data['Answer'], subject: email_subject }, function(response) {
             showIconClass("bad");
       });
     }

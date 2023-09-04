@@ -255,8 +255,10 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === "createPopup" && request.message.length > 0) {
     // Get the alerts found for the new email
     var alerts = request.message;
-    var popupUrl = chrome.runtime.getURL("popups/warningPopUp.html") + `?alerts=${encodeURIComponent(alerts)}`;
+    var subject = request.subject;
+    var popupUrl = chrome.runtime.getURL("popups/warningPopUp.html") + `?alerts=${encodeURIComponent(alerts)}&title=${encodeURIComponent(subject)}`;
     chrome.windows.create({ url: popupUrl, type: "popup", width: 410, height: 400 });
+   
     sendResponse({ message: "Popup created!" });
   }
 
