@@ -237,7 +237,7 @@ function preferencesPopUp(){
     else {
       var popupUrl = chrome.runtime.getURL("popups/preferencesPopUp.html") + `?message=${encodeURIComponent([])}`;
     }
-    chrome.windows.create({ url: popupUrl, type: "popup", width: 450, height: 600});
+    chrome.windows.create({ url: popupUrl, type: "popup", width: 420, height: 330});
   }).catch((error) => {
     // Handle storage error
     console.error(error);
