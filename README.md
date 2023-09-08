@@ -1,5 +1,5 @@
 
-# <img src="Icons/ThePhishermen.png" width="150" height="169"> The Phishermen 
+# The Phishermen <img src="Icons/ThePhishermen.png" width="150" height="169">
 
 https://www.loom.com/share/6017c490be70460db05e1a118da7416f?sid=82c26196-e7ba-499a-b840-1fe7602588d5
 ## Table of Content
@@ -10,7 +10,7 @@ https://www.loom.com/share/6017c490be70460db05e1a118da7416f?sid=82c26196-e7ba-49
 ## Introduction
 In today's rapidly evolving digital landscape, cyberattacks, particularly phishing, pose significant threats. Phishing, often executed through deceptive emails, exploits human vulnerabilities like lack of knowledge and attention.<br>
 
-Usable security tools offer a solution by simplifying cybersecurity and alerting users on suspicious activities. Our Chrome extension addresses email phishing by analyzing content, links, grammar, sender information, and urgency, according to user preferences. When risks are detected, users are alerted through the utilization of machine learning models and Gmail API integration.<br>
+Usable security tools offer a solution by simplifying cybersecurity and alerting users on suspicious activities. Our Chrome extension addresses email phishing by analyzing content, links, grammar, sender information, and urgency, according to user preferences. When risks are detected, users are alerted through the utilization of machine learning models and Gmail API integration.  
 
 ## Installation
 **Set up the server**
