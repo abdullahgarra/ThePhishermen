@@ -37,8 +37,8 @@ Usable security tools offer a solution by simplifying cybersecurity and alerting
 **Start working with the extension**
 ```
 11. Select your preferences and click "Save and Close"
-12. From now on, each unread new email from your inbox will be examined
-    by the extension, according to your preferences
+12. From now on, each unread new email from your inbox will be
+    examined by the extension, according to your preferences
 13. Feel free to change your preferences to your needs
 ```
 ## Directory Tree
