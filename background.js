@@ -197,7 +197,7 @@ function browserInject(tabId, changeInfo, tab){
                   tabsSet.add(tabId);
                   await chrome.scripting.executeScript({
                     target: { tabId: tab.id },
-                    files: ['content.js'],
+                    files: ['Content.js'],
                   });
                 }
                 // Call client to handle the email
@@ -232,10 +232,10 @@ function preferencesPopUp(){
 
   getStoredPreferences().then((preferences) => {
     if (preferences !== null) {
-      var popupUrl = chrome.runtime.getURL("popups/preferencesPopUp.html") + `?message=${encodeURIComponent(preferences)}`;
+      var popupUrl = chrome.runtime.getURL("PopUps/PreferencesPopUp.html") + `?message=${encodeURIComponent(preferences)}`;
     }
     else {
-      var popupUrl = chrome.runtime.getURL("popups/preferencesPopUp.html") + `?message=${encodeURIComponent([])}`;
+      var popupUrl = chrome.runtime.getURL("PopUps/PreferencesPopUp.html") + `?message=${encodeURIComponent([])}`;
     }
     chrome.windows.create({ url: popupUrl, type: "popup", width: 420, height: 330});
   }).catch((error) => {

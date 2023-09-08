@@ -6,7 +6,7 @@
         "48": "icons/icon2.png"
     },
     "background": {
-        "service_worker": "background.js"
+        "service_worker": "Background.js"
     },
     "action": {
         "default_icon": {

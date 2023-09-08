@@ -1,7 +1,7 @@
 from Email import Email
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from feature import ExtendedFeatureExtraction, ReducedFeatureExtraction
+from Feature import ExtendedFeatureExtraction, ReducedFeatureExtraction
 import numpy as np
 # pip install joblib==1.2.0
 # pip install scikit-learn==1.0.1
@@ -104,7 +104,7 @@ def create_analyze_phishing(preferences, content, indicator_of_first_time_sender
 
 # ---------------------------- Content ---------------------------- #
 
-content_model_path = 'ml_models/svm_model.pkl'
+content_model_path = 'ML Models/svm_model.pkl'
 # Load the model from the pickle file
 with open(content_model_path, 'rb') as file:
     loaded_model_info = joblib.load(content_model_path)
@@ -130,8 +130,8 @@ def analyze_phishing_content(content):
 
 # ---------------------------- Links ---------------------------- #
 
-extended_model_path = 'ml_models/gradient_boosting_model.pkl'
-reduced_model_path = 'ml_models/reduce_gradient_boosting_model.pkl'
+extended_model_path = 'ML Models/gradient_boosting_model.pkl'
+reduced_model_path = 'ML Models/reduce_gradient_boosting_model.pkl'
 
 # Load the model from the pickle file
 with open(extended_model_path, 'rb') as file:
