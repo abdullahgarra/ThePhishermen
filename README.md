@@ -9,9 +9,9 @@ https://www.loom.com/share/6017c490be70460db05e1a118da7416f?sid=82c26196-e7ba-49
   * [Directory Tree](#directory-tree)
 
 ## Introduction
-In today's rapidly evolving digital landscape, cyberattacks, particularly phishing, pose significant threats. Phishing, often executed through deceptive emails, exploits human vulnerabilities like lack of knowledge and attention.
-Usable security tools offer a solution by simplifying cybersecurity and alerting users to suspicious activities. Our Chrome extension addresses email phishing by analyzing content, links, grammar, sender information, and urgency according to user preferences. When risks are detected, users receive warnings, thanks to machine learning and Gmail API integration.
-This proactive tool empowers users to make informed email choices, enhancing their online security.
+In today's rapidly evolving digital landscape, cyberattacks, particularly phishing, pose significant threats. Phishing, often executed through deceptive emails, exploits human vulnerabilities like lack of knowledge and attention.  
+
+Usable security tools offer a solution by simplifying cybersecurity and alerting users on suspicious activities. Our Chrome extension addresses email phishing by analyzing content, links, grammar, sender information, and urgency, according to user preferences. When risks are detected, users are alerted through the utilization of machine learning models and Gmail API integration.  
 
 ## Installation
 **Set up the server**
