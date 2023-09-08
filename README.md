@@ -1,8 +1,6 @@
 
 # The Phishermen 
-<img src="Icons/ThePhishermen.png" width="100" height="112">
-
-[![Video Demo](Icons/ThePhishermen.png)](Icons/PromotionalVideo.mp4)
+[<img src="Icons/ThePhishermen.png" width="100" height="112">] (Icons/PromotionalVideo.mp4)
 
 ## Table of Content
   * [Introduction](#introduction)
