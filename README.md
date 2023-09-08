@@ -1,8 +1,22 @@
 # The Phishermen
+
+![Alt text](image.png)
+![Alt text](image-1.png)
+![Alt text](image-2.png)
+![Alt text](image-3.png)
 **Promotional Video**: 
 https://www.loom.com/share/6017c490be70460db05e1a118da7416f?sid=732210a3-d96b-4502-ab43-eab3e2258e9e
 
-## Instructions to run the extenstion
+## Table of Content
+  * [Introduction](#introduction)
+  * [Installation](#installation)
+  * [Directory Tree](#directory-tree)
+  * [Result](#result)
+  * [Conclusion](#conclusion)
+
+## Introduction
+
+## Installation
 **Set up the server**
 1. Add the files from https://github.com/hilalewin/phisherman/tree/master into your google cloud server.
 2. Open terminal from that location, and run sudo -E python3 app.py
