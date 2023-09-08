@@ -1,8 +1,8 @@
 
 # The Phishermen 
-<img src="Icons/ThePhishermen.png" width="250" height="281" title="Click here for Promotional Video">
+<img src="Icons/ThePhishermen.png" width="250" height="281">
 
-https://www.loom.com/share/6017c490be70460db05e1a118da7416f?sid=732210a3-d96b-4502-ab43-eab3e2258e9e
+https://www.loom.com/share/6017c490be70460db05e1a118da7416f
 
 ## Table of Content
   * [Introduction](#introduction)
