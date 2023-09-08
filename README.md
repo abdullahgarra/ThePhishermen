@@ -1,6 +1,8 @@
 
 # The Phishermen 
-[<img src="Icons/ThePhishermen.png" width="100" height="112" title="Click here for Promotional Video">](Icons/PromotionalVideo.mp4)
+<img src="Icons/ThePhishermen.png" width="100" height="112" title="Click here for Promotional Video">
+
+https://www.loom.com/share/6017c490be70460db05e1a118da7416f?sid=732210a3-d96b-4502-ab43-eab3e2258e9e
 
 ## Table of Content
   * [Introduction](#introduction)
@@ -28,9 +30,9 @@
 **Authorization with Google**
 ```
 7. Click on the extension icon
-8. Select the Gmail account you want to work with and log in if needed.
+8. Select the Gmail account you want to work with and log in if needed
 9. Go to gmail for start the extension
-10. Accept any incoming warnings comming from Google.
+10. Accept any incoming warnings comming from Google
 ```
 **Start working with the extension**
 ```
