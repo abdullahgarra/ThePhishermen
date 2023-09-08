@@ -1,6 +1,5 @@
 
-# The Phishermen 
-<img src="Icons/ThePhishermen.png" width="150" height="169">
+# <img src="Icons/ThePhishermen.png" width="150" height="169"> The Phishermen 
 
 https://www.loom.com/share/6017c490be70460db05e1a118da7416f?sid=82c26196-e7ba-499a-b840-1fe7602588d5
 ## Table of Content
