@@ -7,10 +7,11 @@ https://www.loom.com/share/6017c490be70460db05e1a118da7416f?sid=82c26196-e7ba-49
   * [Introduction](#introduction)
   * [Installation](#installation)
   * [Directory Tree](#directory-tree)
-  * [Result](#result)
-  * [Conclusion](#conclusion)
 
 ## Introduction
+In today's rapidly evolving digital landscape, cyberattacks, particularly phishing, pose significant threats. Phishing, often executed through deceptive emails, exploits human vulnerabilities like lack of knowledge and attention.
+Usable security tools offer a solution by simplifying cybersecurity and alerting users to suspicious activities. Our Chrome extension addresses email phishing by analyzing content, links, grammar, sender information, and urgency according to user preferences. When risks are detected, users receive warnings, thanks to machine learning and Gmail API integration.
+This proactive tool empowers users to make informed email choices, enhancing their online security.
 
 ## Installation
 **Set up the server**
@@ -66,10 +67,4 @@ https://www.loom.com/share/6017c490be70460db05e1a118da7416f?sid=82c26196-e7ba-49
 ├── README.md
 ├── Manifest.json
 ```
-
-
-**Files Explanations**
-The manifest.json outlines the chrome extenstion permissions, settings, and key components. It establishes a link between the extension and the browser. Our manifest version is 3.0.
-
-The background.js manages the extension's authentication, user preferences, and overall functionality such as creating popups, while content.js handles the preparation for the analysis of email and interaction with web pages. These scripts work together to provide a Chrome extension for email analysis and warning popups.
 
