@@ -2,7 +2,7 @@
 # The Phishermen 
 <img src="Icons/ThePhishermen.png" width="100" height="112">
 
-[Link to MP4 Video](Icons/PromotionalVideo.mp4)
+[![Video Demo](Icons/ThePhishermen.png)](Icons/PromotionalVideo.mp4)
 
 ## Table of Content
   * [Introduction](#introduction)
