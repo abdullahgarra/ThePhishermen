@@ -15,14 +15,18 @@ Usable security tools offer a solution by simplifying cybersecurity and alerting
 ## Installation
 **Setting up the environment**
 1. Clone the repository to your computer.<br>
-2. Open terminal from the repository locaition on your computer and run ```python app.py```<br>
+2. Open terminal from the repository locaition on your computer and run ```python app.py
+```<br>
 3. Wait for the server to go up<br>
-4. Open terminal from the repository locaition on your computer and run ```del __pycache__``` for windows, or ```rm __pycache__
+4. Open terminal from the repository locaition on your computer and run ```del __pycache__
+``` for windows, or ```rm __pycache__
 ``` for mac. 
 
 **Load the extension to your browser [In any computer]**
 ```
-4. Write chrome://extensions/ in your URL in chrome
+4. Go to ```
+chrome://extensions/
+``` in your URL in chrome
 5. Enable Developer mode
 6. Select "Load unpacked" and load the extenstion's folder
 ```
