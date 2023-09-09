@@ -31,7 +31,7 @@ chrome://extensions/
 ```
 6. Enable Developer mode in chrome browser.<br>
 7. Select "Load unpacked" and load the repository's folder from your computer.<br>
-8. We recommend to pin the extension.
+8. Once the extension is loaded, we recommend to pin the extension.
 
 **Authorization with Google**
 
