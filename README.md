@@ -49,29 +49,27 @@ chrome://extensions/
 
 ## Directory Tree
 
-├── [Icons](./Icons)<br>
-```
-├── ML Creation
-│   ├── Building the dataset
-│   ├── ML Content
-│   ├── ML Links
-├── ML Models
-│   ├── gradient_boosting_model.pkl
-│   ├── reduce_gradient_boosting_model.pkl
-│   ├── svm_model.pkl
-├── PopUps
-│   ├── Images
-│   ├── PreferencesPopUp.html
-│   ├── PreferencesPopUp.js
-│   ├── PreferencesPopUp.html
-│   ├── WarningPopUp.html
-│   ├── WarningPopUp.js
-├── App.py
-├── Background.js
-├── Content.js
-├── Email.py
-├── Feature.py
-├── README.md
-├── Manifest.json
-```
+├── [Icons](/Icons)<br>
+├── [ML Creation](/ML%20Creation)<br>
+│   ├── [Building the dataset](/ML%20Creation/Building%20the%20dataset)<br>
+│   ├── [ML Content](/ML%20Creation/ML%20Content)<br>
+│   ├── [ML Links](/ML%20Creation/ML%20Links)<br>
+├── [ML Models](/ML%20Models)
+│   ├── gradient_boosting_model.pkl<br>
+│   ├── reduce_gradient_boosting_model.pkl<br>
+│   ├── svm_model.pkl<br>
+├── [PopUps](/PopUps)<br>
+│   ├── [Images](/PopUps/Images)<br>
+│   ├── [PreferencesPopUp.html](/PopUps/PreferencesPopUp.html)<br>
+│   ├── [PreferencesPopUp.js](/PopUps/PreferencesPopUp.js)<br>
+│   ├── [WarningPopUp.html](/PopUps/WarningPopUp.html)<br>
+│   ├── [WarningPopUp.js](/PopUps/WarningPopUp.js)<br>
+├── [App.py](/App.py)<br>
+├── [Background.js](/Background.js)<br>
+├── [Content.js](/Content.js)<br>
+├── [Email.py](/Email.py)<br>
+├── [Feature.py](/Feature.py)<br>
+├── [README.md](/README.md)<br>
+├── [Manifest.json](/Manifest.json)<br>
+
 
