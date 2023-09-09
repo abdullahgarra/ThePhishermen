@@ -13,13 +13,13 @@ In today's rapidly evolving digital landscape, cyberattacks, particularly phishi
 Usable security tools offer a solution by simplifying cybersecurity and alerting users on suspicious activities. Our Chrome extension addresses email phishing by analyzing content, links, grammar, sender information, and urgency, according to user preferences. When risks are detected, users are alerted through the utilization of machine learning models and Gmail API integration.  
 
 ## Installation
-**Set up the server**
-```
-1. Add files from Repo into your google cloud server.
-2. Open terminal from that location, and run sudo -E python3 app.py
-3. Wait for the server to go up
-* You can also run it locally, and change vars accordingly 
-```
+**Setting up the environment**
+1. Clone the repository to your computer.<br>
+2. Open terminal from the repository locaition on your computer and run ```python app.py```<br>
+3. Wait for the server to go up<br>
+4. Open terminal from the repository locaition on your computer and run ```del __pycache__``` for windows, or ```rm __pycache__
+``` for mac. 
+
 **Load the extension to your browser [In any computer]**
 ```
 4. Write chrome://extensions/ in your URL in chrome
