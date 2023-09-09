@@ -15,29 +15,28 @@ Usable security tools offer a solution by simplifying cybersecurity and alerting
 ## Installation
 **Setting up the environment**
 1. Clone the repository to your computer.<br>
-2. Open terminal from the repository locaition on your computer and run 
+2. Open terminal from the repository locaition on your computer and run: 
 ```
 python app.py
 ```
 <br>
 3. Wait for the server to go up.<br>
 4. Open terminal from the repository locaition on your computer and run
+
 ```
 del __pycache__
+
 ```
 for windows, or 
+
 ```
-rm __pycache__
+rm __pycache__s
 ```
 for mac. 
 
 **Load the extension to your browser [In any computer]**
 
-5. Go to 
-```
-chrome://extensions/
-```
- page.<br>
+5. Go to <a href="chrome://extensions/" target="_blank">chrome://extensions/</a> page.<br>
 6. Enable Developer mode.<br>
 7. Select "Load unpacked" and load the extenstion's folder.<br>
 8. We recommend to pin the extension.
@@ -53,7 +52,7 @@ chrome://extensions/
 **Start working with the extension**
 
 13. Select your preferences and click "Save and Close".<br>
-14. From now on, each unread email from your inbox will be. examined by the extension, according to your preferences.<br>
+14. From now on, each unread email from your inbox will be examined by the extension, according to your preferences.<br>
 15. Feel free to fit your preferences to your needs.<br>
 
 ## Directory Tree
