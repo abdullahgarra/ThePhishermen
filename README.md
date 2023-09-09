@@ -20,17 +20,17 @@ Usable security tools offer a solution by simplifying cybersecurity and alerting
 python app.py
 ```
 3. Wait for the server to go up.<br>
-4. Delete '__pycache__' folder from the repository location on your computer.<br>
+4. Delete "__pycache__" folder from the repository location on your computer.<br>
 
 
 **Load the extension to your browser**
 
-5. Please navigate to the following webpage by copying and pasting the following URL into your browser's address bar: 
+5. Navigate to the following webpage by copying and pasting the following URL into your browser's address bar: 
 ```
 chrome://extensions/
 ```
-6. Enable Developer mode.<br>
-7. Select "Load unpacked" and load the extenstion's folder.<br>
+6. Enable Developer mode in chrome browser.<br>
+7. Select "Load unpacked" and load the cloned folder.<br>
 8. We recommend to pin the extension.
 
 **Authorization with Google**
