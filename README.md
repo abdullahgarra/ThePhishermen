@@ -48,8 +48,9 @@ chrome://extensions/
 15. Feel free to fit your preferences to your needs.<br>
 
 ## Directory Tree
+
+├── [Icons](./Icons)<br>
 ```
-├── [Icons](./Icons)
 ├── ML Creation
 │   ├── Building the dataset
 │   ├── ML Content
