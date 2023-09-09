@@ -1,34 +1,36 @@
 const content_text =
+    "<br>" +
     "Phishing email often exhibit repetitive patterns and employ" +
-    "specific words to mimic legitimate communication.<br>" +
+    " specific words to mimic legitimate communication.<br>" +
     "We offer a phishing detection service that analyzes email content, "+
     "processing and comprehending the extensive data within emails. "
-//+ "The 'Low' button means you're okay with some probability that the content is phishing." 
 createListenerForExplanation('content-icon', 'Info On Content Detection', content_text);
 const link_text =
     "Phishing links in emails mimic real URLs to deceive recipients, " +
     "into revealing data or spreading malware.<br>" +
     "We offer a phishing detection service that checks these links carefully, "+
-    "through a spectrum of information levels." +
+    "to detect harmful links." +
     " This method offers a detailed review or a simplified inspection," +  
     "relying on fewer data inputs for analysis."
     
 createListenerForExplanation('links-icon', 'Info On Links Detection', link_text);
 const grammar_text = 
-    "Bad grammar/spelling in emails can signal phishing. " +
-    "Be cautious with such emails, especially for unexpected requests" +
-    ", urgency, or unfamiliar links. <br>" +
+    "Bad grammar/spelling in emails can be an indication of phishing. " +
+    "Be cautious with such emails, especially if the bad grammar isn’t" +
+    " the only thing prompted.<br>" +
     " We offer a test comparing email content to a valid version." +
     " High similarity indicates validity." +
-    " The 'Low' button means you're okay with less similarity."
+    " We offer two levels of sensitivity, a lower sense of sensitivity" +
+    " provides a more tolerant model." 
 createListenerForExplanation('grammar-icon', 'Info On Grammar Detection', grammar_text);
 const urgency_text =  
-  "The urgency in an email can signal phishing. " +
-  "Be cautious with urgent emails, especially for unexpected requests, unfamiliar links," +
-  " or sensitive info. " +
+  "The urgency in an email can be an indication of phishing. " +
+  "Be cautious with urgent emails, especially if the urgent sense isn’t " +
+  " the only thing prompted." +
   " We offer a test to determine if the email conveys a sense of urgency." +
   " High score means indicates validity." +
-  " The 'Low' button means you're okay with some sense of urgency."
+  " We offer two levels of sensitivity, a lower sense of sensitivity " +
+  " provides a more tolerant model." 
 createListenerForExplanation('urgency-icon', 'Info On Urgency Detection', urgency_text);
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -74,8 +76,8 @@ function createListenerForExplanation(icon_name, title, text){
     const currIcon = document.getElementById(icon_name);
     currIcon.addEventListener('click', () => {
         const iconRect = currIcon.getBoundingClientRect();
-        const popupWidth = 350;
-        const popupHeight = 200;
+        const popupWidth = 360;
+        const popupHeight = 225;
         const left = iconRect.left - popupWidth + window.screenX;
         const top = iconRect.top + window.screenY;
         const popupFeatures = `width=${popupWidth},height=${popupHeight},left=${left},top=${top}`;
