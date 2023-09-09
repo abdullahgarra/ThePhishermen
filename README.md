@@ -20,16 +20,10 @@ Usable security tools offer a solution by simplifying cybersecurity and alerting
 python app.py
 ```
 3. Wait for the server to go up.<br>
-4. Open terminal from the repository locaition on your computer and run for windows:
-```
-del __pycache__
-```
-, or run for mac:
-```
-rm __pycache__
-```
+4. Delete '__pycache__' folder from the repository location on your computer.<br>
 
-**Load the extension to your browser [In any computer]**
+
+**Load the extension to your browser**
 
 5. Please navigate to the following webpage by copying and pasting the following URL into your browser's address bar: 
 ```
@@ -41,7 +35,7 @@ chrome://extensions/
 
 **Authorization with Google**
 
-9. Click on the extension icon. <br>
+9. Click on the extension icon from browser. <br>
 10. Select the Gmail account you want to work with and log in if needed.<br>
 11. Go to gmail to start the extension.<br>
 12. Accept any incoming warnings comming from Google<br>
