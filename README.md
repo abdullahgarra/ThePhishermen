@@ -54,7 +54,7 @@ chrome://extensions/
 │   ├── [Building the dataset](/ML%20Creation/Building%20the%20dataset)<br>
 │   ├── [ML Content](/ML%20Creation/ML%20Content)<br>
 │   ├── [ML Links](/ML%20Creation/ML%20Links)<br>
-├── [ML Models](/ML%20Models)
+├── [ML Models](/ML%20Models)<br>
 │   ├── gradient_boosting_model.pkl<br>
 │   ├── reduce_gradient_boosting_model.pkl<br>
 │   ├── svm_model.pkl<br>
