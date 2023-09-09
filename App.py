@@ -16,6 +16,8 @@ import pickle
 import warnings
 warnings.filterwarnings('ignore')
 
+import logging
+import ssl
 
 app = Flask(__name__)
 cors = CORS(app)
