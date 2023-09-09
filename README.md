@@ -19,24 +19,22 @@ Usable security tools offer a solution by simplifying cybersecurity and alerting
 ```
 python app.py
 ```
-<br>
 3. Wait for the server to go up.<br>
-4. Open terminal from the repository locaition on your computer and run
-
+4. Open terminal from the repository locaition on your computer and run for windows:
 ```
 del __pycache__
-
 ```
-for windows, or 
-
+, or run for mac:
 ```
-rm __pycache__s
+rm __pycache__
 ```
-for mac. 
 
 **Load the extension to your browser [In any computer]**
 
-5. Go to <a href="chrome://extensions/" target="_blank">chrome://extensions/</a> page.<br>
+5. Please navigate to the following webpage by copying and pasting the following URL into your browser's address bar: 
+```
+chrome://extensions/
+```
 6. Enable Developer mode.<br>
 7. Select "Load unpacked" and load the extenstion's folder.<br>
 8. We recommend to pin the extension.
