@@ -49,7 +49,7 @@ chrome://extensions/
 
 ## Directory Tree
 ```
-├── Icons
+├── [Icons](./Icons)
 ├── ML Creation
 │   ├── Building the dataset
 │   ├── ML Content
