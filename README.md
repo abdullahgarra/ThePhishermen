@@ -15,7 +15,7 @@ Usable security tools offer a solution by simplifying cybersecurity and alerting
 ## Installation
 **Setting up the environment**
 1. Clone the repository to your computer.<br>
-2. Open terminal from the repository locaition on your computer and run: 
+2. Open terminal from the repository location on your computer and run: 
 ```
 python app.py
 ```
@@ -30,7 +30,7 @@ python app.py
 chrome://extensions/
 ```
 6. Enable Developer mode in chrome browser.<br>
-7. Select "Load unpacked" and load the cloned folder.<br>
+7. Select "Load unpacked" and load the repository's folder.<br>
 8. We recommend to pin the extension.
 
 **Authorization with Google**
