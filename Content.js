@@ -325,7 +325,9 @@ function insertImageInClass(className, imageSrc, imageId) {
   elementWithClassGK.insertAdjacentElement('afterend', imgElement);
 
   // Add a margin between the img element and the class "gK"
+  // Left and right, depends on the language in your Gmail setting 
   imgElement.style.marginRight = '10px';
+  imgElement.style.marginLeft = '10px';
 
  }
 
