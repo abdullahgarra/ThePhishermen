@@ -17,7 +17,7 @@ Usable security tools offer a solution by simplifying cybersecurity and alerting
 1. Clone the repository to your computer.<br>
 2. Open terminal from the repository location on your computer and run: 
 ```
-python app.py
+python App.py
 ```
 3. Wait for the server to go up.<br>
 4. Delete "__pycache__" folder from the repository location on your computer.<br>
