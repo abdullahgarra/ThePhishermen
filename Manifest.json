@@ -39,5 +39,5 @@
             "https://www.googleapis.com/auth/gmail.readonly"
         ]
     },
-    "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAgbDe4CqJu8KMnJZzpCzihsCUSnmEA6T3vvZC2hVPEorbCS4NmhupTI4rWHM8yv9A8fbSXBI0uyrIlCs9G8Rvi1tgbGjMtPeRpMYBY6m9gsGJAy8Sibu+mfgr0qaIV3c0XQwCbv7kaFe2R5J1nkY9g2M+PzBC3toZuoVN64aGFpOopuRaXGftcAfT5xOB2TH7BfRRF81tEDGzclxa7WrWWMeyq3HfHMxODfbBybn4EmcSbbv7SpNAirzZV6zZjyN8H8BYN1IASzXK2I2Phv1u7SsKUi2pSRIzy5NsF6ClM5jgWv3rjE4dfQtzpgzUV2UwzKk2KhSHQKLGjO6SoltKgwIDAQAB"
+    "key": some_key
 }
